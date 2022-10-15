@@ -1,4 +1,7 @@
-﻿namespace Avalonia.SessionTimetableBuilder.ViewModels
+﻿using System;
+using System.Collections.ObjectModel;
+
+namespace Avalonia.SessionTimetableBuilder.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
