@@ -5,6 +5,11 @@ namespace Avalonia.SessionTimetableBuilder.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string Greeting => "Welcome to Avalonia!";
+        public MainWindowViewModel()
+        {
+            TeachersViewModel = new TeachersViewModel();
+        }
+        
+        public TeachersViewModel TeachersViewModel { set; get; }
     }
 }

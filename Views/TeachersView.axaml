@@ -2,26 +2,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:Avalonia.SessionTimetableBuilder.ViewModels"
+             xmlns:viewModels="clr-namespace:Avalonia.SessionTimetableBuilder.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Avalonia.SessionTimetableBuilder.Views.TeachersView">
     <Design.DataContext>
-        <vm:TeachersViewModel/>
+        <viewModels:TeachersViewModel />
     </Design.DataContext>
-    
+
     <StackPanel>
-        <!-- <Expander Header="Попов Евгений Александрович"> -->
-        <!-- </Expander> -->
-        <ListBox Items="{Binding Items}">
-            <ListBox.ItemTemplate>
+        <ItemsControl Items="{Binding Items}">
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                    <TextBlock>Hello</TextBlock>
-                    <TextBlock>Hello</TextBlock>
-                    <TextBlock>Hello</TextBlock>
-                    </StackPanel>
+                    <Expander Header="{Binding Name}" HorizontalContentAlignment="Stretch">
+                        <StackPanel>
+                            <TextBlock Text="Расписание" />
+                            <ItemsControl Items="{Binding Schedule}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel>
+                                            <TextBlock DockPanel.Dock="Left" Text="{Binding   IsAvailable}" />
+                                            <TextBlock DockPanel.Dock="Right" TextAlignment="Right"
+                                                       Text="{Binding BellTime.Time}" />
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </StackPanel>
 </UserControl>

@@ -8,6 +8,6 @@
 
     <Application.Styles>
         <!-- <StyleInclude Source="avares://Citrus.Avalonia/Rust.xaml"/> -->
-        <FluentTheme Mode="Light"></FluentTheme>
+        <FluentTheme Mode="Dark"></FluentTheme>
     </Application.Styles>
 </Application>
