@@ -4,6 +4,10 @@
     <option name="projectPerEditor">
       <map>
         <entry key="App.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
+        <entry key="Resources.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
+        <entry key="Styles/Border.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
+        <entry key="Styles/Font.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
+        <entry key="Styles/FontResources.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
         <entry key="Teachers.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
         <entry key="Views/GroupsView.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
         <entry key="Views/MainWindow.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />

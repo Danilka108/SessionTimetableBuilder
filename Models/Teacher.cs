@@ -1,9 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
+
 namespace Avalonia.SessionTimetableBuilder.Models;
 
-public record ScheduleItem(bool IsAvailable, BellTime BellTime);
+public record LessonTimeBounds(BellTime Start, BellTime End);
 
-public class Teacher
-{
-    public string Name { get; init; }
-    public ScheduleItem[] Schedule { get; init; }
-}
+public record TeacherScheduleItem(int Index, bool IsAvailable, LessonTimeBounds LessonTimeBounds);
+
+public record Teacher(string Name, IEnumerable<TeacherScheduleItem> Schedule);

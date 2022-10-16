@@ -15,18 +15,26 @@
                 <DataTemplate>
                     <Expander Header="{Binding Name}" HorizontalContentAlignment="Stretch">
                         <StackPanel>
-                            <TextBlock Text="Расписание" />
-                            <ItemsControl Items="{Binding Schedule}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <DockPanel>
-                                            <TextBlock DockPanel.Dock="Left" Text="{Binding   IsAvailable}" />
-                                            <TextBlock DockPanel.Dock="Right" TextAlignment="Right"
-                                                       Text="{Binding BellTime.Time}" />
-                                        </DockPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                        <TextBlock Classes="HeadlineSmall" Text="Расписание" Margin="5 0 0 5" />
+                        <Border Classes="Medium" Padding="10 5" Background="White">
+                            <StackPanel>
+                                <ItemsControl Items="{Binding Schedule}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <TextBlock Classes="TitleMedium" DockPanel.Dock="Left" Text="{Binding   Index}" />
+                                                <TextBlock Classes="TitleMedium" DockPanel.Dock="Left" Text=" пара" />
+                                                <TextBlock Classes="TitleMedium" DockPanel.Dock="Right" TextAlignment="Right"
+                                                           Text="{Binding LessonTimeBounds.End}" />
+                                                <TextBlock Classes="TitleMedium" DockPanel.Dock="Right" Text=" - "/>
+                                                <TextBlock Classes="TitleMedium" DockPanel.Dock="Right" TextAlignment="Right"
+                                                           Text="{Binding LessonTimeBounds.Start}" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
                         </StackPanel>
                     </Expander>
                 </DataTemplate>
