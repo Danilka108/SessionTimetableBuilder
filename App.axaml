@@ -1,6 +1,8 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:Avalonia.SessionTimetableBuilder"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Class="Avalonia.SessionTimetableBuilder.App">
     <Application.DataTemplates>
         <local:ViewLocator/>
@@ -8,6 +10,10 @@
 
     <Application.Styles>
         <!-- <StyleInclude Source="avares://Citrus.Avalonia/Rust.xaml"/> -->
-        <FluentTheme Mode="Dark"></FluentTheme>
+        <FluentTheme Mode="Light"></FluentTheme>
+        
+        <StyleInclude Source="/Styles/Border.axaml"/>
+        <StyleInclude Source="/Styles/Font.axaml"/>
+        
     </Application.Styles>
 </Application>
