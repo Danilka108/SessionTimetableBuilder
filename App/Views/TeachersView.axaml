@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:App.ViewModels"
+             xmlns:views="clr-namespace:App.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Views.TeachersView">
+    
+    <Design.DataContext>
+        <viewModels:TeachersViewModel />
+    </Design.DataContext>
+
+    <StackPanel>
+        <ItemsControl Items="{Binding Items}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Expander HorizontalContentAlignment="Stretch">
+                        <Expander.Header>
+                            <TextBlock Classes="TitleLarge" Text="{Binding NameWithInitials}"/>
+                        </Expander.Header>
+                        <views:TeacherScheduleView DataContext="{Binding}"/>
+                    </Expander>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

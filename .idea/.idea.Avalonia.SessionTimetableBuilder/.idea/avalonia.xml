@@ -11,6 +11,8 @@
         <entry key="Teachers.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
         <entry key="Views/GroupsView.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
         <entry key="Views/MainWindow.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
+        <entry key="Views/TeacherScheduleView.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
+        <entry key="Views/TeacherWorkSchedule.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
         <entry key="Views/TeachersView.axaml" value="Avalonia.SessionTimetableBuilder.csproj" />
       </map>
     </option>

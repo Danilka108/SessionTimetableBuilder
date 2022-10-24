@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="App/App.axaml" value="App/App.csproj" />
+        <entry key="App/Views/GroupsView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/MainWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Views/TeacherScheduleView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/TeachersView.axaml" value="App/App.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

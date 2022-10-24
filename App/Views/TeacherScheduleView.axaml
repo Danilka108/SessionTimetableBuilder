@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:Domain.Models;assembly=Domain"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Views.TeacherScheduleView">
+
+    <Design.DataContext>
+        <models:Teacher />
+    </Design.DataContext>
+
+    <StackPanel>
+        <TextBlock Margin="5 0 0 12" Classes="TitleLarge" Text="{StaticResource WorkScheduleString}"/>
+
+        <!-- <Border Classes="Small" Background="White"> -->
+        <ItemsControl Items="{Binding Schedule}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Classes="Small" Background="White" Padding="8 8 8 4" Margin="0 0 0 12">
+                        <DockPanel>
+                            <TextBlock FontWeight="Bold" Classes="TitleMedium" DockPanel.Dock="Left"
+                                       Text="{Binding   Number}" />
+                            <TextBlock Classes="TitleMedium" DockPanel.Dock="Left" Text=" " />
+                            <TextBlock Classes="TitleMedium" DockPanel.Dock="Left" Text="{StaticResource ClassString}" />
+                            
+                            <TextBlock Classes="TitleMedium" DockPanel.Dock="Right"
+                                       TextAlignment="Right"
+                                       Text="{Binding End}" />
+                            <TextBlock Classes="TitleMedium" DockPanel.Dock="Right" Text="{StaticResource TimeRangeSeparatorString}" />
+                            <TextBlock Classes="TitleMedium" DockPanel.Dock="Right"
+                                       TextAlignment="Right"
+                                       Text="{Binding Start}" />
+                            
+                        </DockPanel>
+                        </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!-- </Border> -->
+    </StackPanel>
+</UserControl>
