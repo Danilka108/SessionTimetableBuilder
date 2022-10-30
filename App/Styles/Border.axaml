@@ -5,19 +5,19 @@
             <StackPanel>
                 <Border Background="Red" Padding="8" Classes="ExtraSmall">
                     <TextBlock>I'm Border with ExtraSmall corners</TextBlock>
-                </Border> 
+                </Border>
                 <Border Background="Red" Padding="8" Classes="Small">
                     <TextBlock>I'm Border with Small corners</TextBlock>
-                </Border> 
+                </Border>
                 <Border Background="Red" Padding="8" Classes="Medium">
                     <TextBlock>I'm Border with Medium corners</TextBlock>
-                </Border> 
+                </Border>
                 <Border Background="Red" Padding="8" Classes="Large">
                     <TextBlock>I'm Border with Large corners</TextBlock>
-                </Border> 
+                </Border>
                 <Border Background="Red" Padding="8" Classes="ExtraLarge">
                     <TextBlock>I'm Border with ExtraLarge corners</TextBlock>
-                </Border> 
+                </Border>
             </StackPanel>
         </Border>
     </Design.PreviewWith>
@@ -25,24 +25,31 @@
     <Style Selector="Border.NoCorners">
         <Setter Property="CornerRadius" Value="0" />
     </Style>
-    
+
     <Style Selector="Border.ExtraSmall">
         <Setter Property="CornerRadius" Value="4" />
     </Style>
-    
+
     <Style Selector="Border.Small">
         <Setter Property="CornerRadius" Value="8" />
     </Style>
-    
+
     <Style Selector="Border.Medium">
         <Setter Property="CornerRadius" Value="12" />
     </Style>
-    
+
     <Style Selector="Border.Large">
         <Setter Property="CornerRadius" Value="16" />
     </Style>
-    
+
     <Style Selector="Border.ExtraLarge">
         <Setter Property="CornerRadius" Value="28" />
+    </Style>
+
+    <Style Selector="Border.Separator">
+        <Setter Property="Padding" Value="0 0.5" />
+        <Setter Property="Background">
+            <SolidColorBrush Opacity="0.2" Color="Black" />
+        </Setter>
     </Style>
 </Styles>

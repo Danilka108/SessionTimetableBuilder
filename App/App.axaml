@@ -4,27 +4,36 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              x:Class="App.App">
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Resources>
         <ResourceDictionary>
+            <system:String x:Key="MainWindowTitle">Конструктор расписания сессий</system:String>
             <system:String x:Key="WorkScheduleString">График работы</system:String>
             <system:String x:Key="TeachersString">Преподаватели</system:String>
             <system:String x:Key="GroupsString">Группы</system:String>
             <system:String x:Key="ClassString">пара</system:String>
             <system:String x:Key="TimeRangeSeparatorString"> - </system:String>
-            
-                <!-- <Thickness x:Key="MarginSmall">4</Thickness> -->
+
+            <system:String x:Key="MondayString">Понедельник</system:String>
+            <system:String x:Key="TuesdayString">Вторник</system:String>
+            <system:String x:Key="WednesdayString">Среда</system:String>
+            <system:String x:Key="ThursdayString">Четверг</system:String>
+            <system:String x:Key="FridayString">Пятница</system:String>
+            <system:String x:Key="SaturdayString">Суббота</system:String>
+            <system:String x:Key="SundayString">Воскресенье</system:String>
+
+
+            <!-- <Thickness x:Key="MarginSmall">4</Thickness> -->
             <system:Double x:Key="SmallMargin">4</system:Double>
         </ResourceDictionary>
-    </Application.Resources> 
-    
+    </Application.Resources>
+
     <Application.Styles>
-        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Rust.xaml"/> -->
-        <FluentTheme Mode="Light"></FluentTheme>
-        
-        <StyleInclude Source="/Styles/Border.axaml"/>
-        <StyleInclude Source="/Styles/Font.axaml"/>
+        <FluentTheme Mode="Light" />
+
+        <StyleInclude Source="/Styles/Border.axaml" />
+        <StyleInclude Source="/Styles/Font.axaml" />
     </Application.Styles>
 </Application>
