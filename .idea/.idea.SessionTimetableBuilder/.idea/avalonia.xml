@@ -4,6 +4,16 @@
     <option name="projectPerEditor">
       <map>
         <entry key="App/App.axaml" value="App/App.csproj" />
+        <entry key="App/Styles/Border.axaml" value="App/App.csproj" />
+        <entry key="App/Styles/Font.axaml" value="App/App.csproj" />
+        <entry key="App/Ui/ClassSchedule/ClassScheduleView.axaml" value="App/App.csproj" />
+        <entry key="App/Ui/Groups/GroupsView.axaml" value="App/App.csproj" />
+        <entry key="App/Ui/MainWindow/MainWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Ui/TeacherClassSchedule/TeacherClassSchedule.axaml" value="App/App.csproj" />
+        <entry key="App/Ui/TeacherDailySchedule/TeacherDailySchedule.axaml" value="App/App.csproj" />
+        <entry key="App/Ui/TeacherDailySchedule/TeacherDailyScheduleView.axaml" value="App/App.csproj" />
+        <entry key="App/Ui/TeacherSchedule/TeacherScheduleView.axaml" value="App/App.csproj" />
+        <entry key="App/Ui/Teachers/TeachersView.axaml" value="App/App.csproj" />
         <entry key="App/Views/GroupsView.axaml" value="App/App.csproj" />
         <entry key="App/Views/MainWindow.axaml" value="App/App.csproj" />
         <entry key="App/Views/TeacherScheduleView.axaml" value="App/App.csproj" />
