@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿namespace App.Ui.MainWindow;
 
-namespace App.ViewModels
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
-    {
-        public MainWindowViewModel()
-        {
-        }
-    }
 }

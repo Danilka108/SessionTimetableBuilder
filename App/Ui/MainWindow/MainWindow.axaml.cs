@@ -1,12 +1,13 @@
 using Avalonia.Controls;
 
-namespace App.Views
+namespace App.Ui.MainWindow;
+
+// ReSharper disable once PartialTypeWithSinglePart
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        DataContext = new MainWindowViewModel();
     }
 }

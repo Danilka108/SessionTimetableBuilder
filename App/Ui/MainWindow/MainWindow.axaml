@@ -1,31 +1,32 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:App.ViewModels"
+        xmlns:mainWindow="using:App.Ui.MainWindow"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="clr-namespace:App.Views"
+        xmlns:teachers="clr-namespace:App.Ui.Teachers"
+        xmlns:groups="clr-namespace:App.Ui.Groups"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="App.Views.MainWindow"
+        x:Class="App.Ui.MainWindow.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SessionTimetableBuilder">
+        Title="{StaticResource MainWindowTitle}">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel />
+        <mainWindow:MainWindowViewModel />
     </Design.DataContext>
 
     <Grid ColumnDefinitions="1*,4*">
         <TabControl>
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock VerticalAlignment="Center" Text="{StaticResource TeachersString}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{StaticResource TeachersString}" />
                 </TabItem.Header>
-                <views:TeachersView/>
+                <teachers:TeachersView />
             </TabItem>
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock VerticalAlignment="Center" Text="{StaticResource GroupsString}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{StaticResource GroupsString}" />
                 </TabItem.Header>
-                <views:GroupsView/>
+                <groups:GroupsView />
             </TabItem>
         </TabControl>
     </Grid>
