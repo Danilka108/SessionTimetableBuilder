@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:models="clr-namespace:App.Ui.Models"
-             xmlns:dailySchedule="clr-namespace:App.Ui.TeacherDailySchedule"
+             xmlns:models="clr-namespace:App.Models"
+             xmlns:dailySchedule="clr-namespace:App.Ui.DailySchedule"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="App.Ui.TeacherSchedule.TeacherScheduleView">
+             x:Class="App.Ui.Schedule.ScheduleView">
 
     <Design.DataContext>
         <models:Schedule />
@@ -17,7 +17,7 @@
         <ItemsControl Items="{Binding }">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <dailySchedule:TeacherDailyScheduleView DataContext="{Binding}" />
+                    <dailySchedule:DailyScheduleView DataContext="{Binding}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

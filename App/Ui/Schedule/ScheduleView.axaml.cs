@@ -1,12 +1,12 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace App.Ui.TeacherSchedule;
+namespace App.Ui.Schedule;
 
 // ReSharper disable once PartialTypeWithSinglePart
-public partial class TeacherScheduleView : UserControl
+public partial class ScheduleView : UserControl
 {
-    public TeacherScheduleView()
+    public ScheduleView()
     {
         AvaloniaXamlLoader.Load(this);
     }
