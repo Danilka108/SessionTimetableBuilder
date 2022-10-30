@@ -2,24 +2,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:App.ViewModels"
-             xmlns:views="clr-namespace:App.Views"
+             xmlns:teachers="clr-namespace:App.Ui.Teachers"
+             xmlns:schedule="clr-namespace:App.Ui.Schedule"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="App.Views.TeachersView">
-    
+             x:Class="App.Ui.Teachers.TeachersView">
+
     <Design.DataContext>
-        <viewModels:TeachersViewModel />
+        <teachers:TeachersViewModel />
     </Design.DataContext>
 
     <StackPanel>
-        <ItemsControl Items="{Binding Items}">
+        <ItemsControl Items="{Binding Teachers}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Expander HorizontalContentAlignment="Stretch">
                         <Expander.Header>
-                            <TextBlock Classes="TitleLarge" Text="{Binding NameWithInitials}"/>
+                            <TextBlock Classes="TitleLarge" Text="{Binding NameWithInitials}" />
                         </Expander.Header>
-                        <views:TeacherScheduleView DataContext="{Binding}"/>
+                        <schedule:ScheduleView DataContext="{Binding Schedule}" />
                     </Expander>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
