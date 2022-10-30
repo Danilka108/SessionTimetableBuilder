@@ -1,8 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace App.Views;
+namespace App.Ui.Groups;
 
+// ReSharper disable once PartialTypeWithSinglePart
 public partial class GroupsView : UserControl
 {
     public GroupsView()
