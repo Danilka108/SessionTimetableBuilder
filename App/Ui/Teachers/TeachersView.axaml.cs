@@ -1,13 +1,12 @@
-using Avalonia;
+using App.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using App.ViewModels;
 
-namespace App.Views;
+namespace App.Ui.Teachers;
 
-public partial class TeachersView : UserControl
+public class Teachers : UserControl
 {
-    public TeachersView()
+    public Teachers()
     {
         AvaloniaXamlLoader.Load(this);
         DataContext = new TeachersViewModel();

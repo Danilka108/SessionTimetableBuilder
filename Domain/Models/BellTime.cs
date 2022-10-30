@@ -1,5 +1,3 @@
-using System;
-
 namespace Domain.Models;
 
 public record BellTime(byte Hour, byte Minute)
@@ -14,6 +12,9 @@ public record BellTime(byte Hour, byte Minute)
                                       "than or equal 0 and less than or equal 60")
         : Hour;
 
-    public override string ToString() => (Hour < 10 ? "0" : "") + Hour + ":" +
-                          (Minute < 10 ? "0" : "") + Minute;
+    public override string ToString()
+    {
+        return (Hour < 10 ? "0" : "") + Hour + ":" +
+               (Minute < 10 ? "0" : "") + Minute;
+    }
 }
