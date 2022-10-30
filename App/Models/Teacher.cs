@@ -1,4 +1,4 @@
-namespace App.Ui.Models;
+namespace App.Models;
 
 public record Teacher(string Name, string Surname, string Patronymic, Schedule Schedule)
 {
