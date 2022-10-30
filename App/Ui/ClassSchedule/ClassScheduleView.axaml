@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:domainModels="clr-namespace:Domain.Models;assembly=Domain"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="App.Ui.TeacherClassSchedule.TeacherClassScheduleView">
+             x:Class="App.Ui.ClassSchedule.ClassScheduleView">
 
     <Design.DataContext>
         <domainModels:ClassSchedule />
