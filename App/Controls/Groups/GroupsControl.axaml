@@ -2,7 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:groups="clr-namespace:App.Controls.Groups"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="App.Ui.Groups.GroupsView">
-    Welcome to Avalonia!
+             x:Class="App.Controls.Groups.GroupsControl">
+    <Design.DataContext>
+        <groups:GroupsViewModel />
+    </Design.DataContext>
 </UserControl>

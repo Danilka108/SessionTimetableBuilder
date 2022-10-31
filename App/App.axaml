@@ -23,10 +23,6 @@
             <system:String x:Key="FridayString">Пятница</system:String>
             <system:String x:Key="SaturdayString">Суббота</system:String>
             <system:String x:Key="SundayString">Воскресенье</system:String>
-
-
-            <!-- <Thickness x:Key="MarginSmall">4</Thickness> -->
-            <system:Double x:Key="SmallMargin">4</system:Double>
         </ResourceDictionary>
     </Application.Resources>
 

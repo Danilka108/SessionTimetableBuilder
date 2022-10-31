@@ -2,25 +2,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:models="clr-namespace:App.Models"
-             xmlns:dailySchedule="clr-namespace:App.Ui.DailySchedule"
+             xmlns:schedule="clr-namespace:App.Controls.Schedule"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="App.Ui.Schedule.ScheduleView">
+             x:Class="App.Controls.Schedule.ScheduleControl">
 
     <Design.DataContext>
-        <models:Schedule />
+        <schedule:ScheduleViewModel />
     </Design.DataContext>
 
     <StackPanel>
         <TextBlock Margin="5 0 0 12" Classes="TitleLarge" Text="{StaticResource WorkScheduleString}" />
-
-        <ItemsControl Items="{Binding }">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <dailySchedule:DailyScheduleView DataContext="{Binding}" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
+        <ItemsControl Items="{Binding DailyScheduleViewModels}" />
     </StackPanel>
 </UserControl>

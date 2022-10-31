@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:schedule="clr-namespace:App.Controls.Schedule"
+             xmlns:teacher="clr-namespace:App.Controls.Teacher"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Controls.Teacher.TeacherControl">
+    <Design.DataContext>
+        <teacher:TeacherViewModel />
+    </Design.DataContext>
+
+    <Expander HorizontalContentAlignment="Stretch">
+        <Expander.Header>
+            <TextBlock Classes="TitleLarge" Text="{Binding NameWithInitials}" />
+        </Expander.Header>
+        <schedule:ScheduleControl DataContext="{Binding ScheduleViewModel}" />
+    </Expander>
+</UserControl>

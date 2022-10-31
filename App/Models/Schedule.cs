@@ -1,55 +1,52 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Avalonia;
+using Avalonia.Controls;
 using Domain.Models;
 
 namespace App.Models;
 
-public interface IScheduleItem
-{
-    public DayOfWeek DayOfWeek { get; }
-    public DailySchedule DailySchedule { get; }
-    public string Name { get; }
-}
-
-public class Schedule : IEnumerable<IScheduleItem>
+public class Schedule : IEnumerable<Schedule.IItem>
 {
     private readonly Dictionary<DayOfWeek, DailySchedule> _dailySchedules;
-    private readonly Func<DayOfWeek, string> _mapDayOfWeekToString;
 
-    public Schedule(Func<DayOfWeek, string> mapDayOfWeekToString,
+    public Schedule(
         Dictionary<DayOfWeek, DailySchedule> dailySchedules)
     {
-        _mapDayOfWeekToString = mapDayOfWeekToString;
         _dailySchedules = dailySchedules;
     }
 
-    IEnumerator<IScheduleItem> IEnumerable<IScheduleItem>.GetEnumerator()
+    IEnumerator<IItem> IEnumerable<IItem>.GetEnumerator()
     {
-        return new Enumerator(_mapDayOfWeekToString, _dailySchedules.GetEnumerator());
+        return new Enumerator(_dailySchedules.GetEnumerator());
     }
 
     public IEnumerator GetEnumerator()
     {
-        return (this as IEnumerable<IScheduleItem>).GetEnumerator();
+        return (this as IEnumerable<IItem>).GetEnumerator();
     }
 
-    private class Enumerator : IEnumerator<IScheduleItem>
+    public interface IItem
+    {
+        public DayOfWeek DayOfWeek { get; }
+        public DailySchedule DailySchedule { get; }
+        public string Name { get; }
+    }
+
+    private class Enumerator : IEnumerator<IItem>
     {
         private readonly IEnumerator<KeyValuePair<DayOfWeek, DailySchedule>> _enumerator;
-        private readonly Func<DayOfWeek, string> _itemMapperToName;
 
         public Enumerator
         (
-            Func<DayOfWeek, string> itemMapperToName,
             IEnumerator<KeyValuePair<DayOfWeek, DailySchedule>> enumerator
         )
         {
-            _itemMapperToName = itemMapperToName;
             _enumerator = enumerator;
         }
 
-        public IScheduleItem Current => new ScheduleItem(_itemMapperToName, _enumerator.Current);
+        public IItem Current => new Item(_enumerator.Current);
 
         object IEnumerator.Current => Current;
 
@@ -69,11 +66,18 @@ public class Schedule : IEnumerable<IScheduleItem>
         }
     }
 
-    private class ScheduleItem : IScheduleItem
+    private class Item : IItem
     {
-        public ScheduleItem(Func<DayOfWeek, string> mapperToName, KeyValuePair<DayOfWeek, DailySchedule> pair)
+        private const string MondayResourceKey = "MondayString";
+        private const string TuesdayResourceKey = "TuesdayString";
+        private const string WednesdayResourceKey = "WednesdayString";
+        private const string ThursdayResourceKey = "ThursdayString";
+        private const string FridayResourceKey = "FridayString";
+        private const string SaturdayResourceKey = "SaturdayString";
+        private const string SundayResourceKey = "SundayString";
+
+        public Item(KeyValuePair<DayOfWeek, DailySchedule> pair)
         {
-            Name = mapperToName(pair.Key);
             DayOfWeek = pair.Key;
             DailySchedule = pair.Value;
         }
@@ -81,6 +85,30 @@ public class Schedule : IEnumerable<IScheduleItem>
         public DayOfWeek DayOfWeek { get; }
         public DailySchedule DailySchedule { get; }
 
-        public string Name { get; }
+        public string Name => MapDayOfWeekToStringResource();
+
+        private string MapDayOfWeekToStringResource()
+        {
+            var key = DayOfWeek switch
+            {
+                DayOfWeek.Monday => MondayResourceKey,
+                DayOfWeek.Tuesday => TuesdayResourceKey,
+                DayOfWeek.Wednesday => WednesdayResourceKey,
+                DayOfWeek.Thursday => ThursdayResourceKey,
+                DayOfWeek.Friday => FridayResourceKey,
+                DayOfWeek.Saturday => SaturdayResourceKey,
+                DayOfWeek.Sunday => SundayResourceKey
+            };
+
+            object? value = null;
+            var isFound = Application.Current?.TryFindResource(key, out value);
+
+            if (isFound != true)
+                throw new FindResourceException($"Failed to find resource '{key}'");
+
+            if (value is string v) return v;
+
+            throw new FindResourceException("Resource with 'string' type is expected");
+        }
     }
 }

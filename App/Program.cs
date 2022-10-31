@@ -1,19 +1,24 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.ReactiveUI;
-using System;
 
-namespace App
+namespace App;
+
+internal class Program
 {
-    class Program
+    [STAThread]
+    public static void Main(string[] args)
     {
-        [STAThread]
-        public static void Main(string[] args) => BuildAvaloniaApp()
+        BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
+    }
 
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                .UsePlatformDetect()
-                .LogToTrace()
-                .UseReactiveUI();
+    public static AppBuilder BuildAvaloniaApp()
+    {
+        return AppBuilder.Configure<App>()
+            .UseReactiveUI()
+            .UsePlatformDetect()
+            .LogToTrace()
+            .UseReactiveUI();
     }
 }

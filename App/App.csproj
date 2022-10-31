@@ -9,48 +9,48 @@
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     </PropertyGroup>
     <ItemGroup>
-        <AvaloniaResource Include="Assets\**"/>
-        <None Remove=".gitignore"/>
+        <AvaloniaResource Include="Assets\**" />
+        <None Remove=".gitignore" />
     </ItemGroup>
     <ItemGroup>
         <!--This helps with theme dll-s trimming.
         If you will publish your application in self-contained mode with p:PublishTrimmed=true and it will use Fluent theme Default theme will be trimmed from the output and vice versa.
         https://github.com/AvaloniaUI/Avalonia/issues/5593 -->
-        <TrimmableAssembly Include="Avalonia.Themes.Fluent"/>
-        <TrimmableAssembly Include="Avalonia.Themes.Default"/>
+        <TrimmableAssembly Include="Avalonia.Themes.Fluent" />
+        <TrimmableAssembly Include="Avalonia.Themes.Default" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.18"/>
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.18"/>
+        <PackageReference Include="Avalonia" Version="0.10.18" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18"/>
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18"/>
-        <PackageReference Include="Citrus.Avalonia" Version="1.6.1"/>
-        <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4"/>
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
+        <PackageReference Include="Citrus.Avalonia" Version="1.6.1" />
+        <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
     </ItemGroup>
     <ItemGroup>
-        <Resource Include="Assets\Fonts\RobotoBlack.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoBlackItalic.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoBold.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoBoldItalic.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoItalic.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoLight.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoLightItalic.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoMedium.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoMediumItalic.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoRegular.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoThin.ttf"/>
-        <Resource Include="Assets\Fonts\RobotoThinItalic.ttf"/>
+        <Resource Include="Assets\Fonts\RobotoBlack.ttf" />
+        <Resource Include="Assets\Fonts\RobotoBlackItalic.ttf" />
+        <Resource Include="Assets\Fonts\RobotoBold.ttf" />
+        <Resource Include="Assets\Fonts\RobotoBoldItalic.ttf" />
+        <Resource Include="Assets\Fonts\RobotoItalic.ttf" />
+        <Resource Include="Assets\Fonts\RobotoLight.ttf" />
+        <Resource Include="Assets\Fonts\RobotoLightItalic.ttf" />
+        <Resource Include="Assets\Fonts\RobotoMedium.ttf" />
+        <Resource Include="Assets\Fonts\RobotoMediumItalic.ttf" />
+        <Resource Include="Assets\Fonts\RobotoRegular.ttf" />
+        <Resource Include="Assets\Fonts\RobotoThin.ttf" />
+        <Resource Include="Assets\Fonts\RobotoThinItalic.ttf" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Ui\MainWindow\MainWindow.axaml.cs">
             <DependentUpon>MainWindow.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Compile Update="Ui\Teachers\TeachersView.axaml.cs">
+        <Compile Update="Ui\Teachers\TeachersControl.axaml.cs">
             <DependentUpon>TeachersView.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
@@ -58,7 +58,7 @@
             <DependentUpon>TeacherScheduleView.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Compile Update="Ui\Groups\GroupsView.axaml.cs">
+        <Compile Update="Ui\Groups\GroupsControl.axaml.cs">
             <DependentUpon>GroupsView.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>

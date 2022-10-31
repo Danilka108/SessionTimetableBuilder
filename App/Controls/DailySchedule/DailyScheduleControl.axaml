@@ -2,27 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:classSchedule="clr-namespace:App.Ui.ClassSchedule"
+             xmlns:dailySchedule="clr-namespace:App.Controls.DailySchedule"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="App.Ui.DailySchedule.DailyScheduleView">
+             x:Class="App.Controls.DailySchedule.DailyScheduleControl">
 
-    <!-- <Design.DataContext> -->
-    <!--     <models:IScheduleItem/> -->
-    <!-- </Design.DataContext> -->
+    <Design.DataContext>
+        <dailySchedule:DailyScheduleViewModel />
+    </Design.DataContext>
 
     <Border Classes="Small" Background="White" Padding="8 0" Margin="0 0 0 12">
         <StackPanel Orientation="Vertical">
             <TextBlock Margin="0 6  " Classes="TitleMedium" FontWeight="Bold"
                        Text="{Binding Name}" />
-
-            <ItemsControl Items="{Binding DailySchedule}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <classSchedule:ClassScheduleView DataContext="{Binding}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-
+            <ItemsControl Items="{Binding ClassScheduleViewModels}" />
         </StackPanel>
     </Border>
 </UserControl>

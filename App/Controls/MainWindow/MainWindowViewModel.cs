@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using App.Controls.Groups;
+using App.Controls.Teachers;
 using Domain.Models;
-using Teacher = App.Models.Teacher;
 
-namespace App.Ui.Teachers;
+namespace App.Controls.MainWindow;
 
-public class TeachersViewModel : ViewModelBase
+public class MainWindowViewModel : ViewModelBase
 {
     private static readonly ClassTimeBounds[] ClassesTileBounds =
     {
@@ -21,20 +21,15 @@ public class TeachersViewModel : ViewModelBase
         new(new BellTime(21, 00), new BellTime(22, 30))
     };
 
-    public TeachersViewModel(Func<DayOfWeek, string> dayOfWeekToStringMapper)
-    {
-        Teachers = new ObservableCollection<Teacher>(CreateTestTeachers(dayOfWeekToStringMapper));
-    }
+    public TeachersViewModel TeachersViewModel => new(CreateTestTeachers());
+    public GroupsViewModel GroupsViewModel => new();
 
-    public ObservableCollection<Teacher> Teachers { get; }
-
-    private static IEnumerable<Teacher> CreateTestTeachers(Func<DayOfWeek, string> dayOfWeekToStringMapper)
+    private static IEnumerable<Models.Teacher> CreateTestTeachers()
     {
         var timeBounds1 = ClassesTileBounds.Where((_, i) => i % 2 == 0).ToList();
         var timeBounds2 = ClassesTileBounds.Where((_, i) => i % 2 != 0).ToList();
 
-        var teacher1 = new Teacher("Попов", "Евгений", "Александрович", new Models.Schedule(
-            dayOfWeekToStringMapper,
+        var teacher1 = new Models.Teacher("Попов", "Евгений", "Александрович", new Models.Schedule(
             new Dictionary<DayOfWeek, Domain.Models.DailySchedule>
             {
                 { DayOfWeek.Monday, new Domain.Models.DailySchedule(timeBounds1) },
@@ -46,8 +41,7 @@ public class TeachersViewModel : ViewModelBase
                 { DayOfWeek.Sunday, new Domain.Models.DailySchedule(timeBounds1) }
             }));
 
-        var teacher2 = new Teacher("Левяков", "Станислав", "Вячеславович", new Models.Schedule(
-            dayOfWeekToStringMapper,
+        var teacher2 = new Models.Teacher("Левяков", "Станислав", "Вячеславович", new Models.Schedule(
             new Dictionary<DayOfWeek, Domain.Models.DailySchedule>
             {
                 { DayOfWeek.Monday, new Domain.Models.DailySchedule(timeBounds2) },
