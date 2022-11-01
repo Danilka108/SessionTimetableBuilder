@@ -18,7 +18,6 @@ internal class Program
         return AppBuilder.Configure<App>()
             .UseReactiveUI()
             .UsePlatformDetect()
-            .LogToTrace()
-            .UseReactiveUI();
+            .LogToTrace();
     }
 }

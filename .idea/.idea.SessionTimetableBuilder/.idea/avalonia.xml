@@ -26,9 +26,18 @@
         <entry key="App/Ui/TeacherSchedule/TeacherScheduleView.axaml" value="App/App.csproj" />
         <entry key="App/Ui/Teachers/TeachersControl.axaml" value="App/App.csproj" />
         <entry key="App/Ui/Teachers/TeachersView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/ClassSchedule/ClassScheduleView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/CreateTeacher/CreateTeacherView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/DailySchedule/DailyScheduleView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/Groups/GroupsView.axaml" value="App/App.csproj" />
         <entry key="App/Views/GroupsView.axaml" value="App/App.csproj" />
         <entry key="App/Views/MainWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Views/MainWindow/MainWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Views/MainWindow/MainWindowView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/Schedule/ScheduleView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/Teacher/TeacherView.axaml" value="App/App.csproj" />
         <entry key="App/Views/TeacherScheduleView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/Teachers/TeachersView.axaml" value="App/App.csproj" />
         <entry key="App/Views/TeachersView.axaml" value="App/App.csproj" />
       </map>
     </option>

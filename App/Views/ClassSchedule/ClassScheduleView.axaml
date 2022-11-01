@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:classSchedule="clr-namespace:App.Views.ClassSchedule"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Views.ClassSchedule.ClassScheduleView">
+
+    <Design.DataContext>
+        <classSchedule:ClassScheduleViewModel />
+    </Design.DataContext>
+
+    <StackPanel Orientation="Vertical">
+        <Grid Margin="0 8" VerticalAlignment="Center" RowDefinitions="*"
+              ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto,Auto">
+            <TextBlock Grid.Column="0" FontWeight="Bold" Classes="TitleMedium"
+                       Text="{Binding ClassSchedule.Index}" />
+            <TextBlock Grid.Column="1" Classes="TitleMedium"
+                       Text=" " />
+            <TextBlock Grid.Column="2" Classes="TitleMedium"
+                       Text="{StaticResource ClassString}" />
+
+            <TextBlock Grid.Column="4" Classes="TitleMedium"
+                       Text="{Binding ClassSchedule.TimeBounds.Start}" />
+            <TextBlock Grid.Column="5" Classes="TitleMedium"
+                       Text="{StaticResource TimeRangeSeparatorString}" />
+            <TextBlock Grid.Column="6" Classes="TitleMedium"
+                       Text="{Binding ClassSchedule.TimeBounds.End}" />
+        </Grid>
+        <Border Classes="Separator" IsVisible="{Binding !ClassSchedule.IsLast}" />
+    </StackPanel>
+</UserControl>
