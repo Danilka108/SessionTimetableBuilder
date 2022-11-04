@@ -7,6 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:teachers="clr-namespace:App.Views.Teachers"
         xmlns:groups="clr-namespace:App.Views.Groups"
+        xmlns:teacherInfo="clr-namespace:App.Views.TeacherInfo"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="App.Views.MainWindow.MainWindowView"
         Icon="/Assets/avalonia-logo.ico"
@@ -33,7 +34,9 @@
         </TabControl>
         <rxui:RoutedViewHost Grid.Column="1" Router="{Binding Router}">
             <rxui:RoutedViewHost.DefaultContent>
-                <TextBlock>Default Content</TextBlock>
+                <!-- <TextBlock>Default Content</TextBlock> -->
+                <teacherInfo:TeacherInfoView DataContext="{Binding TeacherInfoViewModel}" />
+
             </rxui:RoutedViewHost.DefaultContent>
             <rxui:RoutedViewHost.ViewLocator>
                 <app:RoutedViewLocator />

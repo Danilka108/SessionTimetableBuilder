@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Presentation/Presentation.csproj",
-      "projectName": "Presentation",
-      "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Presentation/Presentation.csproj",
+      "projectUniqueName": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/Database.csproj",
+      "projectName": "Database",
+      "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/Database.csproj",
       "packagesPath": "/home/danilka108/.nuget/packages/",
-      "outputPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Presentation/obj/",
+      "outputPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/danilka108/.nuget/NuGet/NuGet.Config"

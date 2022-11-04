@@ -1,0 +1,12 @@
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/bin/Debug/net6.0/Database.deps.json
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/bin/Debug/net6.0/Database.dll
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/bin/Debug/net6.0/ref/Database.dll
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/bin/Debug/net6.0/Database.pdb
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/obj/Debug/net6.0/Database.csproj.AssemblyReference.cache
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/obj/Debug/net6.0/Database.GeneratedMSBuildEditorConfig.editorconfig
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/obj/Debug/net6.0/Database.AssemblyInfoInputs.cache
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/obj/Debug/net6.0/Database.AssemblyInfo.cs
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/obj/Debug/net6.0/Database.csproj.CoreCompileInputs.cache
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/obj/Debug/net6.0/Database.dll
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/obj/Debug/net6.0/ref/Database.dll
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Database/obj/Debug/net6.0/Database.pdb
