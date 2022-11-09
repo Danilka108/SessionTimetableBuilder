@@ -49,6 +49,10 @@ public class StorageInitializer
         {
             throw new StorageInitializationException("Failed to initialize storage", e);
         }
+        finally
+        {
+            _resource.Dispose();
+        }
     }
 }
 

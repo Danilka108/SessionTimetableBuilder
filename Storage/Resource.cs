@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Storage;
 
-internal class Resource
+internal class Resource : IDisposable
 {
     // private Dictionary<string, SerializableStorageSet>? _cachedStorageSets;
 
@@ -23,11 +23,10 @@ internal class Resource
         _cachedStorageSets = new BehaviorSubject<Dictionary<string, SerializableStorageSet>?>(null);
 
         StorageSets = _cachedStorageSets.AsObservable()
-            .Where
-            (storageSets =>
-                storageSets is not null
-            )!
-            .OfType<Dictionary<string, SerializableStorageSet>>();
+            .SelectMany
+            (async (storageSets, _, token) =>
+                storageSets ?? await Deserialize(token)
+            );
     }
 
     public IObservable<Dictionary<string, SerializableStorageSet>> StorageSets { get; }
@@ -41,6 +40,12 @@ internal class Resource
             new SerializableEntity.ConverterFactory()
         }
     };
+
+    public void Dispose()
+    {
+        _cachedStorageSets.OnCompleted();
+        _cachedStorageSets.Dispose();
+    }
 
     public Stream GetStream()
     {
@@ -65,6 +70,10 @@ internal class Resource
     {
         await using var stream = GetStream();
         await Serialize(stream, storageSets, token);
+    }
+
+    public async Task InitCache(CancellationToken token)
+    {
     }
 
     public async Task Serialize(Stream stream, Dictionary<string, SerializableStorageSet> storageSets,

@@ -10,31 +10,22 @@ namespace Storage;
 ///     Implementation of data storage with serialization and deserialization of entities sets.
 ///     Create and manage your own entities by saving changes in file.
 /// </summary>
-public class Storage
+/// <remarks>
+///     <c>Storage</c> caches all changes of sets.
+///     It's recommended to use one instance of <c>Storage</c> while using it.
+/// </remarks>
+public class Storage : IDisposable
 {
-    private static readonly Dictionary<string, Resource> Resources;
-
     private readonly Resource _resource;
-
-    static Storage()
-    {
-        Resources = new Dictionary<string, Resource>();
-    }
 
     public Storage(storageMetadata metadata)
     {
-        _resource = GetResource(metadata.FullPath);
+        _resource = new Resource(metadata.FullPath);
     }
 
-    private static Resource GetResource(string path)
+    public void Dispose()
     {
-        Resources.TryGetValue(path, out var resource);
-
-        if (resource is { }) return resource;
-
-        var newResource = new Resource(path);
-        Resources.Add(path, newResource);
-        return newResource;
+        _resource.Dispose();
     }
 
     /// <summary>
@@ -70,6 +61,10 @@ public class Storage
             .Select
             (storageSets =>
                 storageSets.GetSetOf<TEntity>()
+            )
+            .Catch<StorageSet<TEntity>, Exception>
+            (e => throw new LoadStorageEntitiesException(
+                $"Failed to load storage set of entities of type '{typeof(TEntity)}'", e)
             );
     }
 
@@ -81,14 +76,6 @@ public class Storage
 
         return set;
     }
-
-    // /// <summary>
-    // ///     Start transaction to add changes to storage.
-    // ///     Storage transaction represents atomic changes undone if they fail to apply.
-    // /// </summary>
-    // /// <param name="token">A token that may be used to cancel the async operation.</param>
-    // /// <returns>Class <c>StorageTransaction</c></returns>
-
 
     /// <summary>
     ///     Start transaction to add changes to storage.
