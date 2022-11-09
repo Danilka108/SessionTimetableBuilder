@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace Storage;
 
 internal static class Extensions
@@ -24,32 +22,32 @@ internal static class Extensions
         StorageTransaction? transaction = null
     )
     {
-        var attr = typeof(TEntity).GetCustomAttribute<EntityAttribute>() ??
-                   throw new MissingEntityAttributeException($"Missing EntityAttribute on {typeof(TEntity)} type");
+        var entityTypeName = typeof(TEntity).FullName;
+        if (entityTypeName is null) throw new NullReferenceException(entityTypeName);
 
         foreach (var (name, serializableStorageSet) in storageSets)
         {
-            if (name != attr.Name) continue;
+            if (name != entityTypeName) continue;
             return serializableStorageSet.ToTypedStorageSet<TEntity>(transaction);
         }
 
-        throw new MissingStorageSetException($"Could not find storage set '{attr.Name}'");
+        throw new MissingStorageSetException($"Could not find storage set of type '{typeof(TEntity)}'");
     }
 
     public static void UpdateSetOf<TEntity>(
         this Dictionary<string, SerializableStorageSet> storageSets,
         StorageSet<TEntity> storageSet)
     {
-        var attr = typeof(TEntity).GetCustomAttribute<EntityAttribute>() ??
-                   throw new MissingEntityAttributeException($"Missing EntityAttribute on {typeof(TEntity)} type");
-
         try
         {
-            storageSets[attr.Name] = SerializableStorageSet.FromTypedStorageSet(storageSet);
+            var entityFullName = typeof(TEntity).FullName;
+            if (entityFullName is null) throw new NullReferenceException(nameof(entityFullName));
+
+            storageSets[entityFullName] = SerializableStorageSet.FromTypedStorageSet(storageSet);
         }
         catch (Exception)
         {
-            throw new MissingStorageSetException($"Could not find storage set '{attr.Name}'");
+            throw new MissingStorageSetException($"Could not find storage set of type '{typeof(TEntity)}'");
         }
     }
 
@@ -57,16 +55,18 @@ internal static class Extensions
         this Dictionary<string, SerializableStorageSet> storageSets,
         SerializableStorageSet storageSet)
     {
-        var attr = typeof(TEntity).GetCustomAttribute<EntityAttribute>() ??
-                   throw new MissingEntityAttributeException($"Missing EntityAttribute on {typeof(TEntity)} type");
-
         try
         {
-            storageSets.Add(attr.Name, storageSet);
+            var entityFullName = typeof(TEntity).FullName;
+
+            storageSets.Add(
+                entityFullName ?? throw new NullReferenceException(nameof(entityFullName)),
+                storageSet
+            );
         }
         catch (Exception)
         {
-            throw new StorageSetAlreadyExistsExceptions($"Storage set '{attr.Name}' already exists");
+            throw new StorageSetAlreadyExistsExceptions($"Storage set of type '{typeof(TEntity)}' already exists");
         }
     }
 }

@@ -2,8 +2,18 @@ using System.Collections;
 
 namespace Storage;
 
+/// <summary>
+///     Represents entity with storage set id.
+/// </summary>
+/// <param name="Id">Id of entity.</param>
+/// <param name="Entity">Value of entity.</param>
+/// <typeparam name="TEntity">Type of entity.</typeparam>
 public record Identified<TEntity>(int Id, TEntity Entity);
 
+/// <summary>
+///     Set of entities.
+/// </summary>
+/// <typeparam name="TEntity">Type of entity.</typeparam>
 public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceConsumer
 {
     private readonly List<Identified<TEntity>> _entities;
@@ -33,6 +43,12 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
         foreach (var identifiedEntity in _entities) identifiedEntity.Entity.ProvideResourceToFields(resource);
     }
 
+    /// <summary>
+    ///     Update entity value by id.
+    /// </summary>
+    /// <param name="identifiedEntityToUpdate">Entity wrapper to <c cref="Identified{TEntity}">Identified</c></param>
+    /// <returns>The same storage set.</returns>
+    /// <exception cref="MissingEntityInStorageSetException">Throw if missing entity to update in storage set.</exception>
     public StorageSet<TEntity> Update(Identified<TEntity> identifiedEntityToUpdate)
     {
         var entityToUpdateIndex = _entities
@@ -46,6 +62,12 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
         return this;
     }
 
+    /// <summary>
+    ///     Delete entity by id.
+    /// </summary>
+    /// <param name="entityIdToDelete">Entity wrapper to <c cref="Identified{TEntity}">Identified</c></param>
+    /// <returns>The same storage set.</returns>
+    /// <exception cref="MissingEntityInStorageSetException">Throw if missing entity to update in storage set.</exception>
     public StorageSet<TEntity> Delete(int entityIdToDelete)
     {
         var isNotRemoved = _entities.RemoveAll(identifiedEntity => identifiedEntity.Id == entityIdToDelete) == 0;
@@ -56,6 +78,12 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
         return this;
     }
 
+    /// <summary>
+    ///     Add entity to storage set.
+    /// </summary>
+    /// <param name="newEntity">Value of entity.</param>
+    /// <param name="idOfNewEntity">Id of added entity.</param>
+    /// <returns>The same storage set.</returns>
     public StorageSet<TEntity> Add(TEntity newEntity, out int idOfNewEntity)
     {
         LastId += 1;
@@ -67,15 +95,33 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
         return this;
     }
 
+    /// <summary>
+    ///     Save changes of stage set to transaction.
+    /// </summary>
+    /// <exception cref="SaveStorageSetException">Throw if failed to save changes to transaction.</exception>
     public void Save()
     {
-        _transaction?.UpdateSetOf(this);
+        try
+        {
+            _transaction?.UpdateSetOf(this);
+        }
+        catch (Exception e)
+        {
+            throw new SaveStorageSetException("Failed to save changes to transaction.", e);
+        }
     }
 }
 
 public class MissingEntityInStorageSetException : Exception
 {
     internal MissingEntityInStorageSetException(string msg) : base(msg)
+    {
+    }
+}
+
+public class SaveStorageSetException : Exception
+{
+    internal SaveStorageSetException(string msg, Exception innerException) : base(msg, innerException)
     {
     }
 }

@@ -1,5 +1,9 @@
 namespace Storage;
 
+/// <summary>
+///     Class <c>LinkedEntity</c> represent a reference to the storage Entity.
+/// </summary>
+/// <typeparam name="TEntity">Type of Entity.</typeparam>
 public class LinkedEntity<TEntity> : IResourceConsumer
 {
     private Resource? _resource;
@@ -10,6 +14,9 @@ public class LinkedEntity<TEntity> : IResourceConsumer
         _resource = null;
     }
 
+    /// <summary>
+    ///     Id of Entity.
+    /// </summary>
     public int Id { get; }
 
     void IResourceConsumer.ConsumeResource(Resource resource)
@@ -17,7 +24,25 @@ public class LinkedEntity<TEntity> : IResourceConsumer
         _resource = resource;
     }
 
-    public async Task<TEntity> Deref(CancellationToken token)
+    /// <summary>
+    ///     Asynchronously get Entity contained by link.
+    /// </summary>
+    /// <param name="token">A token that may be used to cancel the async operation.</param>
+    /// <returns>An Entity contained by link.</returns>
+    /// <exception cref="DereferenceLinkedEntityException">Throw if failed to load storage data or could not find Entity by id.</exception>
+    public async Task<TEntity> Dereference(CancellationToken token)
+    {
+        try
+        {
+            return await TryDereference(token);
+        }
+        catch (Exception e)
+        {
+            throw new DereferenceLinkedEntityException("Failed to dereference linked entity", e);
+        }
+    }
+
+    private async Task<TEntity> TryDereference(CancellationToken token)
     {
         var resource = _resource ?? throw new NullReferenceException(nameof(_resource));
 
@@ -35,5 +60,12 @@ public class LinkedEntity<TEntity> : IResourceConsumer
         }
 
         throw new MissingEntityInStorageSetException("Failed to find linked entity in entities set");
+    }
+}
+
+public class DereferenceLinkedEntityException : Exception
+{
+    internal DereferenceLinkedEntityException(string msg, Exception innerException) : base(msg, innerException)
+    {
     }
 }
