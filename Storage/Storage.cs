@@ -18,7 +18,7 @@ public class Storage : IDisposable
 {
     private readonly Resource _resource;
 
-    public Storage(storageMetadata metadata)
+    public Storage(StorageMetadata metadata)
     {
         _resource = new Resource(metadata.FullPath);
     }

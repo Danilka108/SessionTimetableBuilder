@@ -17,7 +17,7 @@ public class StorageInitializer
     ///     Creation of storage initializer.
     /// </summary>
     /// <param name="metadata">Storage metadata.</param>
-    public StorageInitializer(storageMetadata metadata)
+    public StorageInitializer(StorageMetadata metadata)
     {
         _resource = new Resource(metadata.FullPath);
         _storageSets = new Dictionary<string, SerializableStorageSet>();

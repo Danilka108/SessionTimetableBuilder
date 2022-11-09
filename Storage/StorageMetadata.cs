@@ -3,7 +3,7 @@ namespace Storage;
 /// <summary>
 ///     Represents metadata of the storage.
 /// </summary>
-public class storageMetadata
+public class StorageMetadata
 {
     private const string FileExtension = "json";
     private readonly string _name;
@@ -15,7 +15,7 @@ public class storageMetadata
     /// </summary>
     /// <param name="path">Path to directory contains storage file.</param>
     /// <param name="name">Name of storage.</param>
-    public storageMetadata(string path, string name)
+    public StorageMetadata(string path, string name)
     {
         _path = path;
         _name = name;
