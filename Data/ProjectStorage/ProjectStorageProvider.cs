@@ -5,13 +5,11 @@ namespace Data.Db;
 
 public class ProjectStorageProvider : IDisposable
 {
-    private static readonly storageMetadata Metadata = new("", "TestProjectStorage");
-
     private readonly Storage.Storage _storage;
 
-    public ProjectStorageProvider()
+    public ProjectStorageProvider(StorageMetadata metadata)
     {
-        _storage = new Storage.Storage(Metadata);
+        _storage = new Storage.Storage(metadata);
     }
 
     public void Dispose()

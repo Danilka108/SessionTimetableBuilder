@@ -54,7 +54,7 @@ public class Storage : IDisposable
     /// <typeparam name="TEntity">Type of entities.</typeparam>
     /// <returns>The event is generated when a storage set is updated.</returns>
     /// <exception cref="MissingStorageSetException">Throw if could not find storage set.</exception>
-    public IObservable<StorageSet<TEntity>> ObserveSetOf<TEntity>()
+    public IObservable<IEnumerable<Identified<TEntity>>> ObserveFromSetOf<TEntity>()
     {
         return _resource
             .StorageSets
