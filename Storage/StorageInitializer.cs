@@ -30,7 +30,15 @@ public class StorageInitializer
     /// <returns>The same storage initializer</returns>
     public StorageInitializer AddEntity<TEntity>()
     {
-        _storageSets.AddSerializableStorageSet<TEntity>(SerializableStorageSet.CreateEmpty());
+        try
+        {
+            _storageSets.AddSerializableStorageSet<TEntity>(SerializableStorageSet.CreateEmpty());
+        }
+        finally
+        {
+            _resource.Dispose();
+        }
+
         return this;
     }
 
