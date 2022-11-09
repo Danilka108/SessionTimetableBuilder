@@ -1,24 +1,31 @@
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text.Json;
 
 namespace Storage;
 
 internal class Resource
 {
-    private const string FileExtension = "json";
+    // private Dictionary<string, SerializableStorageSet>? _cachedStorageSets;
 
+    private readonly BehaviorSubject<Dictionary<string, SerializableStorageSet>?> _cachedStorageSets;
     private readonly string _path;
-
-    private Dictionary<string, SerializableStorageSet>? _cachedStorageSets;
 
     public Resource(string path)
     {
         _path = path;
-        _cachedStorageSets = null;
+        // _cachedStorageSets = null;
+        _cachedStorageSets = new BehaviorSubject<Dictionary<string, SerializableStorageSet>?>(null);
+
+        StorageSets = _cachedStorageSets.AsObservable()
+            .Where
+            (storageSets =>
+                storageSets is not null
+            )!
+            .OfType<Dictionary<string, SerializableStorageSet>>();
     }
 
-    public Resource(string directoryPath, string name) : this(BuildPath(directoryPath, name))
-    {
-    }
+    public IObservable<Dictionary<string, SerializableStorageSet>> StorageSets { get; }
 
     private static JsonSerializerOptions JsonOptions => new()
     {
@@ -29,11 +36,6 @@ internal class Resource
             new SerializableEntity.ConverterFactory()
         }
     };
-
-    public static string BuildPath(string directoryPath, string name)
-    {
-        return directoryPath + name + "." + FileExtension;
-    }
 
     public Stream GetStream()
     {
@@ -82,7 +84,8 @@ internal class Resource
         await JsonSerializer.SerializeAsync(stream, storageSets, JsonOptions, token);
         await stream.FlushAsync(token);
 
-        _cachedStorageSets = storageSets;
+        // _cachedStorageSets = storageSets;
+        _cachedStorageSets.OnNext(storageSets);
     }
 
     public async Task<Dictionary<string, SerializableStorageSet>> Deserialize(CancellationToken token)
@@ -107,7 +110,9 @@ internal class Resource
     private async Task<Dictionary<string, SerializableStorageSet>?> TryDeserialize(Stream stream,
         CancellationToken token)
     {
-        if (_cachedStorageSets is { }) return _cachedStorageSets;
+        if (_cachedStorageSets.Value is { } cachedStorageSets)
+            return cachedStorageSets;
+        // if (_cachedStorageSets is { }) return _cachedStorageSets;
 
         return await JsonSerializer.DeserializeAsync<Dictionary<string, SerializableStorageSet>>(
             stream, JsonOptions, token

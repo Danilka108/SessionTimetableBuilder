@@ -3,7 +3,7 @@ using Database;
 
 namespace Data.Db;
 
-public class DbDiModule : Module
+public class DiModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

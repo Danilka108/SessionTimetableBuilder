@@ -1,3 +1,5 @@
+using System.Reactive.Linq;
+
 namespace Storage;
 
 /// <summary>
@@ -15,10 +17,9 @@ public class Storage
         Resources = new Dictionary<string, Resource>();
     }
 
-    public Storage(string directoryPath, string name)
+    public Storage(storageMetadata metadata)
     {
-        var path = Resource.BuildPath(directoryPath, name);
-        _resource = GetResource(path);
+        _resource = GetResource(metadata.FullPath);
     }
 
     private static Resource GetResource(string path)
@@ -31,7 +32,6 @@ public class Storage
         Resources.Add(path, newResource);
         return newResource;
     }
-
 
     /// <summary>
     ///     Load asynchronously storage set of entities.
@@ -51,6 +51,22 @@ public class Storage
             throw new LoadStorageEntitiesException(
                 $"Failed to load storage set of entities of type '{typeof(TEntity)}'", e);
         }
+    }
+
+    /// <summary>
+    ///     Observe set of entities.
+    /// </summary>
+    /// <typeparam name="TEntity">Type of entities.</typeparam>
+    /// <returns>The event is generated when a storage set is updated.</returns>
+    /// <exception cref="MissingStorageSetException">Throw if could not find storage set.</exception>
+    public IObservable<StorageSet<TEntity>> ObserveSetOf<TEntity>()
+    {
+        return _resource
+            .StorageSets
+            .Select
+            (storageSets =>
+                storageSets.GetSetOf<TEntity>()
+            );
     }
 
     private async Task<IEnumerable<Identified<TEntity>>> TryGetFromSetOf<TEntity>(CancellationToken token)

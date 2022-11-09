@@ -7,19 +7,15 @@ public class StorageInitializer
 {
     private readonly Resource _resource;
     private readonly Dictionary<string, SerializableStorageSet> _storageSets;
-    private readonly CancellationToken _token;
 
     /// <summary>
     ///     Creation of storage initializer.
     /// </summary>
-    /// <param name="directoryPath">Path to directory contains storage file.</param>
-    /// <param name="name">Name of storage.</param>
-    /// <param name="token">A token that may be used to cancel the async operation.</param>
-    public StorageInitializer(string directoryPath, string name, CancellationToken token)
+    /// <param name="metadata">Storage metadata.</param>
+    public StorageInitializer(storageMetadata metadata)
     {
-        _resource = new Resource(directoryPath, name);
+        _resource = new Resource(metadata.FullPath);
         _storageSets = new Dictionary<string, SerializableStorageSet>();
-        _token = token;
     }
 
     /// <summary>
@@ -36,12 +32,13 @@ public class StorageInitializer
     /// <summary>
     ///     Asynchronously initialize storage.
     /// </summary>
+    /// <param name="token">A token that may be used to cancel the async operation.</param>
     /// <exception cref="StorageInitializationException">Throw if failed to initialize storage.</exception>
-    public async Task Initialize()
+    public async Task Initialize(CancellationToken token)
     {
         try
         {
-            await _resource.Serialize(_storageSets, _token);
+            await _resource.Serialize(_storageSets, token);
         }
         catch (Exception e)
         {
