@@ -21,5 +21,7 @@ public static class ObservableExtensions
         if (identifiedEntity is null)
             throw new MissingEntityInStorageSetException(
                 $"Failed to find entity with id '{id}' in enumerable of entities of type '{typeof(TEntity)}'");
+
+        return identifiedEntity;
     }
 }
