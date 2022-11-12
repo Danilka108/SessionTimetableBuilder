@@ -1,16 +1,14 @@
 using Autofac;
+using Data.Project;
 
 namespace Data;
 
-public class DiModule : Module
+public class DataModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        RegisterDbModule(builder);
-    }
+        builder.RegisterModule<ProjectModule>();
 
-    private void RegisterDbModule(ContainerBuilder builder)
-    {
-        builder.RegisterModule<Db.DiModule>();
+        base.Load(builder);
     }
 }

@@ -1,0 +1,5 @@
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Data/obj/Debug/net6.0/Data.csproj.AssemblyReference.cache
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Data/obj/Debug/net6.0/Data.GeneratedMSBuildEditorConfig.editorconfig
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Data/obj/Debug/net6.0/Data.AssemblyInfoInputs.cache
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Data/obj/Debug/net6.0/Data.AssemblyInfo.cs
+/home/danilka108/RiderProjects/SessionTimetableBuilder/Data/obj/Debug/net6.0/Data.csproj.CoreCompileInputs.cache

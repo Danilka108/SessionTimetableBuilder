@@ -1,6 +1,6 @@
-namespace Data.ProjectStorage;
+namespace Data.Project;
 
-public class ProjectStorageProvider : IDisposable
+internal class ProjectStorageProvider : IDisposable
 {
     private readonly Storage.Storage _storage;
 

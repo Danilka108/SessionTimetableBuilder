@@ -1,11 +1,11 @@
+using Data.Project.Entities;
 using Storage;
 
-namespace Data.ProjectStorage;
+namespace Data.Project;
 
-public class ProjectStorageInitializer
+internal class ProjectStorageInitializer
 {
     private readonly StorageMetadata _metadata;
-
 
     public ProjectStorageInitializer(ProjectStorageMetadata metadata)
     {

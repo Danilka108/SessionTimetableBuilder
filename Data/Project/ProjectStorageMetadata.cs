@@ -1,8 +1,8 @@
 using Storage;
 
-namespace Data.ProjectStorage;
+namespace Data.Project;
 
-public class ProjectStorageMetadata : StorageMetadata
+internal class ProjectStorageMetadata : StorageMetadata
 {
     public ProjectStorageMetadata(string path, string name) : base(path, name)
     {
