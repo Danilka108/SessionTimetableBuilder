@@ -1,7 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Storage;
 
 /// <summary>
@@ -64,6 +60,12 @@ public class LinkedEntity<TEntity> : IResourceConsumer
         }
 
         throw new MissingEntityInStorageSetException("Failed to find linked entity in entities set");
+    }
+
+    public async Task<Identified<TEntity>> DereferenceToIdentified(CancellationToken token)
+    {
+        var entity = await Dereference(token);
+        return new Identified<TEntity>(Id, entity);
     }
 }
 

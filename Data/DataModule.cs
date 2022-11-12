@@ -1,5 +1,4 @@
 using Autofac;
-using Database;
 
 namespace Data;
 
@@ -7,10 +6,11 @@ public class DiModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        RegisterDbModule(builder);
     }
 
-    private void RegisterAppDbManager(ContainerBuilder builder)
+    private void RegisterDbModule(ContainerBuilder builder)
     {
-        builder.Register(c => new DatabaseManager<>())
+        builder.RegisterModule<Db.DiModule>();
     }
 }
