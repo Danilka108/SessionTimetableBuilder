@@ -1,24 +1,16 @@
-namespace Domain.Repositories;
+using Domain.Models;
 
-public interface IIdentifiedModel
+namespace Domain;
+
+public interface IRepository<TModel>
 {
-    int Id { get; }
-}
+    Task<IdentifiedModel<TModel>> Create(TModel model, CancellationToken token);
 
-public interface ITestModel : IIdentifiedModel
-{
-    string Name { get; }
-}
+    Task Update(IdentifiedModel<TModel> identifiedModel, CancellationToken token);
 
-public interface IRepository<in TModel, TIdentifiedModel> where TIdentifiedModel : TModel, IIdentifiedModel
-{
-    Task<TIdentifiedModel> Create(TModel model);
+    Task Delete(int id, CancellationToken token);
 
-    Task Update(TIdentifiedModel identifiedModel);
+    Task<IdentifiedModel<TModel>> Read(int id, CancellationToken token);
 
-    Task Delete(int id);
-
-    Task<TIdentifiedModel> Read(int id);
-
-    IObservable<TIdentifiedModel> Observe(int id);
+    IObservable<IdentifiedModel<TModel>> Observe(int id);
 }
