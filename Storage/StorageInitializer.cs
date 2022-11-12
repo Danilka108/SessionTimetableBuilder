@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Storage;
 
 /// <summary>
 ///     Class represents initialization of storage.
 /// </summary>
-public class StorageInitializer
+public class StorageInitializer : IDisposable
 {
     private readonly Resource _resource;
     private readonly Dictionary<string, SerializableStorageSet> _storageSets;
@@ -23,6 +18,11 @@ public class StorageInitializer
         _storageSets = new Dictionary<string, SerializableStorageSet>();
     }
 
+    public void Dispose()
+    {
+        _resource.Dispose();
+    }
+
     /// <summary>
     ///     Add entity to storage.
     /// </summary>
@@ -30,15 +30,7 @@ public class StorageInitializer
     /// <returns>The same storage initializer</returns>
     public StorageInitializer AddEntity<TEntity>()
     {
-        try
-        {
-            _storageSets.AddSerializableStorageSet<TEntity>(SerializableStorageSet.CreateEmpty());
-        }
-        finally
-        {
-            _resource.Dispose();
-        }
-
+        _storageSets.AddSerializableStorageSet<TEntity>(SerializableStorageSet.CreateEmpty());
         return this;
     }
 
@@ -56,10 +48,6 @@ public class StorageInitializer
         catch (Exception e)
         {
             throw new StorageInitializationException("Failed to initialize storage", e);
-        }
-        finally
-        {
-            _resource.Dispose();
         }
     }
 }

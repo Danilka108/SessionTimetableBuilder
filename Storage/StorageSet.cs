@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 
 namespace Storage;
 
@@ -53,15 +51,15 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
     /// <exception cref="MissingEntityInStorageSetException">Throw if missing entity to update in storage set.</exception>
     public StorageSet<TEntity> Update(Identified<TEntity> identifiedEntityToUpdate)
     {
-        var entityToUpdateIndex = _entities
-            .FindLastIndex(identifiedEntity => identifiedEntity.Id == identifiedEntityToUpdate.Id);
+        for (var i = 0; i < _entities.Count; i++)
+        {
+            if (_entities[i].Id != identifiedEntityToUpdate.Id) continue;
 
-        if (entityToUpdateIndex < 0)
-            throw new MissingEntityInStorageSetException("Missing entity to update in storage set");
+            _entities[i] = identifiedEntityToUpdate;
+            return this;
+        }
 
-        _entities.Insert(entityToUpdateIndex, identifiedEntityToUpdate);
-
-        return this;
+        throw new MissingEntityInStorageSetException("Missing entity to update in storage set");
     }
 
     /// <summary>
