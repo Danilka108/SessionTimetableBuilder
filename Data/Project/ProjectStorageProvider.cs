@@ -1,10 +1,12 @@
+using Storage;
+
 namespace Data.Project;
 
 internal class ProjectStorageProvider : IDisposable
 {
     private readonly Storage.Storage _storage;
 
-    public ProjectStorageProvider(ProjectStorageMetadata metadata)
+    public ProjectStorageProvider(StorageMetadata metadata)
     {
         _storage = new Storage.Storage(metadata);
     }

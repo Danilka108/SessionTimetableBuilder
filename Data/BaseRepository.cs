@@ -1,3 +1,4 @@
+// ReSharper disable once RedundantUsingDirective
 using System.Reactive.Linq;
 using Domain;
 using Domain.Models;
@@ -62,7 +63,7 @@ public abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
             .FromSetOf<TEntity>(token);
 
         var identifiedEntity = audiences.WhereId(id);
-        var model = await ProvideModelByEntity(identifiedEntity.Entity, token);
+        var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
 
         return new IdentifiedModel<TModel>(identifiedEntity.Id, model);
     }
@@ -74,11 +75,11 @@ public abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
             .WhereId(id)
             .SelectMany(async (identifiedEntity, token) =>
             {
-                var model = await ProvideModelByEntity(identifiedEntity.Entity, token);
+                var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
                 return new IdentifiedModel<TModel>(identifiedEntity.Id, model);
             });
     }
 
-    protected abstract Task<TModel> ProvideModelByEntity(TEntity entity,
+    protected abstract Task<TModel> ProduceModelByEntity(TEntity entity,
         CancellationToken token);
 }

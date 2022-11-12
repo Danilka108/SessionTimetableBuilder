@@ -16,7 +16,7 @@ internal class TeacherRepository : BaseRepository<Teacher, Domain.Models.Teacher
         _disciplineRepository = disciplineRepository;
     }
 
-    protected override async Task<Domain.Models.Teacher> ProvideModelByEntity(Teacher teacher, CancellationToken token)
+    protected override async Task<Domain.Models.Teacher> ProduceModelByEntity(Teacher teacher, CancellationToken token)
     {
         var modelDisciplines = new List<IdentifiedModel<Discipline>>();
 

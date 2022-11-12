@@ -32,7 +32,7 @@ internal class ExamRepository : BaseRepository<Exam, Domain.Models.Exam>
         _teacherRepository = teacherRepository;
     }
 
-    protected override async Task<Domain.Models.Exam> ProvideModelByEntity(Exam exam, CancellationToken token)
+    protected override async Task<Domain.Models.Exam> ProduceModelByEntity(Exam exam, CancellationToken token)
     {
         var modelAudience = await _audienceRepository.Read(exam.Audience.Id, token);
         var modelDiscipline = await _disciplineRepository.Read(exam.Discipline.Id, token);

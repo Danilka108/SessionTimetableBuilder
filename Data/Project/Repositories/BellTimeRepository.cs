@@ -9,7 +9,7 @@ internal class BellTimeRepository : BaseRepository<BellTime, Domain.Models.BellT
     {
     }
 
-    protected override Task<Domain.Models.BellTime> ProvideModelByEntity(BellTime entity, CancellationToken token)
+    protected override Task<Domain.Models.BellTime> ProduceModelByEntity(BellTime entity, CancellationToken token)
     {
         return Task.FromResult(new Domain.Models.BellTime(entity.Minute, entity.Hour));
     }

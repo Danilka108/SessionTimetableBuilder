@@ -9,7 +9,7 @@ internal class AudienceSpecificityRepository : BaseRepository<AudienceSpecificit
     {
     }
 
-    protected override Task<Domain.Models.AudienceSpecificity> ProvideModelByEntity(
+    protected override Task<Domain.Models.AudienceSpecificity> ProduceModelByEntity(
         AudienceSpecificity entity, CancellationToken token)
     {
         return Task.FromResult(

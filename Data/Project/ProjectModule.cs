@@ -1,7 +1,8 @@
 using Autofac;
-using Data.Project.Entities;
 using Data.Project.Repositories;
 using Domain;
+using Domain.Models;
+using Storage;
 
 namespace Data.Project;
 
@@ -18,12 +19,18 @@ internal class ProjectModule : Module
 
     private static void RegisterStorage(ContainerBuilder builder)
     {
-        builder.RegisterType<ProjectStorageMetadata>();
-
-        builder.RegisterType<ProjectStorageInitializer>();
+        builder.Register(container =>
+        {
+            var metadata = container.ResolveKeyed<StorageMetadata>(StorageKind.Project);
+            return new ProjectStorageInitializer(metadata);
+        });
 
         builder
-            .RegisterType<ProjectStorageProvider>()
+            .Register(container =>
+            {
+                var metadata = container.ResolveKeyed<StorageMetadata>(StorageKind.Project);
+                return new ProjectStorageProvider(metadata);
+            })
             .OnRelease(p => p.Dispose())
             .SingleInstance();
     }

@@ -3,18 +3,20 @@ using Storage;
 
 namespace Data.Project;
 
-internal class ProjectStorageInitializer
+public class ProjectStorageInitializer
 {
     private readonly StorageMetadata _metadata;
 
-    public ProjectStorageInitializer(ProjectStorageMetadata metadata)
+    public ProjectStorageInitializer(StorageMetadata metadata)
     {
         _metadata = metadata;
     }
 
     public async Task Initialize(CancellationToken token)
     {
-        await new StorageInitializer(_metadata)
+        using var initializer = new StorageInitializer(_metadata);
+
+        await initializer
             .AddEntity<Teacher>()
             .AddEntity<Group>()
             .AddEntity<Exam>()

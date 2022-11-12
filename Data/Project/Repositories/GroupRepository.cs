@@ -15,7 +15,7 @@ internal class GroupRepository : BaseRepository<Group, Domain.Models.Group>
         _disciplineRepository = disciplineRepository;
     }
 
-    protected override async Task<Domain.Models.Group> ProvideModelByEntity(Group group, CancellationToken token)
+    protected override async Task<Domain.Models.Group> ProduceModelByEntity(Group group, CancellationToken token)
     {
         var modelDisciplines = new List<IdentifiedModel<Discipline>>();
 

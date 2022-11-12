@@ -17,7 +17,7 @@ internal class DisciplineRepository : BaseRepository<Discipline, Domain.Models.D
         _requirementsRepository = requirementsRepository;
     }
 
-    protected override async Task<Domain.Models.Discipline> ProvideModelByEntity(Discipline discipline,
+    protected override async Task<Domain.Models.Discipline> ProduceModelByEntity(Discipline discipline,
         CancellationToken token)
     {
         var modelRequirements = new List<IdentifiedModel<AudienceSpecificity>>();

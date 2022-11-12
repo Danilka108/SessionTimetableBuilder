@@ -17,7 +17,7 @@ internal class AudienceRepository : BaseRepository<Audience, Domain.Models.Audie
         _specificityRepository = specificityRepository;
     }
 
-    protected override async Task<Domain.Models.Audience> ProvideModelByEntity(
+    protected override async Task<Domain.Models.Audience> ProduceModelByEntity(
         Audience audience, CancellationToken token)
     {
         var modelSpecificities = new List<IdentifiedModel<AudienceSpecificity>>();
