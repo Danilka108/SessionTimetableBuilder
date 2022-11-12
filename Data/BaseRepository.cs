@@ -1,7 +1,7 @@
 // ReSharper disable once RedundantUsingDirective
+
 using System.Reactive.Linq;
 using Domain;
-using Domain.Models;
 using Storage;
 
 namespace Data;

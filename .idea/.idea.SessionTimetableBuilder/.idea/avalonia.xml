@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="App/AddDisciplineWindow/AddDisciplineWindowView.axaml" value="App/App.csproj" />
         <entry key="App/App.axaml" value="App/App.csproj" />
         <entry key="App/Controls/DailySchedule/DailyScheduleControl.axaml" value="App/App.csproj" />
         <entry key="App/Controls/Groups/GroupsControl.axaml" value="App/App.csproj" />
@@ -10,6 +11,7 @@
         <entry key="App/Controls/Schedule/ScheduleControl.axaml" value="App/App.csproj" />
         <entry key="App/Controls/Teacher/TeacherControl.axaml" value="App/App.csproj" />
         <entry key="App/Controls/Teachers/TeachersControl.axaml" value="App/App.csproj" />
+        <entry key="App/ProjectControls/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />
         <entry key="App/Styles/Border.axaml" value="App/App.csproj" />
         <entry key="App/Styles/Font.axaml" value="App/App.csproj" />
         <entry key="App/Ui/ClassSchedule/ClassScheduleControl.axaml" value="App/App.csproj" />
@@ -26,6 +28,8 @@
         <entry key="App/Ui/TeacherSchedule/TeacherScheduleView.axaml" value="App/App.csproj" />
         <entry key="App/Ui/Teachers/TeachersControl.axaml" value="App/App.csproj" />
         <entry key="App/Ui/Teachers/TeachersView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/AddDiscipline/AddDisciplineWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Views/AvailableDiscipline/AvailableDisciplineView.axaml" value="App/App.csproj" />
         <entry key="App/Views/ClassSchedule/ClassScheduleView.axaml" value="App/App.csproj" />
         <entry key="App/Views/CreateTeacher/CreateTeacherView.axaml" value="App/App.csproj" />
         <entry key="App/Views/DailySchedule/DailyScheduleView.axaml" value="App/App.csproj" />
@@ -36,9 +40,14 @@
         <entry key="App/Views/MainWindow/MainWindowView.axaml" value="App/App.csproj" />
         <entry key="App/Views/Schedule/ScheduleView.axaml" value="App/App.csproj" />
         <entry key="App/Views/Teacher/TeacherView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/TeacherInfo/TeacherInfoView.axaml" value="App/App.csproj" />
+        <entry key="App/Views/TeacherInfoView.axaml" value="App/App.csproj" />
         <entry key="App/Views/TeacherScheduleView.axaml" value="App/App.csproj" />
         <entry key="App/Views/Teachers/TeachersView.axaml" value="App/App.csproj" />
         <entry key="App/Views/TeachersView.axaml" value="App/App.csproj" />
+        <entry key="AvaloniaCrossPlatformApplication1/AvaloniaCrossPlatformApplication1/Views/MainWindow.axaml" value="AvaloniaCrossPlatformApplication1/AvaloniaCrossPlatformApplication1.Desktop/AvaloniaCrossPlatformApplication1.Desktop.csproj" />
+        <entry key="ProjectPresentation/ProjectWindow.axaml" value="ProjectPresentation/ProjectPresentation.csproj" />
+        <entry key="ProjectPresentation/Views/ProjectView.axaml" value="ProjectPresentation/ProjectPresentation.csproj" />
       </map>
     </option>
   </component>

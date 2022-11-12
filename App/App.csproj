@@ -20,12 +20,14 @@
         <TrimmableAssembly Include="Avalonia.Themes.Default" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Autofac" Version="6.4.0" />
         <PackageReference Include="Avalonia" Version="0.10.18" />
         <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
         <PackageReference Include="Citrus.Avalonia" Version="1.6.1" />
+        <PackageReference Include="Splat.Autofac" Version="14.4.1" />
         <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
     </ItemGroup>
     <ItemGroup>
@@ -43,24 +45,12 @@
         <Resource Include="Assets\Fonts\RobotoThinItalic.ttf" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Domain\Domain.csproj" />
+        <Folder Include="Models" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Update="Ui\MainWindow\MainWindow.axaml.cs">
-            <DependentUpon>MainWindow.axaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
-        <Compile Update="Ui\Teachers\TeachersControl.axaml.cs">
-            <DependentUpon>TeachersView.axaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
-        <Compile Update="Ui\TeacherSchedule\TeacherScheduleView.axaml.cs">
-            <DependentUpon>TeacherScheduleView.axaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
-        <Compile Update="Ui\Groups\GroupsControl.axaml.cs">
-            <DependentUpon>GroupsView.axaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
+      <ProjectReference Include="..\ProjectPresentation\ProjectPresentation.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <UpToDateCheckInput Remove="ProjectControls\ProjectWindow\ProjectWindow.axaml" />
     </ItemGroup>
 </Project>

@@ -1,5 +1,3 @@
-using Domain.Models;
-
 namespace Domain;
 
 public interface IRepository<TModel>

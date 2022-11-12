@@ -1,4 +1,4 @@
-using Domain.Models;
+using Domain;
 using Storage;
 
 namespace Data;

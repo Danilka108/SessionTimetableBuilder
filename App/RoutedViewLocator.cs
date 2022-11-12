@@ -1,5 +1,4 @@
 using System;
-using App.Views.CreateTeacher;
 using ReactiveUI;
 
 namespace App;
@@ -10,7 +9,6 @@ public class RoutedViewLocator : IViewLocator
     {
         return viewModel switch
         {
-            CreateTeacherViewModel context => new CreateTeacherView { DataContext = context },
             _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
         };
     }
