@@ -2,7 +2,7 @@ using Autofac;
 
 namespace ProjectPresentation;
 
-public class DiModule : Module
+public class ProjectPresentationModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

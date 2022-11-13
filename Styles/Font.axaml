@@ -1,0 +1,293 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <StackPanel>
+                <TextBlock Classes="DisplayLarge">I'm DisplayLarge</TextBlock>
+                <TextBlock Classes="DisplayMedium">I'm DisplayMedium</TextBlock>
+                <TextBlock Classes="DisplaySmall">I'm DisplaySmall</TextBlock>
+                <TextBlock Classes="HeadlineLarge">I'm HeadlineLarge</TextBlock>
+                <TextBlock Classes="HeadlineMedium">I'm HeadlineMedium</TextBlock>
+                <TextBlock Classes="HeadlineSmall">I'm HeadlineSmall</TextBlock>
+                <TextBlock Classes="TitleLarge">I'm TitleLarge</TextBlock>
+                <TextBlock Classes="TitleMedium">I'm TitleMedium</TextBlock>
+                <TextBlock Classes="TitleSmall">I'm TitleSmall</TextBlock>
+                <TextBlock Classes="LabelLarge">I'm LabelLarge</TextBlock>
+                <TextBlock Classes="LabelMedium">I'm LabelMedium</TextBlock>
+                <TextBlock Classes="LabelSmall">I'm LabelSmall</TextBlock>
+                <TextBlock Classes="BodyLarge">I'm BodyLarge</TextBlock>
+                <TextBlock Classes="BodyMedium">I'm BodyMedium</TextBlock>
+                <TextBlock Classes="BodySmall">I'm BodySmall</TextBlock>
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="TextBlock.DisplayLarge">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="64" /> -->
+        <!-- <Setter Property="FontSize" Value="57" /> -->
+        <!-- <Setter Property="FontSize" Value="57" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="62" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.DisplayLarge">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="64" /> -->
+        <!-- <Setter Property="FontSize" Value="57" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="62" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBlock.DisplayMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="52" /> -->
+        <!-- <Setter Property="FontSize" Value="45" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="50" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.DisplayMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="52" /> -->
+        <!-- <Setter Property="FontSize" Value="45" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="50" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBlock.DisplaySmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="44" /> -->
+        <!-- <Setter Property="FontSize" Value="36" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="41" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.DisplaySmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="44" /> -->
+        <!-- <Setter Property="FontSize" Value="36" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="41" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBlock.HeadlineLarge">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="40" /> -->
+        <!-- <Setter Property="FontSize" Value="32" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="37" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.HeadlineLarge">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="40" /> -->
+        <!-- <Setter Property="FontSize" Value="32" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="37" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBlock.HeadlineMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="36" /> -->
+        <!-- <Setter Property="FontSize" Value="28" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="33" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.HeadlineMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="36" /> -->
+        <!-- <Setter Property="FontSize" Value="28" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="33" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBlock.HeadlineSmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="32" /> -->
+        <!-- <Setter Property="FontSize" Value="24" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="29" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.HeadlineSmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="32" /> -->
+        <!-- <Setter Property="FontSize" Value="24" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="29" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBlock.TitleLarge">
+        <!-- <Setter Property="LineHeight" Value="28" /> -->
+        <!-- <Setter Property="FontSize" Value="22" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="27" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.TitleLarge">
+        <!-- <Setter Property="LineHeight" Value="28" /> -->
+        <!-- <Setter Property="FontSize" Value="22" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="27" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBlock.TitleMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="24" /> -->
+        <!-- <Setter Property="FontSize" Value="16" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBox.TitleMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="24" /> -->
+        <!-- <Setter Property="FontSize" Value="16" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBlock.TitleSmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="20" /> -->
+        <!-- <Setter Property="FontSize" Value="14" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="19" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBox.TitleSmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="20" /> -->
+        <!-- <Setter Property="FontSize" Value="14" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="19" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBlock.LabelLarge">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="20" /> -->
+        <!-- <Setter Property="FontSize" Value="14" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="19" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBox.LabelLarge">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="20" /> -->
+        <!-- <Setter Property="FontSize" Value="14" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="19" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBlock.LabelMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="16" /> -->
+        <!-- <Setter Property="FontSize" Value="12" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBox.LabelMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="16" /> -->
+        <!-- <Setter Property="FontSize" Value="12" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBlock.LabelSmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="16" /> -->
+        <!-- <Setter Property="FontSize" Value="11" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBox.LabelSmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="16" /> -->
+        <!-- <Setter Property="FontSize" Value="11" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontWeight" Value="500" />
+    </Style>
+
+    <Style Selector="TextBlock.BodyLarge">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="24" /> -->
+        <!-- <Setter Property="FontSize" Value="16" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.BodyLarge">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="24" /> -->
+        <!-- <Setter Property="FontSize" Value="16" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBlock.BodyMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="20" /> -->
+        <!-- <Setter Property="FontSize" Value="14" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="19" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.BodyMedium">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="20" /> -->
+        <!-- <Setter Property="FontSize" Value="14" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="19" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBlock.BodySmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="16" /> -->
+        <!-- <Setter Property="FontSize" Value="12" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+
+    <Style Selector="TextBox.BodySmall">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <!-- <Setter Property="LineHeight" Value="16" /> -->
+        <!-- <Setter Property="FontSize" Value="12" /> -->
+        <!-- + 5 -->
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontWeight" Value="400" />
+    </Style>
+</Styles>
