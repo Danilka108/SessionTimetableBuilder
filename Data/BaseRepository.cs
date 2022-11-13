@@ -6,7 +6,7 @@ using Storage;
 
 namespace Data;
 
-public abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
+internal abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
 {
     protected readonly EntityModelHelper<TEntity, TModel> Helper;
     protected readonly Storage.Storage Storage;
@@ -68,6 +68,20 @@ public abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
         return new IdentifiedModel<TModel>(identifiedEntity.Id, model);
     }
 
+    public async Task<IEnumerable<IdentifiedModel<TModel>>> ReadAll(CancellationToken token)
+    {
+        var identifiedEntities = await Storage.FromSetOf<TEntity>(token);
+        var identifiedModels = new List<IdentifiedModel<TModel>>();
+
+        foreach (var identifiedEntity in identifiedEntities)
+        {
+            var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
+            identifiedModels.Add(new IdentifiedModel<TModel>(identifiedEntity.Id, model));
+        }
+
+        return identifiedModels;
+    }
+
     public IObservable<IdentifiedModel<TModel>> Observe(int id)
     {
         return Storage
@@ -77,6 +91,24 @@ public abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
             {
                 var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
                 return new IdentifiedModel<TModel>(identifiedEntity.Id, model);
+            });
+    }
+
+    public IObservable<IEnumerable<IdentifiedModel<TModel>>> ObserveAll()
+    {
+        return Storage
+            .ObserveFromSetOf<TEntity>()
+            .SelectMany(async (identifiedEntities, token) =>
+            {
+                var identifiedModels = new List<IdentifiedModel<TModel>>();
+
+                foreach (var identifiedEntity in identifiedEntities)
+                {
+                    var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
+                    identifiedModels.Add(new IdentifiedModel<TModel>(identifiedEntity.Id, model));
+                }
+
+                return identifiedModels;
             });
     }
 

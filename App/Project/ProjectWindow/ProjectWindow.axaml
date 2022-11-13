@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:audienceSpecificities="clr-namespace:App.Project.AudienceSpecificities"
+        xmlns:projectWindow="clr-namespace:App.Project.ProjectWindow"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="App.Project.ProjectWindow.ProjectWindow"
+        Title="ProjectWindow">
+
+    <Design.DataContext>
+        <projectWindow:ProjectWindowViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*,Auto,2.5*">
+
+        <ScrollViewer Grid.Column="0">
+            <ScrollViewer.Background>
+                <SolidColorBrush Opacity="0.1" Color="Black" />
+            </ScrollViewer.Background>
+            <StackPanel>
+                <audienceSpecificities:AudienceSpecificitiesView DataContext="{Binding AudienceSpecificitiesViewModel}" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <GridSplitter Grid.Column="1" Width="4" ShowsPreview="False" HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch" />
+
+        <StackPanel Grid.Column="2" />
+    </Grid>
+</Window>

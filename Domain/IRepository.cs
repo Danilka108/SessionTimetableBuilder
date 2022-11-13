@@ -10,5 +10,9 @@ public interface IRepository<TModel>
 
     Task<IdentifiedModel<TModel>> Read(int id, CancellationToken token);
 
+    Task<IEnumerable<IdentifiedModel<TModel>>> ReadAll(CancellationToken token);
+
     IObservable<IdentifiedModel<TModel>> Observe(int id);
+
+    IObservable<IEnumerable<IdentifiedModel<TModel>>> ObserveAll();
 }

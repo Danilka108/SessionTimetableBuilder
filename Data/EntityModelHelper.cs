@@ -3,7 +3,7 @@ using Storage;
 
 namespace Data;
 
-public abstract class EntityModelHelper<TEntity, TModel>
+internal abstract class EntityModelHelper<TEntity, TModel>
 {
     public abstract TEntity ConvertModelToEntity(TModel model);
 

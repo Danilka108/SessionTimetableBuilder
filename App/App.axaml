@@ -1,27 +1,30 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:app="clr-namespace:App"
              x:Class="App.App">
-    <!-- <Application.DataTemplates> -->
-    <!--     <app:ViewLocator /> -->
-    <!-- </Application.DataTemplates> -->
+
+    <Application.DataTemplates>
+        <app:ViewLocator />
+    </Application.DataTemplates>
 
     <Application.Resources>
         <ResourceDictionary>
-            <system:String x:Key="MainWindowTitle">Конструктор расписания сессий</system:String>
-            <system:String x:Key="WorkScheduleString">График работы</system:String>
-            <system:String x:Key="TeachersString">Преподаватели</system:String>
-            <system:String x:Key="GroupsString">Группы</system:String>
-            <system:String x:Key="ClassString">пара</system:String>
-            <system:String x:Key="TimeRangeSeparatorString"> - </system:String>
-
-            <system:String x:Key="MondayString">Понедельник</system:String>
-            <system:String x:Key="TuesdayString">Вторник</system:String>
-            <system:String x:Key="WednesdayString">Среда</system:String>
-            <system:String x:Key="ThursdayString">Четверг</system:String>
-            <system:String x:Key="FridayString">Пятница</system:String>
-            <system:String x:Key="SaturdayString">Суббота</system:String>
-            <system:String x:Key="SundayString">Воскресенье</system:String>
+            <system:String x:Key="AudienceSpecificitiesTitle">Audience specificities</system:String>
+            <!-- <system:String x:Key="MainWindowTitle">Конструктор расписания сессий</system:String> -->
+            <!-- <system:String x:Key="WorkScheduleString">График работы</system:String> -->
+            <!-- <system:String x:Key="TeachersString">Преподаватели</system:String> -->
+            <!-- <system:String x:Key="GroupsString">Группы</system:String> -->
+            <!-- <system:String x:Key="ClassString">пара</system:String> -->
+            <!-- <system:String x:Key="TimeRangeSeparatorString"> - </system:String> -->
+            <!-- -->
+            <!-- <system:String x:Key="MondayString">Понедельник</system:String> -->
+            <!-- <system:String x:Key="TuesdayString">Вторник</system:String> -->
+            <!-- <system:String x:Key="WednesdayString">Среда</system:String> -->
+            <!-- <system:String x:Key="ThursdayString">Четверг</system:String> -->
+            <!-- <system:String x:Key="FridayString">Пятница</system:String> -->
+            <!-- <system:String x:Key="SaturdayString">Суббота</system:String> -->
+            <!-- <system:String x:Key="SundayString">Воскресенье</system:String> -->
         </ResourceDictionary>
     </Application.Resources>
 

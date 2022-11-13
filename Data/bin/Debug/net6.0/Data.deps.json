@@ -37,6 +37,9 @@
         }
       },
       "Domain/1.0.0": {
+        "dependencies": {
+          "Autofac": "6.4.0"
+        },
         "runtime": {
           "Domain.dll": {}
         }

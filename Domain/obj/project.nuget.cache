@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "A2HLpQJUB/ZsAolwJ40yUig6YdFketbacyc/+Es760NCAwTYfkPXCXHgrt+w6I+JW+UclUrOqAFQqWW5vlCYWg==",
+  "dgSpecHash": "+SFTjWweZV3K0X4I7OicV9gEeDMdM5IOgMV9/uKUK3L6iEh8cP3JlM230Hv3dXSpo8tEXGVaNZhugC1r5XHOtQ==",
   "success": true,
   "projectFilePath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/danilka108/.nuget/packages/autofac/6.4.0/autofac.6.4.0.nupkg.sha512",
+    "/home/danilka108/.nuget/packages/system.diagnostics.diagnosticsource/4.7.1/system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
+  ],
   "logs": []
 }
