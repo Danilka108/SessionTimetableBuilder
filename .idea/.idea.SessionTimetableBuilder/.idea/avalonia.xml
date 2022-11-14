@@ -13,9 +13,12 @@
         <entry key="App/Controls/Teachers/TeachersControl.axaml" value="App/App.csproj" />
         <entry key="App/Preview/Controls/PreviewWindow/PreviewWindow.axaml" value="App/App.csproj" />
         <entry key="App/Preview/PreviewWindow/PreviewWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Project/Audience/AudienceView.axaml" value="App/App.csproj" />
         <entry key="App/Project/AudienceSpecificities/AudienceSpecificitiesView.axaml" value="App/App.csproj" />
+        <entry key="App/Project/AudienceSpecificitiesExplorer/AudienceSpecificitiesExplorerView.axaml" value="App/App.csproj" />
         <entry key="App/Project/AudienceSpecificity/AudienceSpecificityView.axaml" value="App/App.csproj" />
         <entry key="App/Project/Controls/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Project/Explorer/ExplorerView.axaml" value="App/App.csproj" />
         <entry key="App/Project/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />
         <entry key="App/ProjectControls/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />
         <entry key="App/Styles/Border.axaml" value="App/App.csproj" />

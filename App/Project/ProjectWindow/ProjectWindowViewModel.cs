@@ -1,13 +1,13 @@
-using App.Project.AudienceSpecificities;
+using App.Project.Explorer;
 
 namespace App.Project.ProjectWindow;
 
 public class ProjectWindowViewModel : ViewModelBase
 {
-    public ProjectWindowViewModel(AudienceSpecificitiesViewModel.Factory specificitiesViewModelFactory)
+    public ProjectWindowViewModel(ExplorerViewModel.Factory explorerViewModelFactory)
     {
-        AudienceSpecificitiesViewModel = specificitiesViewModelFactory.Invoke();
+        ExplorerViewModel = explorerViewModelFactory.Invoke();
     }
 
-    public AudienceSpecificitiesViewModel AudienceSpecificitiesViewModel { get; }
+    public ExplorerViewModel ExplorerViewModel { get; }
 }

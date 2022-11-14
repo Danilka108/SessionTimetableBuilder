@@ -29,9 +29,13 @@
     </Application.Resources>
 
     <Application.Styles>
-        <FluentTheme Mode="Light" />
+        <!-- <FluentTheme Mode="Light" /> -->
 
-        <StyleInclude Source="/Styles/Border.axaml" />
-        <StyleInclude Source="/Styles/Font.axaml" />
+        <!-- <StyleInclude Source="/Styles/Border.axaml" /> -->
+        <!-- <StyleInclude Source="/Styles/Font.axaml" /> -->
+
+        <!-- <StyleInclude Source="avares://Citrus.Avalonia/Citrus.xaml" /> -->
+        <StyleInclude Source="avares://Citrus.Avalonia/Magma.xaml" />
+
     </Application.Styles>
 </Application>

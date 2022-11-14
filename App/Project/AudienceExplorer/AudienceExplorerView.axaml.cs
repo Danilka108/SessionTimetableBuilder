@@ -1,11 +1,11 @@
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 
-namespace App.Project.AudienceSpecificities;
+namespace App.Project.AudienceExplorer;
 
-public partial class AudienceSpecificitiesView : ReactiveUserControl<AudienceSpecificitiesViewModel>
+public partial class AudienceExplorerView : ReactiveUserControl<AudienceExplorerViewModel>
 {
-    public AudienceSpecificitiesView()
+    public AudienceExplorerView()
     {
         InitializeComponent();
     }
