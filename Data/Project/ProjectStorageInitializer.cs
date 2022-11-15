@@ -23,6 +23,7 @@ public class ProjectStorageInitializer
             .AddEntity<Discipline>()
             .AddEntity<Audience>()
             .AddEntity<AudienceSpecificity>()
-            .AddEntity<BellTime>().Initialize(token);
+            .AddEntity<BellTime>()
+            .Initialize(token);
     }
 }

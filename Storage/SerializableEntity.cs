@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
@@ -60,8 +58,12 @@ internal class SerializableEntity
             _typeNameConverter = (JsonConverter<string>)options.GetConverter(_typeNameType);
         }
 
-        public override SerializableEntity Read(ref Utf8JsonReader reader, Type typeToConvert,
-            JsonSerializerOptions options)
+        public override SerializableEntity Read
+        (
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
         {
             if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException();
 
@@ -88,7 +90,8 @@ internal class SerializableEntity
             return entityType ?? throw new NullReferenceException(nameof(entityType));
         }
 
-        private object ReadEntity(ref Utf8JsonReader reader, Type entityType, JsonSerializerOptions options)
+        private object ReadEntity
+            (ref Utf8JsonReader reader, Type entityType, JsonSerializerOptions options)
         {
             reader.Read();
             if (reader.TokenType != JsonTokenType.PropertyName) throw new JsonException();
@@ -106,7 +109,8 @@ internal class SerializableEntity
             }
         }
 
-        private object TryReadEntity(ref Utf8JsonReader reader, JsonSerializerOptions options, Type entityType)
+        private object TryReadEntity
+            (ref Utf8JsonReader reader, JsonSerializerOptions options, Type entityType)
         {
             var entityConverter = options.GetConverter(entityType);
 
@@ -114,7 +118,8 @@ internal class SerializableEntity
 
             var readMethod = entityConverter
                 .GetType()
-                .GetMethod(
+                .GetMethod
+                (
                     nameof(JsonConverter<object>.Read),
                     BindingFlags.Public | BindingFlags.Instance
                 );
@@ -134,7 +139,8 @@ internal class SerializableEntity
             return readResult;
         }
 
-        public override void Write(Utf8JsonWriter writer, SerializableEntity value, JsonSerializerOptions options)
+        public override void Write
+            (Utf8JsonWriter writer, SerializableEntity value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 
@@ -155,15 +161,18 @@ internal class SerializableEntity
             writer.WriteEndObject();
         }
 
-        private void TryWriteEntity(Utf8JsonWriter writer, SerializableEntity value, JsonSerializerOptions options)
+        private void TryWriteEntity
+            (Utf8JsonWriter writer, SerializableEntity value, JsonSerializerOptions options)
         {
             var entityConverter = options.GetConverter(value._entityType);
             var entityConverterType = typeof(JsonConverter<>).MakeGenericType(value._entityType);
-            entityConverterType.GetMethod(nameof(JsonConverter<object>.Write))?
+            entityConverterType.GetMethod(nameof(JsonConverter<object>.Write))
+                ?
                 .Invoke(entityConverter, new[] { writer, value._entity, options });
         }
 
-        private delegate object JsonConverterRead(
+        private delegate object JsonConverterRead
+        (
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options

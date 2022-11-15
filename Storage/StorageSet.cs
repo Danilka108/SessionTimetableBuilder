@@ -19,7 +19,12 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
     private readonly List<Identified<TEntity>> _entities;
     private readonly StorageTransaction? _transaction;
 
-    internal StorageSet(int lastId, IEnumerable<Identified<TEntity>> entities, StorageTransaction? transaction = null)
+    internal StorageSet
+    (
+        int lastId,
+        IEnumerable<Identified<TEntity>> entities,
+        StorageTransaction? transaction = null
+    )
     {
         LastId = lastId;
         _entities = new List<Identified<TEntity>>(entities);
@@ -40,7 +45,8 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
 
     void IResourceConsumer.ConsumeResource(Resource resource)
     {
-        foreach (var identifiedEntity in _entities) identifiedEntity.Entity.ProvideResourceToFields(resource);
+        foreach (var identifiedEntity in _entities)
+            identifiedEntity.Entity.ProvideResourceToFields(resource);
     }
 
     /// <summary>
@@ -53,7 +59,9 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
     {
         for (var i = 0; i < _entities.Count; i++)
         {
-            if (_entities[i].Id != identifiedEntityToUpdate.Id) continue;
+            if (_entities[i]
+                    .Id != identifiedEntityToUpdate.Id)
+                continue;
 
             _entities[i] = identifiedEntityToUpdate;
             return this;
@@ -70,7 +78,8 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
     /// <exception cref="MissingEntityInStorageSetException">Throw if missing entity to update in storage set.</exception>
     public StorageSet<TEntity> Delete(int entityIdToDelete)
     {
-        var isNotRemoved = _entities.RemoveAll(identifiedEntity => identifiedEntity.Id == entityIdToDelete) == 0;
+        var isNotRemoved = _entities.RemoveAll
+            (identifiedEntity => identifiedEntity.Id == entityIdToDelete) == 0;
 
         if (isNotRemoved)
             throw new MissingEntityInStorageSetException("Missing entity to delete in storage set");
@@ -121,7 +130,8 @@ public class MissingEntityInStorageSetException : Exception
 
 public class SaveStorageSetException : Exception
 {
-    internal SaveStorageSetException(string msg, Exception innerException) : base(msg, innerException)
+    internal SaveStorageSetException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }

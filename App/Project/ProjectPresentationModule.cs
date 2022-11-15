@@ -10,7 +10,13 @@ public class ProjectPresentationModule : Module
     {
         builder
             .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-            .Where(t => { return t.FullName!.Contains("Project") && t.FullName!.EndsWith("ViewModel"); })
+            .Where
+            (
+                t =>
+                {
+                    return t.FullName!.Contains("Project") && t.FullName!.EndsWith("ViewModel");
+                }
+            )
             .AsSelf();
 
         base.Load(builder);

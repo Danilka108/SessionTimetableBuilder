@@ -7,6 +7,7 @@ using Avalonia.Controls.Mixins;
 using Data.Project;
 using Domain;
 using Domain.Project;
+using Domain.Project.Models;
 using ProjectPresentation;
 using ReactiveUI;
 using Storage;
@@ -57,11 +58,12 @@ public class ProjectInitializer
         await storageInitializer.Initialize(CancellationToken.None);
 
         var audienceSpecificitiesRepository =
-            container.Resolve<IRepository<Domain.Project.Models.AudienceSpecificity>>();
+            container.Resolve<IRepository<AudienceSpecificity>>();
 
         for (var i = 0; i < 20; i++)
-            await audienceSpecificitiesRepository.Create(
-                new Domain.Project.Models.AudienceSpecificity($"Specificity {i}"),
+            await audienceSpecificitiesRepository.Create
+            (
+                new AudienceSpecificity($"Specificity {i}"),
                 CancellationToken.None
             );
     }
@@ -70,10 +72,13 @@ public class ProjectInitializer
     {
         var autofacBuilder = new ContainerBuilder();
 
-        autofacBuilder.RegisterModule(new ProjectDataModule
-        {
-            Metadata = _storageMetadata
-        });
+        autofacBuilder.RegisterModule
+        (
+            new ProjectDataModule
+            {
+                Metadata = _storageMetadata
+            }
+        );
 
         autofacBuilder.RegisterModule<ProjectDomainModule>();
 
@@ -86,7 +91,8 @@ public class ProjectInitializer
 
 public class InitializeProjectException : Exception
 {
-    internal InitializeProjectException(string msg, Exception innerException) : base(msg, innerException)
+    internal InitializeProjectException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }

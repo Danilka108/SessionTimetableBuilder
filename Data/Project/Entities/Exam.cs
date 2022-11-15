@@ -19,14 +19,17 @@ internal record Exam
     {
         public override Exam ConvertModelToEntity(Domain.Project.Models.Exam model)
         {
-            return new Exam(
+            return new Exam
+            (
                 new LinkedEntity<Teacher>(model.Teacher.Id),
                 new LinkedEntity<Group>(model.Group.Id),
                 new LinkedEntity<Discipline>(model.Discipline.Id),
                 new LinkedEntity<Audience>(model.Audience.Id),
                 new LinkedEntity<BellTime>(model.StartBellTime.Id),
                 new LinkedEntity<BellTime>(model.EndBellTime.Id),
-                model.Day, model.Month, model.Year
+                model.Day,
+                model.Month,
+                model.Year
             );
         }
     }

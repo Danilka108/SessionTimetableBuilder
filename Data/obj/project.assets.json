@@ -176,11 +176,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Data/Data.csproj",
+      "projectUniqueName": "/home/danilka108/SessionTimetableBuilder/Data/Data.csproj",
       "projectName": "Data",
-      "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Data/Data.csproj",
+      "projectPath": "/home/danilka108/SessionTimetableBuilder/Data/Data.csproj",
       "packagesPath": "/home/danilka108/.nuget/packages/",
-      "outputPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Data/obj/",
+      "outputPath": "/home/danilka108/SessionTimetableBuilder/Data/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/danilka108/.nuget/NuGet/NuGet.Config"
@@ -195,11 +195,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj": {
-              "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj"
+            "/home/danilka108/SessionTimetableBuilder/Domain/Domain.csproj": {
+              "projectPath": "/home/danilka108/SessionTimetableBuilder/Domain/Domain.csproj"
             },
-            "/home/danilka108/RiderProjects/SessionTimetableBuilder/Storage/Storage.csproj": {
-              "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Storage/Storage.csproj"
+            "/home/danilka108/SessionTimetableBuilder/Storage/Storage.csproj": {
+              "projectPath": "/home/danilka108/SessionTimetableBuilder/Storage/Storage.csproj"
             }
           }
         }
@@ -234,7 +234,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/dotnet6-6.0.109/sdk/6.0.109/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/dotnet6-6.0.110/sdk/6.0.110/RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -16,7 +16,8 @@ internal class ExamRepository : BaseRepository<Exam, Domain.Project.Models.Exam>
     private readonly IRepository<Group> _groupRepository;
     private readonly IRepository<Teacher> _teacherRepository;
 
-    public ExamRepository(
+    public ExamRepository
+    (
         StorageProvider storageProvider,
         IRepository<Audience> audienceRepository,
         IRepository<Discipline> disciplineRepository,
@@ -32,7 +33,8 @@ internal class ExamRepository : BaseRepository<Exam, Domain.Project.Models.Exam>
         _teacherRepository = teacherRepository;
     }
 
-    protected override async Task<Domain.Project.Models.Exam> ProduceModelByEntity(Exam exam, CancellationToken token)
+    protected override async Task<Domain.Project.Models.Exam> ProduceModelByEntity
+        (Exam exam, CancellationToken token)
     {
         var modelAudience = await _audienceRepository.Read(exam.Audience.Id, token);
         var modelDiscipline = await _disciplineRepository.Read(exam.Discipline.Id, token);
@@ -41,7 +43,8 @@ internal class ExamRepository : BaseRepository<Exam, Domain.Project.Models.Exam>
         var modelStartBellTime = await _bellTimeRepository.Read(exam.StartBellTime.Id, token);
         var modelEndBellTime = await _bellTimeRepository.Read(exam.EndBellTime.Id, token);
 
-        return new Domain.Project.Models.Exam(
+        return new Domain.Project.Models.Exam
+        (
             modelTeacher,
             modelGroup,
             modelDiscipline,

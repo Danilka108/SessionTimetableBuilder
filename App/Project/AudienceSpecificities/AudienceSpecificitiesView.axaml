@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:audienceSpecificities="clr-namespace:App.Project.AudienceSpecificities"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Project.AudienceSpecificities.AudienceSpecificitiesView">
+
+    <Design.DataContext>
+        <audienceSpecificities:AudienceSpecificitiesViewModel />
+    </Design.DataContext>
+
+    <StackPanel Margin="12 0 12 12">
+        <Button Command="{Binding Create}" HorizontalAlignment="Right" Margin="0 0 0 8">
+            <TextBlock Classes="LabelLarge" Text="Create" />
+        </Button>
+
+        <ItemsControl Items="{Binding Specificities}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel HorizontalAlignment="Stretch" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

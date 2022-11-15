@@ -1,6 +1,7 @@
 namespace Domain.Project.Models;
 
-public record Teacher(
+public record Teacher
+(
     string Name,
     string Surname,
     string Patronymic,

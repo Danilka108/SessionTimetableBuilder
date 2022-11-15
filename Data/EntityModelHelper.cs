@@ -9,16 +9,20 @@ internal abstract class EntityModelHelper<TEntity, TModel>
 
     public Identified<TEntity> ConvertModelToEntity(IdentifiedModel<TModel> identifiedModel)
     {
-        return new Identified<TEntity>(identifiedModel.Id, ConvertModelToEntity(identifiedModel.Model));
+        return new Identified<TEntity>
+            (identifiedModel.Id, ConvertModelToEntity(identifiedModel.Model));
     }
 
-    public IEnumerable<LinkedEntity<TEntity>> LinkedEntitiesFromIdentifiedModels(
-        IEnumerable<IdentifiedModel<TModel>> identifiedModels)
+    public IEnumerable<LinkedEntity<TEntity>> LinkedEntitiesFromIdentifiedModels
+    (
+        IEnumerable<IdentifiedModel<TModel>> identifiedModels
+    )
     {
         return identifiedModels.Select(LinkedEntityFromIdentifiedModel);
     }
 
-    public LinkedEntity<TEntity> LinkedEntityFromIdentifiedModel(IdentifiedModel<TModel> identifiedModel)
+    public LinkedEntity<TEntity> LinkedEntityFromIdentifiedModel
+        (IdentifiedModel<TModel> identifiedModel)
     {
         return new LinkedEntity<TEntity>(identifiedModel.Id);
     }

@@ -11,8 +11,11 @@ internal abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
     protected readonly EntityModelHelper<TEntity, TModel> Helper;
     protected readonly Storage.Storage Storage;
 
-    protected BaseRepository(Storage.Storage storage,
-        EntityModelHelper<TEntity, TModel> helper)
+    protected BaseRepository
+    (
+        Storage.Storage storage,
+        EntityModelHelper<TEntity, TModel> helper
+    )
     {
         Storage = storage;
         Helper = helper;
@@ -87,31 +90,41 @@ internal abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
         return Storage
             .ObserveFromSetOf<TEntity>()
             .WhereId(id)
-            .SelectMany(async (identifiedEntity, token) =>
-            {
-                var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
-                return new IdentifiedModel<TModel>(identifiedEntity.Id, model);
-            });
+            .SelectMany
+            (
+                async (identifiedEntity, token) =>
+                {
+                    var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
+                    return new IdentifiedModel<TModel>(identifiedEntity.Id, model);
+                }
+            );
     }
 
     public IObservable<IEnumerable<IdentifiedModel<TModel>>> ObserveAll()
     {
         return Storage
             .ObserveFromSetOf<TEntity>()
-            .SelectMany(async (identifiedEntities, token) =>
-            {
-                var identifiedModels = new List<IdentifiedModel<TModel>>();
-
-                foreach (var identifiedEntity in identifiedEntities)
+            .SelectMany
+            (
+                async (identifiedEntities, token) =>
                 {
-                    var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
-                    identifiedModels.Add(new IdentifiedModel<TModel>(identifiedEntity.Id, model));
-                }
+                    var identifiedModels = new List<IdentifiedModel<TModel>>();
 
-                return identifiedModels;
-            });
+                    foreach (var identifiedEntity in identifiedEntities)
+                    {
+                        var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
+                        identifiedModels.Add
+                            (new IdentifiedModel<TModel>(identifiedEntity.Id, model));
+                    }
+
+                    return identifiedModels;
+                }
+            );
     }
 
-    protected abstract Task<TModel> ProduceModelByEntity(TEntity entity,
-        CancellationToken token);
+    protected abstract Task<TModel> ProduceModelByEntity
+    (
+        TEntity entity,
+        CancellationToken token
+    );
 }

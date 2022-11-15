@@ -1,6 +1,6 @@
 using System;
 using App.Project.AudienceExplorer;
-using App.Project.AudienceSpecificitiesExplorer;
+using App.Project.AudienceSpecificities;
 using ReactiveUI;
 
 namespace App.Project.Explorer;
@@ -15,7 +15,7 @@ public class ExplorerViewLocator : IViewLocator
             {
                 DataContext = context
             },
-            AudienceSpecificitiesExplorerViewModel context => new AudienceSpecificitiesExplorerView
+            AudienceSpecificitiesViewModel context => new AudienceSpecificitiesView
             {
                 DataContext = context
             },

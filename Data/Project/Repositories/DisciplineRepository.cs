@@ -8,7 +8,8 @@ internal class DisciplineRepository : BaseRepository<Discipline, Domain.Project.
 {
     private readonly IRepository<AudienceSpecificity> _requirementsRepository;
 
-    public DisciplineRepository(
+    public DisciplineRepository
+    (
         StorageProvider storageProvider,
         IRepository<AudienceSpecificity> requirementsRepository
     ) : base(storageProvider.ProvideStorage(), new Discipline.Helper())
@@ -16,8 +17,11 @@ internal class DisciplineRepository : BaseRepository<Discipline, Domain.Project.
         _requirementsRepository = requirementsRepository;
     }
 
-    protected override async Task<Domain.Project.Models.Discipline> ProduceModelByEntity(Discipline discipline,
-        CancellationToken token)
+    protected override async Task<Domain.Project.Models.Discipline> ProduceModelByEntity
+    (
+        Discipline discipline,
+        CancellationToken token
+    )
     {
         var modelRequirements = new List<IdentifiedModel<AudienceSpecificity>>();
 

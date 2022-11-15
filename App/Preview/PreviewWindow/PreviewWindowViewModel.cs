@@ -12,11 +12,14 @@ public class PreviewWindowViewModel : ViewModelBase
     {
         ShowProjectWindow = new Interaction<ProjectInitializer, Unit>();
 
-        OpenProject = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var metadata = new StorageMetadata("", "TestProjectStorage");
-            await ShowProjectWindow.Handle(new ProjectInitializer(metadata));
-        });
+        OpenProject = ReactiveCommand.CreateFromTask
+        (
+            async () =>
+            {
+                var metadata = new StorageMetadata("", "TestProjectStorage");
+                await ShowProjectWindow.Handle(new ProjectInitializer(metadata));
+            }
+        );
     }
 
     public ReactiveCommand<Unit, Unit> OpenProject { get; }

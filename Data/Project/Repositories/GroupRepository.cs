@@ -8,14 +8,18 @@ internal class GroupRepository : BaseRepository<Group, Domain.Project.Models.Gro
 {
     private readonly IRepository<Discipline> _disciplineRepository;
 
-    public GroupRepository(StorageProvider storageProvider, IRepository<Discipline> disciplineRepository)
+    public GroupRepository
+        (StorageProvider storageProvider, IRepository<Discipline> disciplineRepository)
         : base(storageProvider.ProvideStorage(), new Group.Helper())
     {
         _disciplineRepository = disciplineRepository;
     }
 
-    protected override async Task<Domain.Project.Models.Group> ProduceModelByEntity(Group group,
-        CancellationToken token)
+    protected override async Task<Domain.Project.Models.Group> ProduceModelByEntity
+    (
+        Group group,
+        CancellationToken token
+    )
     {
         var modelDisciplines = new List<IdentifiedModel<Discipline>>();
 

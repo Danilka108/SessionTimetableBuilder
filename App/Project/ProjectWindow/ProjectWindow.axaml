@@ -12,7 +12,7 @@
         <projectWindow:ProjectWindowViewModel />
     </Design.DataContext>
 
-    <Grid ColumnDefinitions="*,Auto,2.5*">
+    <Grid ColumnDefinitions="*,Auto,4*">
 
         <ScrollViewer Grid.Column="0">
             <!-- <ScrollViewer.Background> -->
@@ -23,8 +23,12 @@
             </StackPanel>
         </ScrollViewer>
 
-        <GridSplitter Grid.Column="1" Width="4" ShowsPreview="False" HorizontalAlignment="Center"
-                      VerticalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False" HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch">
+            <GridSplitter.Background>
+                <SolidColorBrush Color="Black" Opacity="0.15" />
+            </GridSplitter.Background>
+        </GridSplitter>
 
         <StackPanel Grid.Column="2" />
     </Grid>

@@ -1,7 +1,7 @@
 using System;
 using System.Reactive.Linq;
 using App.Project.AudienceExplorer;
-using App.Project.AudienceSpecificitiesExplorer;
+using App.Project.AudienceSpecificities;
 using ReactiveUI;
 
 namespace App.Project.Explorer;
@@ -9,7 +9,7 @@ namespace App.Project.Explorer;
 internal enum ExploredSetItem : byte
 {
     Audience = 0,
-    AudienceSpecificity
+    AudienceSpecificities
 }
 
 public class ExplorerViewModel : ViewModelBase, IScreen
@@ -18,25 +18,31 @@ public class ExplorerViewModel : ViewModelBase, IScreen
 
     private byte _exploredSet = (byte)ExploredSetItem.Audience;
 
-    public ExplorerViewModel(
+    public ExplorerViewModel
+    (
         AudienceExplorerViewModel.Factory audienceExplorerViewModelFactory,
-        AudienceSpecificitiesExplorerViewModel.Factory specificitiesViewModelFactory)
+        AudienceSpecificitiesViewModel.Factory specificitiesViewModelFactory
+    )
     {
         Router = new RoutingState();
 
         NavigateToExploredItem = this
             .WhenAnyValue(vm => vm.ExploredSet)
-            .SelectMany(exploredSet =>
-            {
-                IRoutableViewModel navigatedViewModel = (ExploredSetItem)exploredSet switch
+            .SelectMany
+            (
+                exploredSet =>
                 {
-                    ExploredSetItem.Audience => audienceExplorerViewModelFactory.Invoke(this),
-                    ExploredSetItem.AudienceSpecificity => specificitiesViewModelFactory.Invoke(this),
-                    _ => throw new ArgumentNullException(nameof(exploredSet))
-                };
+                    IRoutableViewModel navigatedViewModel = (ExploredSetItem)exploredSet switch
+                    {
+                        ExploredSetItem.Audience => audienceExplorerViewModelFactory.Invoke(this),
+                        ExploredSetItem.AudienceSpecificities => specificitiesViewModelFactory
+                            .Invoke(this),
+                        _ => throw new ArgumentNullException(nameof(exploredSet))
+                    };
 
-                return Router.Navigate.Execute(navigatedViewModel);
-            });
+                    return Router.Navigate.Execute(navigatedViewModel);
+                }
+            );
     }
 
     public IObservable<IRoutableViewModel> NavigateToExploredItem { get; }

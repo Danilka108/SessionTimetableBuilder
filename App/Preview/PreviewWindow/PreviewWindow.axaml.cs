@@ -14,7 +14,13 @@ public partial class PreviewWindow : ReactiveWindow<PreviewWindowViewModel>
     public PreviewWindow()
     {
         this.WhenActivated
-            (d => { ViewModel!.ShowProjectWindow.RegisterHandler(DoOpenProject).DisposeWith(d); });
+        (
+            d =>
+            {
+                ViewModel!.ShowProjectWindow.RegisterHandler(DoOpenProject)
+                    .DisposeWith(d);
+            }
+        );
 
         InitializeComponent();
 #if DEBUG

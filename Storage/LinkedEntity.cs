@@ -59,7 +59,8 @@ public class LinkedEntity<TEntity> : IResourceConsumer
             return identifiedEntity.Entity;
         }
 
-        throw new MissingEntityInStorageSetException("Failed to find linked entity in entities set");
+        throw new MissingEntityInStorageSetException
+            ("Failed to find linked entity in entities set");
     }
 
     public async Task<Identified<TEntity>> DereferenceToIdentified(CancellationToken token)
@@ -71,7 +72,8 @@ public class LinkedEntity<TEntity> : IResourceConsumer
 
 public class DereferenceLinkedEntityException : Exception
 {
-    internal DereferenceLinkedEntityException(string msg, Exception innerException) : base(msg, innerException)
+    internal DereferenceLinkedEntityException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }

@@ -10,3 +10,15 @@
 /home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.dll
 /home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/obj/Debug/net6.0/ref/Domain.dll
 /home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.pdb
+/home/danilka108/SessionTimetableBuilder/Domain/bin/Debug/net6.0/Domain.deps.json
+/home/danilka108/SessionTimetableBuilder/Domain/bin/Debug/net6.0/Domain.dll
+/home/danilka108/SessionTimetableBuilder/Domain/bin/Debug/net6.0/ref/Domain.dll
+/home/danilka108/SessionTimetableBuilder/Domain/bin/Debug/net6.0/Domain.pdb
+/home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.csproj.AssemblyReference.cache
+/home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.AssemblyInfoInputs.cache
+/home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.AssemblyInfo.cs
+/home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.csproj.CoreCompileInputs.cache
+/home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.dll
+/home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/ref/Domain.dll
+/home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.pdb

@@ -8,15 +8,21 @@ internal class TeacherRepository : BaseRepository<Teacher, Domain.Project.Models
 {
     private readonly IRepository<Discipline> _disciplineRepository;
 
-    public TeacherRepository(StorageProvider storageProvider,
-        IRepository<Discipline> disciplineRepository)
+    public TeacherRepository
+    (
+        StorageProvider storageProvider,
+        IRepository<Discipline> disciplineRepository
+    )
         : base(storageProvider.ProvideStorage(), new Teacher.Helper())
     {
         _disciplineRepository = disciplineRepository;
     }
 
-    protected override async Task<Domain.Project.Models.Teacher> ProduceModelByEntity(Teacher teacher,
-        CancellationToken token)
+    protected override async Task<Domain.Project.Models.Teacher> ProduceModelByEntity
+    (
+        Teacher teacher,
+        CancellationToken token
+    )
     {
         var modelDisciplines = new List<IdentifiedModel<Discipline>>();
 
@@ -26,6 +32,7 @@ internal class TeacherRepository : BaseRepository<Teacher, Domain.Project.Models
             modelDisciplines.Add(modelDiscipline);
         }
 
-        return new Domain.Project.Models.Teacher(teacher.Name, teacher.Surname, teacher.Patronymic, modelDisciplines);
+        return new Domain.Project.Models.Teacher
+            (teacher.Name, teacher.Surname, teacher.Patronymic, modelDisciplines);
     }
 }

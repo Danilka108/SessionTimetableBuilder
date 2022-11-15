@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:messageWindow="clr-namespace:App.CommonControls.MessageWindow"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="App.CommonControls.MessageWindow.MessageWindow"
+        SizeToContent="Height"
+        MaxWidth="300"
+        WindowStartupLocation="CenterOwner"
+        Title="{Binding Header}">
+
+    <Design.DataContext>
+        <messageWindow:MessageWindowViewModel />
+    </Design.DataContext>
+
+    <StackPanel Margin="24" HorizontalAlignment="Center">
+        <TextBlock TextWrapping="WrapWithOverflow" HorizontalAlignment="Stretch" Classes="TitleMedium" Text="{Binding Message}" />
+        <Button HorizontalAlignment="Center" Margin="0 12 0 0 " Command="{Binding Close}">
+            <TextBlock HorizontalAlignment="Right" Classes="TitleSmall" Text="Close" />
+        </Button>
+    </StackPanel>
+</Window>

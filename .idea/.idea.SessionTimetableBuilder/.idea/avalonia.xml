@@ -5,6 +5,7 @@
       <map>
         <entry key="App/AddDisciplineWindow/AddDisciplineWindowView.axaml" value="App/App.csproj" />
         <entry key="App/App.axaml" value="App/App.csproj" />
+        <entry key="App/CommonControls/MessageWindow/MessageWindow.axaml" value="App/App.csproj" />
         <entry key="App/Controls/DailySchedule/DailyScheduleControl.axaml" value="App/App.csproj" />
         <entry key="App/Controls/Groups/GroupsControl.axaml" value="App/App.csproj" />
         <entry key="App/Controls/MainWindow/MainWindow.axaml" value="App/App.csproj" />
@@ -17,6 +18,11 @@
         <entry key="App/Project/AudienceSpecificities/AudienceSpecificitiesView.axaml" value="App/App.csproj" />
         <entry key="App/Project/AudienceSpecificitiesExplorer/AudienceSpecificitiesExplorerView.axaml" value="App/App.csproj" />
         <entry key="App/Project/AudienceSpecificity/AudienceSpecificityView.axaml" value="App/App.csproj" />
+        <entry key="App/Project/AudienceSpecificityCard/AudienceSpecificityCard.axaml" value="App/App.csproj" />
+        <entry key="App/Project/AudienceSpecificityCard/AudienceSpecificityCardView.axaml" value="App/App.csproj" />
+        <entry key="App/Project/AudienceSpecificityCard/AuidenceSpecificityCardView.axaml" value="App/App.csproj" />
+        <entry key="App/Project/AudienceSpecificityEditor/AudienceSpcificityEditorWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Project/AudienceSpecificityEditor/AudienceSpecificityEditorWindow.axaml" value="App/App.csproj" />
         <entry key="App/Project/Controls/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />
         <entry key="App/Project/Explorer/ExplorerView.axaml" value="App/App.csproj" />
         <entry key="App/Project/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />

@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Storage;
 
@@ -43,8 +39,11 @@ public class Storage : IDisposable
         }
         catch (Exception e)
         {
-            throw new LoadStorageEntitiesException(
-                $"Failed to load storage set of entities of type '{typeof(TEntity)}'", e);
+            throw new LoadStorageEntitiesException
+            (
+                $"Failed to load storage set of entities of type '{typeof(TEntity)}'",
+                e
+            );
         }
     }
 
@@ -59,16 +58,22 @@ public class Storage : IDisposable
         return _resource
             .StorageSets
             .Select
-            (storageSets =>
-                storageSets.GetSetOf<TEntity>()
+            (
+                storageSets =>
+                    storageSets.GetSetOf<TEntity>()
             )
             .Catch<StorageSet<TEntity>, Exception>
-            (e => throw new LoadStorageEntitiesException(
-                $"Failed to load storage set of entities of type '{typeof(TEntity)}'", e)
+            (
+                e => throw new LoadStorageEntitiesException
+                (
+                    $"Failed to load storage set of entities of type '{typeof(TEntity)}'",
+                    e
+                )
             );
     }
 
-    private async Task<IEnumerable<Identified<TEntity>>> TryGetFromSetOf<TEntity>(CancellationToken token)
+    private async Task<IEnumerable<Identified<TEntity>>> TryGetFromSetOf<TEntity>
+        (CancellationToken token)
     {
         var scheme = await _resource.Deserialize(token);
         var set = scheme.GetSetOf<TEntity>();
@@ -99,14 +104,16 @@ public class Storage : IDisposable
 
 public class LoadStorageEntitiesException : Exception
 {
-    internal LoadStorageEntitiesException(string msg, Exception innerException) : base(msg, innerException)
+    internal LoadStorageEntitiesException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }
 
 public class StartStorageTransactionException : Exception
 {
-    internal StartStorageTransactionException(string msg, Exception innerException) : base(msg, innerException)
+    internal StartStorageTransactionException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }

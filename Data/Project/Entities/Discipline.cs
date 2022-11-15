@@ -14,7 +14,8 @@ internal record Discipline
         {
             var requirementsConverter = new AudienceSpecificity.Helper();
             var linkedRequirements =
-                requirementsConverter.LinkedEntitiesFromIdentifiedModels(model.AudienceRequirements);
+                requirementsConverter.LinkedEntitiesFromIdentifiedModels
+                    (model.AudienceRequirements);
 
             return new Discipline(model.Name, linkedRequirements);
         }

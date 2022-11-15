@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -20,23 +17,31 @@ internal class SerializableStorageSet
     internal StorageSet<TEntity> ToTypedStorageSet<TEntity>(StorageTransaction? transaction = null)
     {
         var typedEntities = _entities
-            .Select(entity => new Identified<TEntity>(
-                entity.Id,
-                entity.Entity.ToTypedEntity<TEntity>())
+            .Select
+            (
+                entity => new Identified<TEntity>
+                (
+                    entity.Id,
+                    entity.Entity.ToTypedEntity<TEntity>()
+                )
             )
             .ToList();
 
         return new StorageSet<TEntity>(_lastId, typedEntities, transaction);
     }
 
-    internal static SerializableStorageSet FromTypedStorageSet<TEntity>(StorageSet<TEntity> storageSet)
+    internal static SerializableStorageSet FromTypedStorageSet<TEntity>
+        (StorageSet<TEntity> storageSet)
     {
         var serializableEntities = storageSet
-            .Select(entity =>
-                new Identified<SerializableEntity>(
-                    entity.Id,
-                    SerializableEntity.FromTypedEntity(entity.Entity)
-                )
+            .Select
+            (
+                entity =>
+                    new Identified<SerializableEntity>
+                    (
+                        entity.Id,
+                        SerializableEntity.FromTypedEntity(entity.Entity)
+                    )
             );
 
         return new SerializableStorageSet(storageSet.LastId, serializableEntities);
@@ -62,7 +67,9 @@ internal class SerializableStorageSet
 
     private class Converter : JsonConverter<SerializableStorageSet>
     {
-        private readonly JsonConverter<IEnumerable<Identified<SerializableEntity>>> _entitiesConverter;
+        private readonly JsonConverter<IEnumerable<Identified<SerializableEntity>>>
+            _entitiesConverter;
+
         private readonly Type _entitiesType;
 
         private readonly JsonConverter<int> _lastIdConverter;
@@ -75,11 +82,16 @@ internal class SerializableStorageSet
 
             _entitiesType = typeof(IEnumerable<Identified<SerializableEntity>>);
             _entitiesConverter =
-                (JsonConverter<IEnumerable<Identified<SerializableEntity>>>)options.GetConverter(_entitiesType);
+                (JsonConverter<IEnumerable<Identified<SerializableEntity>>>)options.GetConverter
+                    (_entitiesType);
         }
 
-        public override SerializableStorageSet Read(ref Utf8JsonReader reader, Type typeToConvert,
-            JsonSerializerOptions options)
+        public override SerializableStorageSet Read
+        (
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
         {
             if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException();
 
@@ -102,8 +114,11 @@ internal class SerializableStorageSet
             return _lastIdConverter.Read(ref reader, _lastIdType, options);
         }
 
-        private IEnumerable<Identified<SerializableEntity>> ReadEntities(ref Utf8JsonReader reader,
-            JsonSerializerOptions options)
+        private IEnumerable<Identified<SerializableEntity>> ReadEntities
+        (
+            ref Utf8JsonReader reader,
+            JsonSerializerOptions options
+        )
         {
             reader.Read();
             if (reader.TokenType != JsonTokenType.PropertyName) throw new JsonException();
@@ -114,7 +129,8 @@ internal class SerializableStorageSet
             return entities ?? throw new NullReferenceException(nameof(entities));
         }
 
-        public override void Write(Utf8JsonWriter writer, SerializableStorageSet value, JsonSerializerOptions options)
+        public override void Write
+            (Utf8JsonWriter writer, SerializableStorageSet value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 

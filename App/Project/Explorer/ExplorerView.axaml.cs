@@ -10,7 +10,14 @@ public partial class ExplorerView : ReactiveUserControl<ExplorerViewModel>
 {
     public ExplorerView()
     {
-        this.WhenActivated(d => { ViewModel!.NavigateToExploredItem.Subscribe().DisposeWith(d); });
+        this.WhenActivated
+        (
+            d =>
+            {
+                ViewModel!.NavigateToExploredItem.Subscribe()
+                    .DisposeWith(d);
+            }
+        );
 
         InitializeComponent();
     }

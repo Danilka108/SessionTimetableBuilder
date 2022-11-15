@@ -15,8 +15,12 @@ internal record Audience
         {
             var specificitiesConverter = new AudienceSpecificity.Helper();
 
-            return new Audience(model.Number, model.Capacity,
-                specificitiesConverter.LinkedEntitiesFromIdentifiedModels(model.Specificities));
+            return new Audience
+            (
+                model.Number,
+                model.Capacity,
+                specificitiesConverter.LinkedEntitiesFromIdentifiedModels(model.Specificities)
+            );
         }
     }
 }

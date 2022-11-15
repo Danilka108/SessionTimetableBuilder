@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Storage;
 
@@ -13,7 +8,9 @@ internal class Resource : IDisposable
 {
     // private Dictionary<string, SerializableStorageSet>? _cachedStorageSets;
 
-    private readonly BehaviorSubject<Dictionary<string, SerializableStorageSet>?> _cachedStorageSets;
+    private readonly BehaviorSubject<Dictionary<string, SerializableStorageSet>?>
+        _cachedStorageSets;
+
     private readonly string _path;
 
     public Resource(string path)
@@ -24,22 +21,24 @@ internal class Resource : IDisposable
 
         StorageSets = _cachedStorageSets.AsObservable()
             .SelectMany
-            (async (storageSets, _, token) =>
-                storageSets ?? await Deserialize(token)
+            (
+                async (storageSets, _, token) =>
+                    storageSets ?? await Deserialize(token)
             );
     }
 
     public IObservable<Dictionary<string, SerializableStorageSet>> StorageSets { get; }
 
-    private static JsonSerializerOptions JsonOptions => new()
-    {
-        WriteIndented = true,
-        Converters =
+    private static JsonSerializerOptions JsonOptions =>
+        new()
         {
-            new SerializableStorageSet.ConverterFactory(),
-            new SerializableEntity.ConverterFactory()
-        }
-    };
+            WriteIndented = true,
+            Converters =
+            {
+                new SerializableStorageSet.ConverterFactory(),
+                new SerializableEntity.ConverterFactory()
+            }
+        };
 
     public void Dispose()
     {
@@ -55,18 +54,29 @@ internal class Resource : IDisposable
         }
         catch (Exception e)
         {
-            throw new AccessStorageResourceException("Failed to create stream of storage resource ", e);
+            throw new AccessStorageResourceException
+                ("Failed to create stream of storage resource ", e);
         }
     }
 
     private Stream CreateStream()
     {
-        return new FileStream(_path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite, 4096,
-            FileOptions.Asynchronous);
+        return new FileStream
+        (
+            _path,
+            FileMode.OpenOrCreate,
+            FileAccess.ReadWrite,
+            FileShare.ReadWrite,
+            4096,
+            FileOptions.Asynchronous
+        );
     }
 
-    public async Task Serialize(Dictionary<string, SerializableStorageSet> storageSets,
-        CancellationToken token)
+    public async Task Serialize
+    (
+        Dictionary<string, SerializableStorageSet> storageSets,
+        CancellationToken token
+    )
     {
         await using var stream = GetStream();
         await Serialize(stream, storageSets, token);
@@ -76,8 +86,12 @@ internal class Resource : IDisposable
     {
     }
 
-    public async Task Serialize(Stream stream, Dictionary<string, SerializableStorageSet> storageSets,
-        CancellationToken token)
+    public async Task Serialize
+    (
+        Stream stream,
+        Dictionary<string, SerializableStorageSet> storageSets,
+        CancellationToken token
+    )
     {
         try
         {
@@ -89,8 +103,12 @@ internal class Resource : IDisposable
         }
     }
 
-    private async Task TrySerialize(Stream stream, Dictionary<string, SerializableStorageSet> storageSets,
-        CancellationToken token)
+    private async Task TrySerialize
+    (
+        Stream stream,
+        Dictionary<string, SerializableStorageSet> storageSets,
+        CancellationToken token
+    )
     {
         stream.SetLength(0);
         await stream.FlushAsync(token);
@@ -102,13 +120,15 @@ internal class Resource : IDisposable
         _cachedStorageSets.OnNext(storageSets);
     }
 
-    public async Task<Dictionary<string, SerializableStorageSet>> Deserialize(CancellationToken token)
+    public async Task<Dictionary<string, SerializableStorageSet>> Deserialize
+        (CancellationToken token)
     {
         await using var stream = GetStream();
         return await Deserialize(stream, token);
     }
 
-    public async Task<Dictionary<string, SerializableStorageSet>> Deserialize(Stream stream, CancellationToken token)
+    public async Task<Dictionary<string, SerializableStorageSet>> Deserialize
+        (Stream stream, CancellationToken token)
     {
         try
         {
@@ -121,15 +141,20 @@ internal class Resource : IDisposable
         }
     }
 
-    private async Task<Dictionary<string, SerializableStorageSet>?> TryDeserialize(Stream stream,
-        CancellationToken token)
+    private async Task<Dictionary<string, SerializableStorageSet>?> TryDeserialize
+    (
+        Stream stream,
+        CancellationToken token
+    )
     {
-        if (_cachedStorageSets.Value is { } cachedStorageSets)
-            return cachedStorageSets;
+        if (_cachedStorageSets.Value is { } cachedStorageSets) return cachedStorageSets;
         // if (_cachedStorageSets is { }) return _cachedStorageSets;
 
-        return await JsonSerializer.DeserializeAsync<Dictionary<string, SerializableStorageSet>>(
-            stream, JsonOptions, token
+        return await JsonSerializer.DeserializeAsync<Dictionary<string, SerializableStorageSet>>
+        (
+            stream,
+            JsonOptions,
+            token
         );
     }
 }
@@ -141,14 +166,16 @@ internal interface IResourceConsumer
 
 public class AccessStorageResourceException : Exception
 {
-    internal AccessStorageResourceException(string msg, Exception innerException) : base(msg, innerException)
+    internal AccessStorageResourceException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }
 
 public class SerializeStorageException : Exception
 {
-    internal SerializeStorageException(string msg, Exception innerException) : base(msg, innerException)
+    internal SerializeStorageException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }

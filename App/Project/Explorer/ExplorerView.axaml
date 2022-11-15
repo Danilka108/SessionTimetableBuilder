@@ -12,19 +12,19 @@
     </Design.DataContext>
 
     <StackPanel HorizontalAlignment="Stretch">
-        <Label Margin="12 12 12 4" Target="{Binding ElementName=ExploredSet}">
-            <TextBlock Classes="Heading" Text="Explored set" />
-        </Label>
+        <!-- <Label Margin="12 12 12 4" Target="{Binding ElementName=ExploredSet}"> -->
+        <!--     <TextBlock Classes="HeadlineMedium" Text="Explored set" /> -->
+        <!-- </Label> -->
         <ComboBox Margin="12 4 12 12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
                   SelectedIndex="{Binding ExploredSet}" x:Name="ExploredSet">
-            <ComboBoxItem HorizontalContentAlignment="Stretch">
-                <TextBlock Classes="Caption" Text="Audience" />
+            <ComboBoxItem>
+                <TextBlock Classes="TitleMedium">Audiences</TextBlock>
             </ComboBoxItem>
-            <ComboBoxItem HorizontalContentAlignment="Stretch">
-                <TextBlock Classes="Caption" Text="Audience specificities" />
+            <ComboBoxItem>
+                <TextBlock Classes="TitleMedium">Audiences specificities</TextBlock>
             </ComboBoxItem>
         </ComboBox>
-        <rxui:RoutedViewHost Router="{Binding Router}">
+        <rxui:RoutedViewHost HorizontalContentAlignment="Stretch" Router="{Binding Router}">
             <rxui:RoutedViewHost.ViewLocator>
                 <explorer:ExplorerViewLocator />
             </rxui:RoutedViewHost.ViewLocator>

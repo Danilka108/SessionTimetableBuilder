@@ -54,7 +54,8 @@ public class StorageInitializer : IDisposable
 
 public class StorageInitializationException : Exception
 {
-    internal StorageInitializationException(string msg, Exception innerException) : base(msg, innerException)
+    internal StorageInitializationException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }

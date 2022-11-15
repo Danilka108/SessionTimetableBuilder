@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Storage;
 
 /// <summary>
@@ -16,7 +10,8 @@ public class StorageTransaction : IAsyncDisposable
     private readonly Stream _stream;
     private readonly CancellationToken _token;
 
-    private StorageTransaction(
+    private StorageTransaction
+    (
         Resource resource,
         Dictionary<string, SerializableStorageSet> storageSets,
         Stream stream,
@@ -48,7 +43,8 @@ public class StorageTransaction : IAsyncDisposable
         }
         catch (Exception e)
         {
-            throw new GetStorageSetException($"Could not find storage set of type '{typeof(TEntity)}'", e);
+            throw new GetStorageSetException
+                ($"Could not find storage set of type '{typeof(TEntity)}'", e);
         }
     }
 
@@ -73,8 +69,10 @@ public class StorageTransaction : IAsyncDisposable
         }
     }
 
-    internal static async Task<StorageTransaction> CreateWithResource(
-        Resource resource, CancellationToken token
+    internal static async Task<StorageTransaction> CreateWithResource
+    (
+        Resource resource,
+        CancellationToken token
     )
     {
         var stream = resource.GetStream();
@@ -94,14 +92,16 @@ public class StorageTransaction : IAsyncDisposable
 
 public class GetStorageSetException : Exception
 {
-    internal GetStorageSetException(string msg, Exception innerException) : base(msg, innerException)
+    internal GetStorageSetException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }
 
 public class CommitTransactionException : Exception
 {
-    internal CommitTransactionException(string msg, Exception innerException) : base(msg, innerException)
+    internal CommitTransactionException(string msg, Exception innerException) : base
+        (msg, innerException)
     {
     }
 }

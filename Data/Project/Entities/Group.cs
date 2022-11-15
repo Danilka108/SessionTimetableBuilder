@@ -15,7 +15,8 @@ internal record Group
         {
             var disciplineConverter = new Discipline.Helper();
             var linkedDisciplines =
-                disciplineConverter.LinkedEntitiesFromIdentifiedModels(model.ExaminationDisciplines);
+                disciplineConverter.LinkedEntitiesFromIdentifiedModels
+                    (model.ExaminationDisciplines);
 
             return new Group(model.Name, model.StudentsNumber, linkedDisciplines);
         }

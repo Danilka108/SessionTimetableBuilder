@@ -21,7 +21,8 @@ public class ProjectDataModule : Module
 
     private void RegisterStorage(ContainerBuilder builder)
     {
-        builder.Register(_ => new ProjectStorageInitializer(Metadata)).AsSelf();
+        builder.Register(_ => new ProjectStorageInitializer(Metadata))
+            .AsSelf();
 
         builder
             .Register(_ => new StorageProvider(Metadata))

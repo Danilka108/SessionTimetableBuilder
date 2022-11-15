@@ -8,7 +8,8 @@ internal class AudienceRepository : BaseRepository<Audience, Domain.Project.Mode
 {
     private readonly IRepository<AudienceSpecificity> _specificityRepository;
 
-    public AudienceRepository(
+    public AudienceRepository
+    (
         StorageProvider storageProvider,
         IRepository<AudienceSpecificity> specificityRepository
     ) : base(storageProvider.ProvideStorage(), new Audience.Helper())
@@ -16,8 +17,11 @@ internal class AudienceRepository : BaseRepository<Audience, Domain.Project.Mode
         _specificityRepository = specificityRepository;
     }
 
-    protected override async Task<Domain.Project.Models.Audience> ProduceModelByEntity(
-        Audience audience, CancellationToken token)
+    protected override async Task<Domain.Project.Models.Audience> ProduceModelByEntity
+    (
+        Audience audience,
+        CancellationToken token
+    )
     {
         var modelSpecificities = new List<IdentifiedModel<AudienceSpecificity>>();
 
@@ -27,7 +31,8 @@ internal class AudienceRepository : BaseRepository<Audience, Domain.Project.Mode
             modelSpecificities.Add(modelSpecificity);
         }
 
-        return new Domain.Project.Models.Audience(
+        return new Domain.Project.Models.Audience
+        (
             audience.Number,
             audience.Capacity,
             modelSpecificities

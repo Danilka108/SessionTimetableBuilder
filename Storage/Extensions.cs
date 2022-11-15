@@ -2,7 +2,8 @@ namespace Storage;
 
 internal static class Extensions
 {
-    public static void ProvideResourceToFields<TConsumer>(this TConsumer consumer, Resource resource)
+    public static void ProvideResourceToFields<TConsumer>
+        (this TConsumer consumer, Resource resource)
     {
         var fields = typeof(TConsumer).GetFields();
 
@@ -17,7 +18,8 @@ internal static class Extensions
                 resourceConsumer.ConsumeResource(resource);
     }
 
-    public static StorageSet<TEntity> GetSetOf<TEntity>(
+    public static StorageSet<TEntity> GetSetOf<TEntity>
+    (
         this Dictionary<string, SerializableStorageSet> storageSets,
         StorageTransaction? transaction = null
     )
@@ -31,12 +33,15 @@ internal static class Extensions
             return serializableStorageSet.ToTypedStorageSet<TEntity>(transaction);
         }
 
-        throw new MissingStorageSetException($"Could not find storage set of type '{typeof(TEntity)}'");
+        throw new MissingStorageSetException
+            ($"Could not find storage set of type '{typeof(TEntity)}'");
     }
 
-    public static void UpdateSetOf<TEntity>(
+    public static void UpdateSetOf<TEntity>
+    (
         this Dictionary<string, SerializableStorageSet> storageSets,
-        StorageSet<TEntity> storageSet)
+        StorageSet<TEntity> storageSet
+    )
     {
         try
         {
@@ -47,26 +52,31 @@ internal static class Extensions
         }
         catch (Exception)
         {
-            throw new MissingStorageSetException($"Could not find storage set of type '{typeof(TEntity)}'");
+            throw new MissingStorageSetException
+                ($"Could not find storage set of type '{typeof(TEntity)}'");
         }
     }
 
-    public static void AddSerializableStorageSet<TEntity>(
+    public static void AddSerializableStorageSet<TEntity>
+    (
         this Dictionary<string, SerializableStorageSet> storageSets,
-        SerializableStorageSet storageSet)
+        SerializableStorageSet storageSet
+    )
     {
         try
         {
             var entityFullName = typeof(TEntity).FullName;
 
-            storageSets.Add(
+            storageSets.Add
+            (
                 entityFullName ?? throw new NullReferenceException(nameof(entityFullName)),
                 storageSet
             );
         }
         catch (Exception)
         {
-            throw new StorageSetAlreadyExistsExceptions($"Storage set of type '{typeof(TEntity)}' already exists");
+            throw new StorageSetAlreadyExistsExceptions
+                ($"Storage set of type '{typeof(TEntity)}' already exists");
         }
     }
 }
