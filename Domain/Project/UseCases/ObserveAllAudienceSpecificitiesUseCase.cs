@@ -1,12 +1,14 @@
 using Domain.Project.Models;
+using Domain.Project.Repositories;
 
 namespace Domain.Project.UseCases;
 
 public class ObserveAllAudienceSpecificitiesUseCase
 {
-    private readonly IRepository<AudienceSpecificity> _specificitiesRepository;
+    private readonly IAudienceSpecificityRepository _specificitiesRepository;
 
-    public ObserveAllAudienceSpecificitiesUseCase(IRepository<AudienceSpecificity> specificitiesRepository)
+    public ObserveAllAudienceSpecificitiesUseCase
+        (IAudienceSpecificityRepository specificitiesRepository)
     {
         _specificitiesRepository = specificitiesRepository;
     }

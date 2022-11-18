@@ -1,13 +1,14 @@
 using Domain.Project.Models;
+using Domain.Project.Repositories;
 
 namespace Domain.Project.UseCases;
 
 public class SaveAudienceSpecificityUseCase
 {
-    private readonly IRepository<AudienceSpecificity> _specificityRepository;
+    private readonly IAudienceSpecificityRepository _specificityRepository;
 
     public SaveAudienceSpecificityUseCase
-        (IRepository<AudienceSpecificity> specificityRepository)
+        (IAudienceSpecificityRepository specificityRepository)
     {
         _specificityRepository = specificityRepository;
     }
@@ -37,10 +38,8 @@ public class SaveAudienceSpecificityUseCase
         if (specificityWithSameDescription?.Id == id) return;
 
         if (specificityWithSameDescription is { })
-        {
             throw new SaveAudienceSpecificityException
                 ("Description of audience specificity must be original");
-        }
     }
 
     private async Task Create
