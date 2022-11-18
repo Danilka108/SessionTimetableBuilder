@@ -6,12 +6,12 @@ using Storage;
 
 namespace Data;
 
-internal abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
+internal abstract class BaseStorageRepository<TEntity, TModel> : IBaseRepository<TModel>
 {
     protected readonly EntityModelHelper<TEntity, TModel> Helper;
     protected readonly Storage.Storage Storage;
 
-    protected BaseRepository
+    protected BaseStorageRepository
     (
         Storage.Storage storage,
         EntityModelHelper<TEntity, TModel> helper
@@ -62,10 +62,10 @@ internal abstract class BaseRepository<TEntity, TModel> : IRepository<TModel>
 
     public async Task<IdentifiedModel<TModel>> Read(int id, CancellationToken token)
     {
-        var audiences = await Storage
+        var entities = await Storage
             .FromSetOf<TEntity>(token);
 
-        var identifiedEntity = audiences.WhereId(id);
+        var identifiedEntity = entities.WhereId(id);
         var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
 
         return new IdentifiedModel<TModel>(identifiedEntity.Id, model);

@@ -1,6 +1,6 @@
 namespace Domain;
 
-public interface IRepository<TModel>
+public interface IBaseRepository<TModel>
 {
     Task<IdentifiedModel<TModel>> Create(TModel model, CancellationToken token);
 

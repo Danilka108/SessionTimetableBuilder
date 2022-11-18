@@ -17,13 +17,13 @@ public class ProjectStorageInitializer
         using var initializer = new StorageInitializer(_metadata);
 
         await initializer
-            .AddEntity<Teacher>()
-            .AddEntity<Group>()
-            .AddEntity<Exam>()
-            .AddEntity<Discipline>()
-            .AddEntity<Audience>()
-            .AddEntity<AudienceSpecificity>()
-            .AddEntity<BellTime>()
+            .AddEntity<TeacherEntity>()
+            .AddEntity<GroupEntity>()
+            .AddEntity<ExamEntity>()
+            .AddEntity<DisciplineEntity>()
+            .AddEntity<AudienceEntity>()
+            .AddEntity<AudienceSpecificityEntity>()
+            .AddEntity<BellTimeEntity>()
             .Initialize(token);
     }
 }

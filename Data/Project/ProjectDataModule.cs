@@ -1,8 +1,7 @@
+using System.Reflection;
 using Autofac;
-using Data.Project.Repositories;
-using Domain;
-using Domain.Project.Models;
 using Storage;
+using Module = Autofac.Module;
 
 namespace Data.Project;
 
@@ -34,31 +33,8 @@ public class ProjectDataModule : Module
     private static void RegisterRepositories(ContainerBuilder builder)
     {
         builder
-            .RegisterType<BellTimeRepository>()
-            .As<IRepository<BellTime>>();
-
-        builder
-            .RegisterType<AudienceSpecificityRepository>()
-            .As<IRepository<AudienceSpecificity>>();
-
-        builder
-            .RegisterType<AudienceRepository>()
-            .As<IRepository<Audience>>();
-
-        builder
-            .RegisterType<DisciplineRepository>()
-            .As<IRepository<Discipline>>();
-
-        builder
-            .RegisterType<GroupRepository>()
-            .As<IRepository<Group>>();
-
-        builder
-            .RegisterType<TeacherRepository>()
-            .As<IRepository<Teacher>>();
-
-        builder
-            .RegisterType<ExamRepository>()
-            .As<IRepository<Exam>>();
+            .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+            .Where(t => t.FullName.EndsWith("Repository") && t.FullName.Contains("Project"))
+            .AsImplementedInterfaces();
     }
 }

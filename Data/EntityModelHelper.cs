@@ -21,7 +21,7 @@ internal abstract class EntityModelHelper<TEntity, TModel>
         return identifiedModels.Select(LinkedEntityFromIdentifiedModel);
     }
 
-    public LinkedEntity<TEntity> LinkedEntityFromIdentifiedModel
+    private static LinkedEntity<TEntity> LinkedEntityFromIdentifiedModel
         (IdentifiedModel<TModel> identifiedModel)
     {
         return new LinkedEntity<TEntity>(identifiedModel.Id);
