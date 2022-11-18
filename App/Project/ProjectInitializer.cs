@@ -5,9 +5,9 @@ using App.Project.ProjectWindow;
 using Autofac;
 using Avalonia.Controls.Mixins;
 using Data.Project;
-using Domain;
 using Domain.Project;
 using Domain.Project.Models;
+using Domain.Project.Repositories;
 using ProjectPresentation;
 using ReactiveUI;
 using Storage;
@@ -58,7 +58,7 @@ public class ProjectInitializer
         await storageInitializer.Initialize(CancellationToken.None);
 
         var audienceSpecificitiesRepository =
-            container.Resolve<IRepository<AudienceSpecificity>>();
+            container.Resolve<IAudienceSpecificityRepository>();
 
         for (var i = 0; i < 20; i++)
             await audienceSpecificitiesRepository.Create

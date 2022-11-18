@@ -35,9 +35,7 @@ public partial class AudienceSpecificitiesView : ReactiveUserControl<AudienceSpe
         };
 
         if (ProjectWindow.ProjectWindow.GetCurrent() is { } window)
-        {
             await editorWindow.ShowDialog(window);
-        }
 
         context.SetOutput(Unit.Default);
     }

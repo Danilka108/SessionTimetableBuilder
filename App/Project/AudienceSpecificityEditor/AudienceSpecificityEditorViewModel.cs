@@ -2,7 +2,6 @@ using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using App.CommonControls.MessageWindow;
 using Domain;
 using Domain.Project.Models;
@@ -16,15 +15,9 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
     public delegate AudienceSpecificityEditorViewModel Factory
         (IdentifiedModel<AudienceSpecificity>? specificity);
 
-    private int? _id;
+    private readonly int? _id;
 
     private string _description;
-
-    private ObservableAsPropertyHelper<bool> _canBeSaved { get; }
-
-    private ObservableAsPropertyHelper<bool> _isLoading { get; }
-
-    private SaveAudienceSpecificityUseCase _saveAudienceSpecificityUseCase { get; }
 
     public AudienceSpecificityEditorViewModel
     (
@@ -88,6 +81,12 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
             }
         );
     }
+
+    private ObservableAsPropertyHelper<bool> _canBeSaved { get; }
+
+    private ObservableAsPropertyHelper<bool> _isLoading { get; }
+
+    private SaveAudienceSpecificityUseCase _saveAudienceSpecificityUseCase { get; }
 
     public ReactiveCommand<Unit, Unit> Save { get; }
 

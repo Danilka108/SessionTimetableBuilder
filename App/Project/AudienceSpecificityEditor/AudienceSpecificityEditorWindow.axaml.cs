@@ -1,10 +1,9 @@
+using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using App.CommonControls.MessageWindow;
-using System;
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
@@ -45,10 +44,8 @@ public partial class
             DataContext = context.Input
         };
 
-        if (ProjectWindow.ProjectWindow.GetCurrent() is {} window)
-        {
+        if (ProjectWindow.ProjectWindow.GetCurrent() is { } window)
             await messageWindow.ShowDialog(window);
-        }
 
         context.SetOutput(Unit.Default);
     }

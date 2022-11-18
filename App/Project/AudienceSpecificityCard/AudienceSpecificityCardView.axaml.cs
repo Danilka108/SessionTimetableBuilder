@@ -1,9 +1,8 @@
-using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
+using App.CommonControls.ConfirmWindow;
+using App.CommonControls.MessageWindow;
 using App.Project.AudienceSpecificityEditor;
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Mixins;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
@@ -24,9 +23,51 @@ public partial class
                     .OpenEditor
                     .RegisterHandler(DoOpenEditorDialog)
                     .DisposeWith(d);
+
+                ViewModel!
+                    .OpenConfirmDialog
+                    .RegisterHandler(DoOpenConfirmDialog)
+                    .DisposeWith(d);
+
+                ViewModel!
+                    .OpenErrorMessageDialog
+                    .RegisterHandler(DoOpenErrorMessageDialog)
+                    .DisposeWith(d);
             }
         );
         InitializeComponent();
+    }
+
+    private async Task DoOpenConfirmDialog(InteractionContext<ConfirmWindowViewModel, bool> context)
+    {
+        var confirmWindow = new ConfirmWindow
+        {
+            DataContext = context.Input
+        };
+
+        if (ProjectWindow.ProjectWindow.GetCurrent() is { } window)
+        {
+            var result = await confirmWindow.ShowDialog<bool?>(window);
+            context.SetOutput(result ?? false);
+        }
+        else
+        {
+            context.SetOutput(false);
+        }
+    }
+
+    private async Task DoOpenErrorMessageDialog
+        (InteractionContext<MessageWindowViewModel, Unit> context)
+    {
+        var messageWindow = new MessageWindow
+        {
+            DataContext = context.Input
+        };
+
+        if (ProjectWindow.ProjectWindow.GetCurrent() is { } window)
+            await messageWindow.ShowDialog(window);
+
+        context.SetOutput(Unit.Default);
     }
 
     private async Task DoOpenEditorDialog
@@ -37,10 +78,8 @@ public partial class
             DataContext = context.Input
         };
 
-        if (ProjectWindow.ProjectWindow.GetCurrent() is {} window)
-        {
+        if (ProjectWindow.ProjectWindow.GetCurrent() is { } window)
             await editorWindow.ShowDialog(window);
-        }
 
         context.SetOutput(Unit.Default);
     }

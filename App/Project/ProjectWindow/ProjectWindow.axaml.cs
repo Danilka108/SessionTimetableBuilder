@@ -31,9 +31,7 @@ public partial class ProjectWindow : ReactiveWindow<ProjectWindow>
             && desktop.Windows.FirstOrDefault(w => w is ProjectWindow)
                 is { } window
         )
-        {
             return window;
-        }
 
         return null;
     }

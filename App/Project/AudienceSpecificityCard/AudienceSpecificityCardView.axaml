@@ -10,17 +10,41 @@
         <audienceSpecificityCard:AudienceSpecificityCardViewModel />
     </Design.DataContext>
 
-    <DockPanel>
-        <Button Command="{Binding Show}" CornerRadius="2" HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Stretch" Padding="8 6"
+
+    <Grid ColumnDefinitions="*, Auto">
+        <Grid.Styles>
+            <Style Selector="Button.DeleteButton /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background">
+                    <SolidColorBrush Color="DarkRed" Opacity="0.8" />
+                </Setter>
+            </Style>
+            <Style Selector="Button:pointerover.DeleteButton /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background">
+                    <SolidColorBrush Color="DarkRed" Opacity="0.7" />
+                </Setter>
+            </Style>
+            <Style Selector="Button:pressed.DeleteButton /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background">
+                    <SolidColorBrush Color="DarkRed" Opacity="1" />
+                </Setter>
+            </Style>
+        </Grid.Styles>
+
+        <Button Grid.Column="0" Command="{Binding ShowEditor}"
+                CornerRadius="2"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Padding="8 6"
                 Margin="0 4">
             <Button.Background>
                 <SolidColorBrush Color="Black" Opacity="0.08" />
             </Button.Background>
-            <TextBlock Classes="LabelLarge" Text="{Binding Description}" />
+            <TextBlock HorizontalAlignment="Stretch" Classes="LabelLarge" Text="{Binding Description}" />
         </Button>
-    </DockPanel>
-    <!-- <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="12 8"> -->
-    <!--     <TextBlock Classes="LabelLarge" Text="{Binding Description}"/> -->
-    <!-- </Button> -->
+
+        <Button Command="{Binding Delete}"
+                Classes="DeleteButton" Grid.Column="1" Margin="4 0 0 0 ">
+            <TextBlock Foreground="White" Classes="LabelLarge" Text="Delete" />
+        </Button>
+    </Grid>
 </UserControl>
