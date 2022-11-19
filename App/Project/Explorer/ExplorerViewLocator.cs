@@ -1,5 +1,4 @@
 using System;
-using App.Project.AudienceExplorer;
 using App.Project.AudienceSpecificities;
 using ReactiveUI;
 
@@ -11,10 +10,10 @@ public class ExplorerViewLocator : IViewLocator
     {
         return viewModel switch
         {
-            AudienceExplorerViewModel context => new AudienceExplorerView
-            {
-                DataContext = context
-            },
+            // AudienceExplorerViewModel context => new AudienceExplorerView
+            // {
+            //     DataContext = context
+            // },
             AudienceSpecificitiesViewModel context => new AudienceSpecificitiesView
             {
                 DataContext = context

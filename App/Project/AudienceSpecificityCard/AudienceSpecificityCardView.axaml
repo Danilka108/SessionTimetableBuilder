@@ -2,14 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:audienceSpecificityCard="clr-namespace:App.Project.AudienceSpecificityCard"
+             xmlns:specificityCard="clr-namespace:App.Project.AudienceSpecificityCard"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="App.Project.AudienceSpecificityCard.AudienceSpecificityCardView">
 
     <Design.DataContext>
-        <audienceSpecificityCard:AudienceSpecificityCardViewModel />
+        <specificityCard:AudienceSpecificityCardViewModel />
     </Design.DataContext>
-
 
     <Grid ColumnDefinitions="*, Auto">
         <Grid.Styles>
@@ -18,7 +17,8 @@
                     <SolidColorBrush Color="DarkRed" Opacity="0.8" />
                 </Setter>
             </Style>
-            <Style Selector="Button:pointerover.DeleteButton /template/ ContentPresenter#PART_ContentPresenter">
+            <Style
+                Selector="Button:pointerover.DeleteButton /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background">
                     <SolidColorBrush Color="DarkRed" Opacity="0.7" />
                 </Setter>
@@ -39,7 +39,9 @@
             <Button.Background>
                 <SolidColorBrush Color="Black" Opacity="0.08" />
             </Button.Background>
-            <TextBlock HorizontalAlignment="Stretch" Classes="LabelLarge" Text="{Binding Description}" />
+            <TextBlock HorizontalAlignment="Stretch"
+                       Classes="LabelLarge"
+                       Text="{Binding Description}" />
         </Button>
 
         <Button Command="{Binding Delete}"

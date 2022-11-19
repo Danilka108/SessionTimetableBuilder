@@ -1,6 +1,8 @@
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
+using App.CommonControls.ConfirmWindow;
+using App.CommonControls.MessageWindow;
 using App.Project.AudienceSpecificityEditor;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
@@ -18,7 +20,7 @@ public partial class AudienceSpecificitiesView : ReactiveUserControl<AudienceSpe
             {
                 ViewModel!
                     .OpenEditor
-                    .RegisterHandler(DoOpenEditor)
+                    .RegisterHandler(DoOpenEditorDialog)
                     .DisposeWith(d);
             }
         );
@@ -26,7 +28,7 @@ public partial class AudienceSpecificitiesView : ReactiveUserControl<AudienceSpe
         InitializeComponent();
     }
 
-    private async Task DoOpenEditor
+    private async Task DoOpenEditorDialog
         (InteractionContext<AudienceSpecificityEditorViewModel, Unit> context)
     {
         var editorWindow = new AudienceSpecificityEditorWindow

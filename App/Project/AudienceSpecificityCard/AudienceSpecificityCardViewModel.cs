@@ -17,69 +17,77 @@ public class AudienceSpecificityCardViewModel : ViewModelBase
     public delegate AudienceSpecificityCardViewModel Factory
         (IdentifiedModel<AudienceSpecificity> specificity);
 
-    private readonly DeleteAudienceSpecificityUseCase _deleteAudienceSpecificityUseCase;
+    private readonly int _id;
+    private string _description;
+
     private readonly AudienceSpecificityEditorViewModel.Factory _editorViewModelFactory;
-    private readonly IdentifiedModel<AudienceSpecificity> _specificity;
+    private readonly DeleteAudienceSpecificityUseCase _deleteUseCase;
 
     public AudienceSpecificityCardViewModel
     (
         IdentifiedModel<AudienceSpecificity> specificity,
         AudienceSpecificityEditorViewModel.Factory editorViewModelFactory,
-        DeleteAudienceSpecificityUseCase deleteAudienceSpecificityUseCase
+        DeleteAudienceSpecificityUseCase deleteUseCase
     )
     {
-        _deleteAudienceSpecificityUseCase = deleteAudienceSpecificityUseCase;
-        _editorViewModelFactory = editorViewModelFactory;
-        _specificity = specificity;
+        _id = specificity.Id;
+        Description = specificity.Model.Description;
 
-        OpenEditor = new Interaction<AudienceSpecificityEditorViewModel, Unit>();
+        _editorViewModelFactory = editorViewModelFactory;
+        _deleteUseCase = deleteUseCase;
+
+        OpenMessageDialog = new Interaction<MessageWindowViewModel, Unit>();
         OpenConfirmDialog = new Interaction<ConfirmWindowViewModel, bool>();
-        OpenErrorMessageDialog = new Interaction<MessageWindowViewModel, Unit>();
+        OpenEditor = new Interaction<AudienceSpecificityEditorViewModel, Unit>();
 
         ShowEditor = ReactiveCommand.CreateFromTask(DoShowEditor);
-        Delete = ReactiveCommand.CreateFromTask(DoDeleteSpecificity);
+        Delete = ReactiveCommand.CreateFromTask(DoDelete);
     }
 
-    public Interaction<AudienceSpecificityEditorViewModel, Unit> OpenEditor { get; }
-
-    public Interaction<ConfirmWindowViewModel, bool> OpenConfirmDialog { get; }
-
-    public Interaction<MessageWindowViewModel, Unit> OpenErrorMessageDialog { get; }
-
-    public ReactiveCommand<Unit, Unit> ShowEditor { get; }
-
-    public ReactiveCommand<Unit, Unit> Delete { get; }
-
-    public string Description => _specificity.Model.Description;
-
-    private async Task DoDeleteSpecificity()
+    private async Task DoShowEditor()
     {
-        var hasBeenConfirmed = await OpenConfirmDialog.Handle
+        var specificity = new IdentifiedModel<AudienceSpecificity>
+            (_id, new AudienceSpecificity(Description));
+        var editorViewModel = _editorViewModelFactory.Invoke(specificity);
+
+        await OpenEditor.Handle(editorViewModel);
+    }
+
+    private async Task DoDelete()
+    {
+        var confirmViewModel = new ConfirmWindowViewModel
         (
-            new ConfirmWindowViewModel
-                ("Confirm action", $"Delete '{Description}' audience specificity?", "Delete")
+            "Confirm deletion",
+            $"Delete '{Description}' audience specificity?",
+            "Delete"
         );
+        var hasBeenConfirmed = await OpenConfirmDialog.Handle(confirmViewModel);
 
         if (!hasBeenConfirmed) return;
 
         try
         {
-            await _deleteAudienceSpecificityUseCase.Handle(_specificity.Id);
+            await _deleteUseCase.Handle(_id);
         }
         catch (Exception e)
         {
-            await OpenErrorMessageDialog.Handle(new MessageWindowViewModel("Error", e.Message));
+            var messageViewModel = new MessageWindowViewModel("Error", e.Message);
+            await OpenMessageDialog.Handle(messageViewModel);
         }
     }
 
-    private async Task DoShowEditor()
-    {
-        var viewModel = _editorViewModelFactory.Invoke
-        (
-            new IdentifiedModel<AudienceSpecificity>
-                (_specificity.Id, new AudienceSpecificity(Description))
-        );
+    public Interaction<AudienceSpecificityEditorViewModel, Unit> OpenEditor { get; }
 
-        await OpenEditor.Handle(viewModel);
+    public Interaction<MessageWindowViewModel, Unit> OpenMessageDialog { get; }
+    public Interaction<ConfirmWindowViewModel, bool> OpenConfirmDialog { get; }
+
+    public ReactiveCommand<Unit, Unit> ShowEditor { get; }
+
+    public ReactiveCommand<Unit, Unit> Delete { get; }
+
+    public string Description
+    {
+        get => _description;
+        set => this.RaiseAndSetIfChanged(ref _description, value);
     }
 }

@@ -1,6 +1,6 @@
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
-using App.Project.AudienceExplorer;
 using App.Project.AudienceSpecificities;
 using ReactiveUI;
 
@@ -16,11 +16,11 @@ public class ExplorerViewModel : ViewModelBase, IScreen
 {
     public delegate ExplorerViewModel Factory();
 
-    private byte _exploredSet = (byte)ExploredSetItem.Audience;
+    private byte _exploredSet = (byte)ExploredSetItem.AudienceSpecificities;
 
     public ExplorerViewModel
     (
-        AudienceExplorerViewModel.Factory audienceExplorerViewModelFactory,
+        // AudienceExplorerViewModel.Factory audienceExplorerViewModelFactory,
         AudienceSpecificitiesViewModel.Factory specificitiesViewModelFactory
     )
     {
@@ -34,7 +34,7 @@ public class ExplorerViewModel : ViewModelBase, IScreen
                 {
                     IRoutableViewModel navigatedViewModel = (ExploredSetItem)exploredSet switch
                     {
-                        ExploredSetItem.Audience => audienceExplorerViewModelFactory.Invoke(this),
+                        // ExploredSetItem.Audience => audienceExplorerViewModelFactory.Invoke(this),
                         ExploredSetItem.AudienceSpecificities => specificitiesViewModelFactory
                             .Invoke(this),
                         _ => throw new ArgumentNullException(nameof(exploredSet))

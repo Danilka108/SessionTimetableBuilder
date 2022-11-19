@@ -15,7 +15,7 @@
             <TextBlock Classes="LabelLarge" Text="Create" />
         </Button>
 
-        <ItemsControl Items="{Binding Specificities}">
+        <ItemsControl Items="{Binding Cards}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel HorizontalAlignment="Stretch" />
