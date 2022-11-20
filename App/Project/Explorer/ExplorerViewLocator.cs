@@ -1,5 +1,7 @@
 using System;
+using App.Project.Audiences;
 using App.Project.AudienceSpecificities;
+using App.Project.BellTimes;
 using ReactiveUI;
 
 namespace App.Project.Explorer;
@@ -10,11 +12,15 @@ public class ExplorerViewLocator : IViewLocator
     {
         return viewModel switch
         {
-            // AudienceExplorerViewModel context => new AudienceExplorerView
-            // {
-            //     DataContext = context
-            // },
+            AudiencesViewModel context => new AudiencesView
+            {
+                DataContext = context
+            },
             AudienceSpecificitiesViewModel context => new AudienceSpecificitiesView
+            {
+                DataContext = context
+            },
+            BellTimesViewModel context => new BellTimesView
             {
                 DataContext = context
             },

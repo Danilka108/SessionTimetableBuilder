@@ -22,3 +22,6 @@
 /home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.dll
 /home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/ref/Domain.dll
 /home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.pdb
+/home/danilka108/SessionTimetableBuilder/Domain/bin/Debug/net6.0/System.Reactive.dll
+/home/danilka108/SessionTimetableBuilder/Domain/bin/Debug/net6.0/System.Reactive.xml
+/home/danilka108/SessionTimetableBuilder/Domain/obj/Debug/net6.0/Domain.csproj.CopyComplete

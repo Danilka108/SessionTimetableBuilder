@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
@@ -5,6 +6,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using App.Project.AudienceSpecificityCard;
 using App.Project.AudienceSpecificityEditor;
+using App.Project.ExplorerList;
 using Domain;
 using Domain.Project.Models;
 using Domain.Project.UseCases;
@@ -12,15 +14,13 @@ using ReactiveUI;
 
 namespace App.Project.AudienceSpecificities;
 
-public class AudienceSpecificitiesViewModel : ViewModelBase, IRoutableViewModel
+public class AudienceSpecificitiesViewModel : ExplorerListViewModel, IRoutableViewModel
 {
     public delegate AudienceSpecificitiesViewModel Factory(IScreen hostScreen);
 
+    private readonly ObserveAllAudienceSpecificitiesUseCase _observeAllUseCase;
     private readonly AudienceSpecificityEditorViewModel.Factory _editorViewModelFactory;
     private readonly AudienceSpecificityCardViewModel.Factory _cardViewModelFactory;
-
-    private readonly ObservableAsPropertyHelper<IEnumerable<AudienceSpecificityCardViewModel>>
-        _cards;
 
     public AudienceSpecificitiesViewModel
     (
@@ -32,37 +32,30 @@ public class AudienceSpecificitiesViewModel : ViewModelBase, IRoutableViewModel
     {
         HostScreen = hostScreen;
 
+        _observeAllUseCase = observeAllAudienceSpecificitiesUseCase;
+
         _editorViewModelFactory = editorViewModelFactory;
         _cardViewModelFactory = cardViewModelFactory;
 
-        OpenEditor = new Interaction<AudienceSpecificityEditorViewModel, Unit>();
-
-        Create = ReactiveCommand.CreateFromTask
-            (DoCreateSpecificity);
-
-        _cards = observeAllAudienceSpecificitiesUseCase
-            .Handle()
-            .Select(MapSpecificitiesToCards)
-            .ToProperty(this, vm => vm.Cards);
+        Init();
     }
 
-    private async Task DoCreateSpecificity()
+    protected override IObservable<IEnumerable<ViewModelBase>> ObserveCards()
     {
-        await OpenEditor.Handle(_editorViewModelFactory.Invoke(null));
+        return _observeAllUseCase.Handle()
+            .Select
+            (
+                specificities =>
+                {
+                    return specificities.Select(s => _cardViewModelFactory.Invoke(s));
+                }
+            );
     }
 
-    private IEnumerable<AudienceSpecificityCardViewModel> MapSpecificitiesToCards
-        (IEnumerable<IdentifiedModel<AudienceSpecificity>> specificities)
+    protected override ViewModelBase ProvideEditorViewModel()
     {
-        return specificities.Select(
-            s => _cardViewModelFactory.Invoke(s));
+        return _editorViewModelFactory.Invoke(null);
     }
-
-    public Interaction<AudienceSpecificityEditorViewModel, Unit> OpenEditor { get; }
-
-    public ReactiveCommand<Unit, Unit> Create { get; }
-
-    public IEnumerable<AudienceSpecificityCardViewModel> Cards => _cards.Value;
 
     public string? UrlPathSegment { get; } = "/AudienceSpecificities";
     public IScreen HostScreen { get; }

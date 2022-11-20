@@ -18,7 +18,7 @@ internal class Resource : IDisposable
         _path = path;
         // _cachedStorageSets = null;
         _cachedStorageSets = new BehaviorSubject<Dictionary<string, SerializableStorageSet>?>(null);
-
+        
         StorageSets = _cachedStorageSets.AsObservable()
             .SelectMany
             (
@@ -80,10 +80,6 @@ internal class Resource : IDisposable
     {
         await using var stream = GetStream();
         await Serialize(stream, storageSets, token);
-    }
-
-    public async Task InitCache(CancellationToken token)
-    {
     }
 
     public async Task Serialize

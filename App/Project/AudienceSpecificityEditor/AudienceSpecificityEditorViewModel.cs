@@ -2,6 +2,9 @@ using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.Threading;
+using System.Threading.Tasks;
 using App.CommonControls.MessageWindow;
 using Domain;
 using Domain.Project.Models;
@@ -15,9 +18,13 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
     public delegate AudienceSpecificityEditorViewModel Factory
         (IdentifiedModel<AudienceSpecificity>? specificity);
 
-    private readonly int? _id;
-
     private string _description;
+
+    private readonly ObservableAsPropertyHelper<bool> _canBeSaved;
+
+    private readonly ObservableAsPropertyHelper<bool> _isLoading;
+
+    private readonly SaveAudienceSpecificityUseCase _saveAudienceSpecificityUseCase;
 
     public AudienceSpecificityEditorViewModel
     (
@@ -36,7 +43,6 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
         );
 
         _saveAudienceSpecificityUseCase = saveAudienceSpecificityUseCase;
-        _id = specificity?.Id;
         _description = specificity?.Model.Description ?? "";
 
         var canBeSaved = this
@@ -47,7 +53,7 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
             .CreateFromTask
             (
                 async () => await _saveAudienceSpecificityUseCase.Handle
-                    (new AudienceSpecificity(_description), _id),
+                    (new AudienceSpecificity(_description), specificity?.Id),
                 canBeSaved
             );
 
@@ -60,6 +66,10 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
             .ObserveOn(RxApp.MainThreadScheduler)
             .ToProperty(this, vm => vm.IsLoading);
 
+        var savingErrors = Save
+            .ThrownExceptions
+            .SelectMany(HandleSavingErrors);
+
         this.WhenActivated
         (
             d =>
@@ -69,24 +79,20 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
                     .Subscribe()
                     .DisposeWith(d);
 
-                Save
-                    .ThrownExceptions
-                    .SelectMany
-                    (
-                        e => OpenMessageDialog.Handle
-                            (new MessageWindowViewModel("Error", e.Message))
-                    )
+                savingErrors
                     .Subscribe()
                     .DisposeWith(d);
             }
         );
     }
 
-    private ObservableAsPropertyHelper<bool> _canBeSaved { get; }
+    private async Task<Unit> HandleSavingErrors(Exception e, int _, CancellationToken token)
+    {
+        var messageViewModel = new MessageWindowViewModel("Error", e.Message);
+        await OpenMessageDialog.Handle(messageViewModel);
 
-    private ObservableAsPropertyHelper<bool> _isLoading { get; }
-
-    private SaveAudienceSpecificityUseCase _saveAudienceSpecificityUseCase { get; }
+        return Unit.Default;
+    }
 
     public ReactiveCommand<Unit, Unit> Save { get; }
 

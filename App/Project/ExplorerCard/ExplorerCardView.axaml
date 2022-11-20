@@ -2,14 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:specificityCard="clr-namespace:App.Project.AudienceSpecificityCard"
+             xmlns:explorerCard="clr-namespace:App.Project.ExplorerCard"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="App.Project.AudienceSpecificityCard.AudienceSpecificityCardView">
-
+             x:Class="App.Project.ExplorerCard.ExplorerCardView">
+    
     <Design.DataContext>
-        <specificityCard:AudienceSpecificityCardViewModel />
+        <explorerCard:ExplorerCardViewModel/>
     </Design.DataContext>
-
+    
     <Grid ColumnDefinitions="*, Auto">
         <Grid.Styles>
             <Style Selector="Button.DeleteButton /template/ ContentPresenter#PART_ContentPresenter">
@@ -41,7 +41,7 @@
             </Button.Background>
             <TextBlock HorizontalAlignment="Stretch"
                        Classes="LabelLarge"
-                       Text="{Binding Description}" />
+                       Text="{Binding Title}" />
         </Button>
 
         <Button Command="{Binding Delete}"

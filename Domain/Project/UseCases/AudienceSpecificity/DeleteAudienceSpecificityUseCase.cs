@@ -23,7 +23,7 @@ public class DeleteAudienceSpecificityUseCase
         catch (Exception e)
         {
             throw new DeleteAudienceSpecificityException
-                ($"Failed to delete audience specificity with id '{id}'", e);
+                ("Failed to delete audience specificity", e);
         }
     }
 }

@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using App.Project.ProjectWindow;
 using Autofac;
 using Avalonia.Controls.Mixins;
 using Data.Project;
+using Domain;
 using Domain.Project;
 using Domain.Project.Models;
 using Domain.Project.Repositories;
@@ -60,12 +62,29 @@ public class ProjectInitializer
         var audienceSpecificitiesRepository =
             container.Resolve<IAudienceSpecificityRepository>();
 
+        var audienceRepository = container.Resolve<IAudienceRepository>();
+
+        var audienceSpecificities = new List<IdentifiedModel<AudienceSpecificity>>();
+
         for (var i = 0; i < 20; i++)
-            await audienceSpecificitiesRepository.Create
+        {
+            var specificity = await audienceSpecificitiesRepository.Create
             (
                 new AudienceSpecificity($"Specificity {i}"),
                 CancellationToken.None
             );
+
+            audienceSpecificities.Add(specificity);
+        }
+
+        for (var i = 0; i < 20; i++)
+        {
+            await audienceRepository.Create
+            (
+                new Audience(i, 30, audienceSpecificities),
+                CancellationToken.None
+            );
+        }
     }
 
     private ILifetimeScope InitializeDiContainer()

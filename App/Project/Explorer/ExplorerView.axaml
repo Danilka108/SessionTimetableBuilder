@@ -23,6 +23,9 @@
             <ComboBoxItem>
                 <TextBlock Classes="TitleMedium">Audiences specificities</TextBlock>
             </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock Classes="TitleMedium">Bell times</TextBlock>
+            </ComboBoxItem>
         </ComboBox>
 
         <rxui:RoutedViewHost HorizontalContentAlignment="Stretch" Router="{Binding Router}">

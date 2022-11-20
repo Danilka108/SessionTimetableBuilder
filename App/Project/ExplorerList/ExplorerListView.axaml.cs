@@ -1,18 +1,18 @@
+using System;
 using System.Reactive;
-using System.Reactive.Disposables;
 using System.Threading.Tasks;
-using App.CommonControls.ConfirmWindow;
-using App.CommonControls.MessageWindow;
-using App.Project.AudienceSpecificityEditor;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Mixins;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 
-namespace App.Project.AudienceSpecificities;
+namespace App.Project.ExplorerList;
 
-public partial class AudienceSpecificitiesView : ReactiveUserControl<AudienceSpecificitiesViewModel>
+public partial class ExplorerListView : ReactiveUserControl<ExplorerListViewModel>
 {
-    public AudienceSpecificitiesView()
+    public ExplorerListView()
     {
         this.WhenActivated
         (
@@ -24,17 +24,19 @@ public partial class AudienceSpecificitiesView : ReactiveUserControl<AudienceSpe
                     .DisposeWith(d);
             }
         );
-
+        
         InitializeComponent();
     }
 
-    private async Task DoOpenEditorDialog
-        (InteractionContext<AudienceSpecificityEditorViewModel, Unit> context)
+    protected virtual Window CreateEditorWindow(ViewModelBase viewModel)
     {
-        var editorWindow = new AudienceSpecificityEditorWindow
-        {
-            DataContext = context.Input
-        };
+        throw new NotImplementedException();
+    }
+
+    private async Task DoOpenEditorDialog
+        (InteractionContext<ViewModelBase, Unit> context)
+    {
+        var editorWindow = CreateEditorWindow(context.Input);
 
         if (ProjectWindow.ProjectWindow.GetCurrent() is { } window)
             await editorWindow.ShowDialog(window);

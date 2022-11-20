@@ -1,25 +1,28 @@
+using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using App.CommonControls.ConfirmWindow;
 using App.CommonControls.MessageWindow;
 using App.Project.AudienceSpecificityEditor;
+using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 
-namespace App.Project.AudienceSpecificityCard;
+namespace App.Project.ExplorerCard;
 
-public partial class AudienceSpecificityCardView : ReactiveUserControl<AudienceSpecificityCardViewModel>
+public partial class ExplorerCardView : ReactiveUserControl<ExplorerCardViewModel>
 {
-    public AudienceSpecificityCardView()
+    public ExplorerCardView()
     {
         this.WhenActivated
         (
             d =>
             {
                 ViewModel!
-                    .OpenEditor
+                    .OpenEditorDialog
                     .RegisterHandler(DoOpenEditorDialog)
                     .DisposeWith(d);
 
@@ -30,20 +33,23 @@ public partial class AudienceSpecificityCardView : ReactiveUserControl<AudienceS
 
                 ViewModel!
                     .OpenMessageDialog
-                    .RegisterHandler(DoOpenErrorMessageDialog)
+                    .RegisterHandler(DoOpenMessageDialog)
                     .DisposeWith(d);
             }
         );
+
         InitializeComponent();
     }
-    
-    private async Task DoOpenEditorDialog
-        (InteractionContext<AudienceSpecificityEditorViewModel, Unit> context)
+
+    protected virtual Window CreateEditorWindow(ViewModelBase viewModel)
     {
-        var editorWindow = new AudienceSpecificityEditorWindow
-        {
-            DataContext = context.Input
-        };
+        throw new NotImplementedException();
+    }
+
+    private async Task DoOpenEditorDialog
+        (InteractionContext<ViewModelBase, Unit> context)
+    {
+        var editorWindow = CreateEditorWindow(context.Input);
 
         if (ProjectWindow.ProjectWindow.GetCurrent() is { } window)
             await editorWindow.ShowDialog(window);
@@ -69,7 +75,7 @@ public partial class AudienceSpecificityCardView : ReactiveUserControl<AudienceS
         }
     }
 
-    private async Task DoOpenErrorMessageDialog
+    private async Task DoOpenMessageDialog
         (InteractionContext<MessageWindowViewModel, Unit> context)
     {
         var messageWindow = new MessageWindow
