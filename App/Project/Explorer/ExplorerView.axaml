@@ -11,7 +11,7 @@
         <explorer:ExplorerViewModel />
     </Design.DataContext>
 
-    <StackPanel HorizontalAlignment="Stretch">
+    <StackPanel>
         <Label Margin="12 12 12 4" Target="{Binding ElementName=ExploredSet}">
             <TextBlock Classes="HeadlineMedium" Text="Explored set" />
         </Label>
@@ -26,9 +26,12 @@
             <ComboBoxItem>
                 <TextBlock Classes="TitleMedium">Bell times</TextBlock>
             </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock Classes="TitleMedium">Disciplines</TextBlock>
+            </ComboBoxItem>
         </ComboBox>
 
-        <rxui:RoutedViewHost HorizontalContentAlignment="Stretch" Router="{Binding Router}">
+        <rxui:RoutedViewHost Router="{Binding Router}">
             <rxui:RoutedViewHost.ViewLocator>
                 <explorer:ExplorerViewLocator />
             </rxui:RoutedViewHost.ViewLocator>

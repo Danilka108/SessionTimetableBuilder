@@ -3,8 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:specificityWindow="clr-namespace:App.Project.AudienceSpecificityEditor"
-        Height="150"
-        Width="350"
+        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="App.Project.AudienceSpecificityEditor.AudienceSpecificityEditorWindow"
@@ -14,7 +13,7 @@
         <specificityWindow:AudienceSpecificityEditorViewModel />
     </Design.DataContext>
 
-    <StackPanel Margin="24" HorizontalAlignment="Stretch" Orientation="Vertical">
+    <StackPanel Margin="24 12" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Vertical">
         <StackPanel Orientation="Vertical" Margin="0 0 0 12" HorizontalAlignment="Stretch">
             <Label HorizontalAlignment="Left" Target="{Binding ElementName=Description}">
                 <TextBlock Classes="LabelLarge" Text="Description" />

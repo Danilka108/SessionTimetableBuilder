@@ -2,6 +2,7 @@ using System;
 using App.Project.Audiences;
 using App.Project.AudienceSpecificities;
 using App.Project.BellTimes;
+using App.Project.Disciplines;
 using ReactiveUI;
 
 namespace App.Project.Explorer;
@@ -21,6 +22,10 @@ public class ExplorerViewLocator : IViewLocator
                 DataContext = context
             },
             BellTimesViewModel context => new BellTimesView
+            {
+                DataContext = context
+            },
+            DisciplinesViewModel context => new DisciplinesView
             {
                 DataContext = context
             },

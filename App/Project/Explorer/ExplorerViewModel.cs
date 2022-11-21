@@ -4,28 +4,31 @@ using System.Reactive.Linq;
 using App.Project.Audiences;
 using App.Project.AudienceSpecificities;
 using App.Project.BellTimes;
+using App.Project.Disciplines;
 using ReactiveUI;
 
 namespace App.Project.Explorer;
 
 internal enum ExploredSetItem : byte
 {
-    Audience = 0,
+    Audiences = 0,
     AudienceSpecificities,
-    BellTimes
+    BellTimes,
+    Disciplines
 }
 
 public class ExplorerViewModel : ViewModelBase, IScreen
 {
     public delegate ExplorerViewModel Factory();
 
-    private byte _exploredSet = (byte)ExploredSetItem.BellTimes;
+    private byte _exploredSet = (byte)ExploredSetItem.Disciplines;
 
     public ExplorerViewModel
     (
         AudiencesViewModel.Factory audiencesViewModelFactory,
         AudienceSpecificitiesViewModel.Factory specificitiesViewModelFactory,
-        BellTimesViewModel.Factory bellTimesViewModelFactory
+        BellTimesViewModel.Factory bellTimesViewModelFactory,
+        DisciplinesViewModel.Factory disciplinesViewModelFactory
     )
     {
         Router = new RoutingState();
@@ -38,10 +41,11 @@ public class ExplorerViewModel : ViewModelBase, IScreen
                 {
                     IRoutableViewModel navigatedViewModel = (ExploredSetItem)exploredSet switch
                     {
-                        ExploredSetItem.Audience => audiencesViewModelFactory.Invoke(this),
+                        ExploredSetItem.Audiences => audiencesViewModelFactory.Invoke(this),
                         ExploredSetItem.AudienceSpecificities => specificitiesViewModelFactory
                             .Invoke(this),
                         ExploredSetItem.BellTimes => bellTimesViewModelFactory.Invoke(this),
+                        ExploredSetItem.Disciplines => disciplinesViewModelFactory.Invoke(this),
                         _ => throw new ArgumentNullException(nameof(exploredSet))
                     };
 

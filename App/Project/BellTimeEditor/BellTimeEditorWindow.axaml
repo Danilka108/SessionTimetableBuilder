@@ -5,8 +5,7 @@
         xmlns:bellTimeEditor="clr-namespace:App.Project.BellTimeEditor"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="App.Project.BellTimeEditor.BellTimeEditorWindow"
-        Height="100"
-        Width="325"
+        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         Title="BellTimeEditorWindow">
 
@@ -14,20 +13,19 @@
         <bellTimeEditor:BellTimeEditorViewModel />
     </Design.DataContext>
 
-    <StackPanel Margin="24" HorizontalAlignment="Center" Orientation="Vertical">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Hour}">
+    <StackPanel Margin="24 12" VerticalAlignment="Center" HorizontalAlignment="Stretch" Orientation="Vertical">
+        <DockPanel HorizontalAlignment="Stretch">
+            <StackPanel Margin="0 0 12 24" Width="90" Orientation="Vertical" DockPanel.Dock="Left">
                 <TextBlock Classes="LabelLarge" Text="Hour" />
-            </Label>
-            <TextBox Margin="0 0 6 24" Classes="BodyMedium" HorizontalAlignment="Left" x:Name="Hour"
-                     Text="{Binding Hour}" />
-
-            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Minute}">
+                <TextBox DockPanel.Dock="Left" Classes="BodyMedium"
+                         Text="{Binding Hour}" />
+            </StackPanel>
+            <StackPanel Margin="12 0 0 24" Width="90" Orientation="Vertical" DockPanel.Dock="Right">
                 <TextBlock Classes="LabelLarge" Text="Minute" />
-            </Label>
-            <TextBox Margin="6 0 0 24" Classes="BodyMedium" HorizontalAlignment="Right" x:Name="Minute"
-                     Text="{Binding Minute}" />
-        </StackPanel>
+                <TextBox DockPanel.Dock="Right" Classes="BodyMedium"
+                         Text="{Binding Minute}" />
+            </StackPanel>
+        </DockPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button IsEnabled="{Binding CanBeSaved}"

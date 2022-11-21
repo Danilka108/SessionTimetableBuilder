@@ -35,6 +35,7 @@
         <entry key="App/Project/BellTimeEditor/BellTimeEditorWindow.axaml" value="App/App.csproj" />
         <entry key="App/Project/BellTimes/BellTimesView.axaml" value="App/App.csproj" />
         <entry key="App/Project/Controls/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Project/DisciplineEditor/DisciplineEditorWindow.axaml" value="App/App.csproj" />
         <entry key="App/Project/Explorer/ExplorerView.axaml" value="App/App.csproj" />
         <entry key="App/Project/ExplorerCard/ExplorerCardView.axaml" value="App/App.csproj" />
         <entry key="App/Project/ExplorerCard1/ExplorerCard.axaml" value="App/App.csproj" />

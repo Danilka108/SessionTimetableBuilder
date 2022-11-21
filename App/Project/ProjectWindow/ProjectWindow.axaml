@@ -12,14 +12,11 @@
         <projectWindow:ProjectWindowViewModel />
     </Design.DataContext>
 
-    <Grid ColumnDefinitions="*,Auto,4*">
-
+    <Grid ClipToBounds="True" ColumnDefinitions="*,Auto,4*">
         <ScrollViewer Grid.Column="0">
-            <!-- <ScrollViewer.Background> -->
-            <!--     <SolidColorBrush Opacity="0.1" Color="Black" /> -->
-            <!-- </ScrollViewer.Background> -->
-            <StackPanel HorizontalAlignment="Stretch">
-                <explorer:ExplorerView DataContext="{Binding ExplorerViewModel}" />
+            <StackPanel>
+                <explorer:ExplorerView
+                    DataContext="{Binding ExplorerViewModel}" />
             </StackPanel>
         </ScrollViewer>
 

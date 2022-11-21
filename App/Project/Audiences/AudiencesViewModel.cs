@@ -53,6 +53,6 @@ public class AudiencesViewModel : ExplorerListViewModel, IRoutableViewModel
         return _editorViewModelFactory.Invoke(null);
     }
 
-    public string? UrlPathSegment { get; } = "/Audiences";
+    public string? UrlPathSegment => "/Audiences";
     public IScreen HostScreen { get; }
 }

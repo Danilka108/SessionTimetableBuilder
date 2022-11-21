@@ -2,37 +2,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:audienceEditor="clr-namespace:App.Project.AudienceEditor"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="App.Project.AudienceEditor.AudienceEditorWindow"
+        xmlns:disciplineEditor="clr-namespace:App.Project.DisciplineEditor"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
-        Title="AudienceEditorWindow">
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="App.Project.DisciplineEditor.DisciplineEditorWindow"
+        Title="DisciplineEditorWindow">
 
     <Design.DataContext>
-        <audienceEditor:AudienceEditorViewModel />
+        <disciplineEditor:DisciplineEditorViewModel />
     </Design.DataContext>
 
-    <StackPanel Width="350" Margin="24" VerticalAlignment="Center" HorizontalAlignment="Stretch" Orientation="Vertical">
+    <StackPanel Width="300" Margin="24 12" HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Vertical">
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Number}">
-                <TextBlock Classes="LabelLarge" Text="Number" />
+            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Name}">
+                <TextBlock Classes="LabelLarge" Text="Name" />
             </Label>
-            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch" x:Name="Number"
-                     Text="{Binding Number}" />
+            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch" x:Name="Name"
+                     Text="{Binding Name}" />
 
-            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Capacity}">
-                <TextBlock Classes="LabelLarge" Text="Capacity" />
+            <Label HorizontalAlignment="Left" Target="{Binding ElementName=AudienceRequirements}">
+                <TextBlock Classes="LabelLarge" Text="Audience requirements" />
             </Label>
-            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch" x:Name="Capacity"
-                     Text="{Binding Capacity}" />
-
-            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Specificities}">
-                <TextBlock Classes="LabelLarge" Text="Specificities" />
-            </Label>
-            <ScrollViewer Margin="0 0 0 12" Height="300" x:Name="Specificities">
-                <ListBox SelectionMode="Multiple,Toggle" Items="{Binding AllSpecificities}"
-                         SelectedItems="{Binding SelectedSpecificities}">
+            <ScrollViewer Margin="0 0 0 12" Height="300" x:Name="AudienceRequirements">
+                <ListBox SelectionMode="Multiple,Toggle" Items="{Binding AllRequirements}"
+                         SelectedItems="{Binding SelectedRequirements}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Classes="BodyMedium" Text="{Binding Model.Description}" />
