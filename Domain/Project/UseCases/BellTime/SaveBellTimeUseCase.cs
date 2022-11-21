@@ -13,6 +13,8 @@ public class SaveBellTimeUseCase
 
     public async Task Handle(Models.BellTime bellTime, int? id = null)
     {
+        ValidateBellTime(bellTime);
+        
         var token = CancellationToken.None;
 
         await CheckToOriginality(bellTime, token, id);
@@ -21,6 +23,25 @@ public class SaveBellTimeUseCase
             await Update(notNullId, bellTime, token);
         else
             await Create(bellTime, token);
+    }
+
+    private void ValidateBellTime(Models.BellTime bellTime)
+    {
+        switch (bellTime.Hour)
+        {
+            case >= 24:
+                throw new SaveBellTimeException("Hour value must less than 24.");
+            case < 0:
+                throw new SaveBellTimeException("Hour value must greater than or equal 0.");
+        }
+
+        switch (bellTime.Minute)
+        {
+            case >= 60:
+                throw new SaveBellTimeException("Minute value must less than 60.");
+            case < 0:
+                throw new SaveBellTimeException("Hour value must greater than 0.");
+        }
     }
 
     private async Task CheckToOriginality
