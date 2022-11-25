@@ -9,6 +9,8 @@ using Avalonia.Controls.Mixins;
 using Domain;
 using Domain.Project.Models;
 using Domain.Project.UseCases;
+using Domain.Project.UseCases.Audience;
+using Domain.Project.UseCases.AudienceSpecificity;
 using ReactiveUI;
 
 namespace App.Project.AudienceEditor;

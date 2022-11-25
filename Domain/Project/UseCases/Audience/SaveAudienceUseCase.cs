@@ -1,8 +1,6 @@
-using System.Data;
-using Domain.Project.Models;
 using Domain.Project.Repositories;
 
-namespace Domain.Project.UseCases;
+namespace Domain.Project.UseCases.Audience;
 
 public class SaveAudienceUseCase
 {
@@ -13,7 +11,7 @@ public class SaveAudienceUseCase
         _audienceRepository = audienceRepository;
     }
 
-    public async Task Handle(Audience audience, int? id = null)
+    public async Task Handle(Models.Audience audience, int? id = null)
     {
         var token = CancellationToken.None;
 
@@ -39,7 +37,7 @@ public class SaveAudienceUseCase
             throw new SaveAudienceException("Number of audience must be original");
     }
 
-    private async Task Create(Audience audience, CancellationToken token)
+    private async Task Create(Models.Audience audience, CancellationToken token)
     {
         try
         {
@@ -52,11 +50,11 @@ public class SaveAudienceUseCase
         }
     }
 
-    private async Task Update(Audience audience, int id, CancellationToken token)
+    private async Task Update(Models.Audience audience, int id, CancellationToken token)
     {
         try
         {
-            await _audienceRepository.Update(new IdentifiedModel<Audience>(id, audience), token);
+            await _audienceRepository.Update(new IdentifiedModel<Models.Audience>(id, audience), token);
         }
         catch (Exception e)
         {

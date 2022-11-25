@@ -1,5 +1,4 @@
 using System.Reactive.Linq;
-using Domain.Project.UseCases.BellTime;
 
 namespace Domain.Project.UseCases.Discipline;
 

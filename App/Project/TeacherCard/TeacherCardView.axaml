@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:App.Project.TeacherCard"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Project.TeacherCard.TeacherCardView">
+
+    <Design.DataContext>
+        <local:TeacherCardViewModel />
+    </Design.DataContext>
+
+    <Button Command="{Binding ShowEditor}"
+            CornerRadius="2"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Padding="8 6"
+            Margin="0 4">
+        <Button.Background>
+            <SolidColorBrush Color="Black" Opacity="0.08" />
+        </Button.Background>
+        <TextBlock HorizontalAlignment="Stretch"
+                   Classes="LabelLarge"
+                   Text="{Binding Title}" />
+    </Button>
+</UserControl>

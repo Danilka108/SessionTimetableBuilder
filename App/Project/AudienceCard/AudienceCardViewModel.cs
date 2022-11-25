@@ -10,6 +10,7 @@ using App.Project.ExplorerCard;
 using Domain;
 using Domain.Project.Models;
 using Domain.Project.UseCases;
+using Domain.Project.UseCases.Audience;
 using ReactiveUI;
 
 namespace App.Project.AudienceCard;

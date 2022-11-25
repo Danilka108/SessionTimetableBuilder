@@ -9,6 +9,7 @@ using App.CommonControls.MessageWindow;
 using Domain;
 using Domain.Project.Models;
 using Domain.Project.UseCases;
+using Domain.Project.UseCases.AudienceSpecificity;
 using ReactiveUI;
 
 namespace App.Project.AudienceSpecificityEditor;
@@ -58,12 +59,10 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
             );
 
         _canBeSaved = canBeSaved
-            .ObserveOn(RxApp.MainThreadScheduler)
             .ToProperty(this, vm => vm.CanBeSaved);
 
         _isLoading = Save
             .IsExecuting
-            .ObserveOn(RxApp.MainThreadScheduler)
             .ToProperty(this, vm => vm.IsLoading);
 
         var savingErrors = Save

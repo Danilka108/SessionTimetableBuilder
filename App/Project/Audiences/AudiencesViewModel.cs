@@ -7,6 +7,7 @@ using App.Project.AudienceCard;
 using App.Project.AudienceEditor;
 using App.Project.ExplorerList;
 using Domain.Project.UseCases;
+using Domain.Project.UseCases.Audience;
 using ReactiveUI;
 
 namespace App.Project.Audiences;

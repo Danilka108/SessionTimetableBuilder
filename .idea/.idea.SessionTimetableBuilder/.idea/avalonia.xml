@@ -34,6 +34,8 @@
         <entry key="App/Project/BellTimeEditor/BellTimeEditorViewModel.axaml" value="App/App.csproj" />
         <entry key="App/Project/BellTimeEditor/BellTimeEditorWindow.axaml" value="App/App.csproj" />
         <entry key="App/Project/BellTimes/BellTimesView.axaml" value="App/App.csproj" />
+        <entry key="App/Project/Browser/BrowsedHost.axaml" value="App/App.csproj" />
+        <entry key="App/Project/Browser/BrowsedViewHost.axaml" value="App/App.csproj" />
         <entry key="App/Project/Controls/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />
         <entry key="App/Project/DisciplineEditor/DisciplineEditorWindow.axaml" value="App/App.csproj" />
         <entry key="App/Project/Explorer/ExplorerView.axaml" value="App/App.csproj" />
@@ -43,6 +45,9 @@
         <entry key="App/Project/ExplorerItem/ExplorerItemView.axaml" value="App/App.csproj" />
         <entry key="App/Project/ExplorerList/ExplorerListView.axaml" value="App/App.csproj" />
         <entry key="App/Project/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />
+        <entry key="App/Project/TeacherCard/TeacherCardView.axaml" value="App/App.csproj" />
+        <entry key="App/Project/TeacherEditor/TeacherEditorView.axaml" value="App/App.csproj" />
+        <entry key="App/Project/Teachers/TeachersView.axaml" value="App/App.csproj" />
         <entry key="App/ProjectControls/ProjectWindow/ProjectWindow.axaml" value="App/App.csproj" />
         <entry key="App/Styles/Border.axaml" value="App/App.csproj" />
         <entry key="App/Styles/Font.axaml" value="App/App.csproj" />

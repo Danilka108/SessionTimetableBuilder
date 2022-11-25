@@ -1,8 +1,7 @@
 using System.Reactive.Linq;
-using Domain.Project.Models;
 using Domain.Project.Repositories;
 
-namespace Domain.Project.UseCases;
+namespace Domain.Project.UseCases.AudienceSpecificity;
 
 public class ObserveAllAudienceSpecificitiesUseCase
 {
@@ -14,12 +13,12 @@ public class ObserveAllAudienceSpecificitiesUseCase
         _specificitiesRepository = specificitiesRepository;
     }
 
-    public IObservable<IEnumerable<IdentifiedModel<AudienceSpecificity>>> Handle()
+    public IObservable<IEnumerable<IdentifiedModel<Models.AudienceSpecificity>>> Handle()
     {
         return _specificitiesRepository.ObserveAll()
-            .Catch<IEnumerable<IdentifiedModel<AudienceSpecificity>>, Exception>
+            .Catch<IEnumerable<IdentifiedModel<Models.AudienceSpecificity>>, Exception>
             (
-                e => Observable.Throw<IEnumerable<IdentifiedModel<AudienceSpecificity>>>
+                e => Observable.Throw<IEnumerable<IdentifiedModel<Models.AudienceSpecificity>>>
                 (
                     new ObserveAllAudienceSpecificitiesException
                         ("Failed to get all audience specificities", e)

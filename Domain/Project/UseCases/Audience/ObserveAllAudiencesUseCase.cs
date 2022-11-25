@@ -1,9 +1,7 @@
 using System.Reactive.Linq;
-using Domain.Project.Models;
 using Domain.Project.Repositories;
-using Domain.Project.UseCases.BellTime;
 
-namespace Domain.Project.UseCases;
+namespace Domain.Project.UseCases.Audience;
 
 public class ObserveAllAudiencesUseCase
 {
@@ -14,13 +12,13 @@ public class ObserveAllAudiencesUseCase
         _audienceRepository = audienceRepository;
     }
 
-    public IObservable<IEnumerable<IdentifiedModel<Audience>>> Handle()
+    public IObservable<IEnumerable<IdentifiedModel<Models.Audience>>> Handle()
     {
         return _audienceRepository
             .ObserveAll()
-            .Catch<IEnumerable<IdentifiedModel<Audience>>, Exception>
+            .Catch<IEnumerable<IdentifiedModel<Models.Audience>>, Exception>
             (
-                e => Observable.Throw<IEnumerable<IdentifiedModel<Audience>>>
+                e => Observable.Throw<IEnumerable<IdentifiedModel<Models.Audience>>>
                     (new ObserveAllAudiencesException("Failed to get all audiences", e))
             );
     }

@@ -10,6 +10,7 @@ using App.Project.ExplorerList;
 using Domain;
 using Domain.Project.Models;
 using Domain.Project.UseCases;
+using Domain.Project.UseCases.AudienceSpecificity;
 using ReactiveUI;
 
 namespace App.Project.AudienceSpecificities;

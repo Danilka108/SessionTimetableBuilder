@@ -1,7 +1,6 @@
-using Domain.Project.Models;
 using Domain.Project.Repositories;
 
-namespace Domain.Project.UseCases;
+namespace Domain.Project.UseCases.AudienceSpecificity;
 
 public class SaveAudienceSpecificityUseCase
 {
@@ -14,7 +13,7 @@ public class SaveAudienceSpecificityUseCase
     }
 
     public async Task Handle
-        (AudienceSpecificity specificity, int? id = null)
+        (Models.AudienceSpecificity specificity, int? id = null)
     {
         var token = CancellationToken.None;
 
@@ -43,7 +42,7 @@ public class SaveAudienceSpecificityUseCase
     }
 
     private async Task Create
-        (AudienceSpecificity specificity, CancellationToken token)
+        (Models.AudienceSpecificity specificity, CancellationToken token)
     {
         try
         {
@@ -57,11 +56,11 @@ public class SaveAudienceSpecificityUseCase
     }
 
     private async Task Update
-        (AudienceSpecificity specificity, int id, CancellationToken token)
+        (Models.AudienceSpecificity specificity, int id, CancellationToken token)
     {
         try
         {
-            var identifiedSpecificity = new IdentifiedModel<AudienceSpecificity>(id, specificity);
+            var identifiedSpecificity = new IdentifiedModel<Models.AudienceSpecificity>(id, specificity);
 
             await _specificityRepository.Update
                 (identifiedSpecificity, token);

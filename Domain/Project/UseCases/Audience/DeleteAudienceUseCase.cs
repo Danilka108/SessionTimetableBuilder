@@ -1,6 +1,6 @@
 using Domain.Project.Repositories;
 
-namespace Domain.Project.UseCases;
+namespace Domain.Project.UseCases.Audience;
 
 public class DeleteAudienceUseCase
 {

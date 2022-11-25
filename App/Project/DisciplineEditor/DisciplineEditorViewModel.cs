@@ -10,6 +10,7 @@ using App.CommonControls.MessageWindow;
 using Domain;
 using Domain.Project.Models;
 using Domain.Project.UseCases;
+using Domain.Project.UseCases.AudienceSpecificity;
 using Domain.Project.UseCases.Discipline;
 using ReactiveUI;
 
