@@ -10,8 +10,7 @@ public class ViewLocator : IDataTemplate
     {
         var dataType = data.GetType();
 
-        
-        
+
         var name = data.GetType()
             .FullName!.Replace("ViewModel", "View");
 

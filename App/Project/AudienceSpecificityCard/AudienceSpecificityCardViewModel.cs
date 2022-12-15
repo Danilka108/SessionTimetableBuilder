@@ -1,16 +1,9 @@
-using System;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
-using App.CommonControls.ConfirmWindow;
-using App.CommonControls.MessageWindow;
 using App.Project.AudienceSpecificityEditor;
 using App.Project.ExplorerCard;
 using Domain;
 using Domain.Project.Models;
-using Domain.Project.UseCases;
 using Domain.Project.UseCases.AudienceSpecificity;
-using ReactiveUI;
 
 namespace App.Project.AudienceSpecificityCard;
 
@@ -19,10 +12,11 @@ public class AudienceSpecificityCardViewModel : ExplorerCardViewModel
     public delegate AudienceSpecificityCardViewModel Factory
         (IdentifiedModel<AudienceSpecificity> specificity);
 
-    private readonly int _id;
+    private readonly DeleteAudienceSpecificityUseCase _deleteUseCase;
 
     private readonly AudienceSpecificityEditorViewModel.Factory _editorViewModelFactory;
-    private readonly DeleteAudienceSpecificityUseCase _deleteUseCase;
+
+    private readonly int _id;
 
     public AudienceSpecificityCardViewModel
     (
@@ -39,11 +33,14 @@ public class AudienceSpecificityCardViewModel : ExplorerCardViewModel
         _deleteUseCase = deleteUseCase;
     }
 
+    protected override string ConfirmDeleteMessage { get; }
+    public override string Title { get; }
+
     protected override ViewModelBase ProvideEditorViewModel()
     {
         var specificity = new IdentifiedModel<AudienceSpecificity>
             (_id, new AudienceSpecificity(Title));
-        
+
         return _editorViewModelFactory.Invoke
             (specificity);
     }
@@ -52,7 +49,4 @@ public class AudienceSpecificityCardViewModel : ExplorerCardViewModel
     {
         await _deleteUseCase.Handle(_id);
     }
-
-    protected override string ConfirmDeleteMessage { get; }
-    public override string Title { get; }
 }

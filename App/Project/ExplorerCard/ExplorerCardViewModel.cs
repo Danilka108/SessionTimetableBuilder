@@ -19,7 +19,17 @@ public abstract class ExplorerCardViewModel : ViewModelBase
         ShowEditor = ReactiveCommand.CreateFromTask(DoShowEditor);
         Delete = ReactiveCommand.CreateFromTask(DoDelete);
     }
-    
+
+    protected abstract string ConfirmDeleteMessage { get; }
+    public abstract string Title { get; }
+
+    public ReactiveCommand<Unit, Unit> ShowEditor { get; }
+    public ReactiveCommand<Unit, Unit> Delete { get; }
+
+    public Interaction<ViewModelBase, Unit> OpenEditorDialog { get; }
+    public Interaction<ConfirmWindowViewModel, bool> OpenConfirmDialog { get; }
+    public Interaction<MessageWindowViewModel, Unit> OpenMessageDialog { get; }
+
     private async Task DoDelete()
     {
         var confirmViewModel = new ConfirmWindowViewModel
@@ -47,14 +57,4 @@ public abstract class ExplorerCardViewModel : ViewModelBase
 
     protected abstract ViewModelBase ProvideEditorViewModel();
     protected abstract Task TryDoDelete();
-
-    protected abstract string ConfirmDeleteMessage { get; }
-    public abstract string Title { get; }
-
-    public ReactiveCommand<Unit, Unit> ShowEditor { get; }
-    public ReactiveCommand<Unit, Unit> Delete { get; }
-
-    public Interaction<ViewModelBase, Unit> OpenEditorDialog { get; }
-    public Interaction<ConfirmWindowViewModel, bool> OpenConfirmDialog { get; }
-    public Interaction<MessageWindowViewModel, Unit> OpenMessageDialog { get; }
 }

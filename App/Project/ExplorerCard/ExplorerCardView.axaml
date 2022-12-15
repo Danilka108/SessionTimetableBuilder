@@ -5,11 +5,11 @@
              xmlns:explorerCard="clr-namespace:App.Project.ExplorerCard"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="App.Project.ExplorerCard.ExplorerCardView">
-    
+
     <Design.DataContext>
-        <explorerCard:ExplorerCardViewModel/>
+        <explorerCard:ExplorerCardViewModel />
     </Design.DataContext>
-    
+
     <Grid ColumnDefinitions="*, Auto">
         <Grid.Styles>
             <Style Selector="Button.DeleteButton /template/ ContentPresenter#PART_ContentPresenter">
@@ -23,7 +23,8 @@
                     <SolidColorBrush Color="DarkRed" Opacity="0.7" />
                 </Setter>
             </Style>
-            <Style Selector="Button:pressed.DeleteButton /template/ ContentPresenter#PART_ContentPresenter">
+            <Style
+                Selector="Button:pressed.DeleteButton /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background">
                     <SolidColorBrush Color="DarkRed" Opacity="1" />
                 </Setter>

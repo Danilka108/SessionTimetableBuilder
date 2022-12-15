@@ -13,18 +13,21 @@
         <audienceEditor:AudienceEditorViewModel />
     </Design.DataContext>
 
-    <StackPanel Width="350" Margin="24" VerticalAlignment="Center" HorizontalAlignment="Stretch" Orientation="Vertical">
+    <StackPanel Width="350" Margin="24" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                Orientation="Vertical">
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
             <Label HorizontalAlignment="Left" Target="{Binding ElementName=Number}">
                 <TextBlock Classes="LabelLarge" Text="Number" />
             </Label>
-            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch" x:Name="Number"
+            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch"
+                     x:Name="Number"
                      Text="{Binding Number}" />
 
             <Label HorizontalAlignment="Left" Target="{Binding ElementName=Capacity}">
                 <TextBlock Classes="LabelLarge" Text="Capacity" />
             </Label>
-            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch" x:Name="Capacity"
+            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch"
+                     x:Name="Capacity"
                      Text="{Binding Capacity}" />
 
             <Label HorizontalAlignment="Left" Target="{Binding ElementName=Specificities}">
@@ -47,7 +50,8 @@
                     Command="{Binding Save}" Margin="0 0 6 0">
                 <WrapPanel>
                     <TextBlock IsVisible="{Binding !IsLoading}" Classes="TitleSmall" Text="Save" />
-                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall" Text="Loading..." />
+                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall"
+                               Text="Loading..." />
                 </WrapPanel>
             </Button>
 

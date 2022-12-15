@@ -60,7 +60,8 @@ public class SaveAudienceSpecificityUseCase
     {
         try
         {
-            var identifiedSpecificity = new IdentifiedModel<Models.AudienceSpecificity>(id, specificity);
+            var identifiedSpecificity =
+                new IdentifiedModel<Models.AudienceSpecificity>(id, specificity);
 
             await _specificityRepository.Update
                 (identifiedSpecificity, token);

@@ -13,12 +13,14 @@
         <disciplineEditor:DisciplineEditorViewModel />
     </Design.DataContext>
 
-    <StackPanel Width="300" Margin="24 12" HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Vertical">
+    <StackPanel Width="300" Margin="24 12" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                Orientation="Vertical">
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
             <Label HorizontalAlignment="Left" Target="{Binding ElementName=Name}">
                 <TextBlock Classes="LabelLarge" Text="Name" />
             </Label>
-            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch" x:Name="Name"
+            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch"
+                     x:Name="Name"
                      Text="{Binding Name}" />
 
             <Label HorizontalAlignment="Left" Target="{Binding ElementName=AudienceRequirements}">
@@ -41,7 +43,8 @@
                     Command="{Binding Save}" Margin="0 0 6 0">
                 <WrapPanel>
                     <TextBlock IsVisible="{Binding !IsLoading}" Classes="TitleSmall" Text="Save" />
-                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall" Text="Loading..." />
+                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall"
+                               Text="Loading..." />
                 </WrapPanel>
             </Button>
 

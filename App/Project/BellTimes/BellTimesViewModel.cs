@@ -14,9 +14,10 @@ public class BellTimesViewModel : ExplorerListViewModel, IRoutableViewModel
 {
     public delegate BellTimesViewModel Factory(IScreen hostScreen);
 
-    private readonly ObserveAllBellTimesUseCase _observeAllUseCase;
     private readonly BellTimeCardViewModel.Factory _cardViewModelFactory;
     private readonly BellTimeEditorViewModel.Factory _editorViewModelFactory;
+
+    private readonly ObserveAllBellTimesUseCase _observeAllUseCase;
 
     public BellTimesViewModel
     (
@@ -26,14 +27,17 @@ public class BellTimesViewModel : ExplorerListViewModel, IRoutableViewModel
         BellTimeEditorViewModel.Factory editorViewModelFactory
     )
     {
-        HostScreen = hostScreen; 
-        
+        HostScreen = hostScreen;
+
         _editorViewModelFactory = editorViewModelFactory;
         _observeAllUseCase = observeAllUseCase;
         _cardViewModelFactory = cardViewModelFactory;
-        
+
         Init();
     }
+
+    public string UrlPathSegment => "/BellTimes";
+    public IScreen HostScreen { get; }
 
     protected override IObservable<IEnumerable<ViewModelBase>> ObserveCards()
     {
@@ -48,7 +52,4 @@ public class BellTimesViewModel : ExplorerListViewModel, IRoutableViewModel
     {
         return _editorViewModelFactory.Invoke(null);
     }
-
-    public string UrlPathSegment => "/BellTimes";
-    public IScreen HostScreen { get; }
 }

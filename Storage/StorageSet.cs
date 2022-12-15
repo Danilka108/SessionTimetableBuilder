@@ -52,9 +52,15 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
     /// <summary>
     ///     Update entity value by id.
     /// </summary>
-    /// <param name="identifiedEntityToUpdate">Entity wrapper to <c cref="Identified{TEntity}">Identified</c></param>
+    /// <param name="identifiedEntityToUpdate">
+    ///     Entity wrapper to
+    ///     <c cref="Identified{TEntity}">Identified</c>
+    /// </param>
     /// <returns>The same storage set.</returns>
-    /// <exception cref="MissingEntityInStorageSetException">Throw if missing entity to update in storage set.</exception>
+    /// <exception cref="MissingEntityInStorageSetException">
+    ///     Throw if missing entity to update in storage
+    ///     set.
+    /// </exception>
     public StorageSet<TEntity> Update(Identified<TEntity> identifiedEntityToUpdate)
     {
         for (var i = 0; i < _entities.Count; i++)
@@ -73,9 +79,14 @@ public class StorageSet<TEntity> : IEnumerable<Identified<TEntity>>, IResourceCo
     /// <summary>
     ///     Delete entity by id.
     /// </summary>
-    /// <param name="entityIdToDelete">Entity wrapper to <c cref="Identified{TEntity}">Identified</c></param>
+    /// <param name="entityIdToDelete">
+    ///     Entity wrapper to <c cref="Identified{TEntity}">Identified</c>
+    /// </param>
     /// <returns>The same storage set.</returns>
-    /// <exception cref="MissingEntityInStorageSetException">Throw if missing entity to update in storage set.</exception>
+    /// <exception cref="MissingEntityInStorageSetException">
+    ///     Throw if missing entity to update in storage
+    ///     set.
+    /// </exception>
     public StorageSet<TEntity> Delete(int entityIdToDelete)
     {
         var isNotRemoved = _entities.RemoveAll

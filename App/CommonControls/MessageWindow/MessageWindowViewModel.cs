@@ -12,9 +12,7 @@ public class MessageWindowViewModel : ViewModelBase
 
         Close = ReactiveCommand.Create
         (
-            () =>
-            {
-            }
+            () => { }
         );
     }
 

@@ -13,7 +13,8 @@
         <specificityWindow:AudienceSpecificityEditorViewModel />
     </Design.DataContext>
 
-    <StackPanel Margin="24 12" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Vertical">
+    <StackPanel Margin="24 12" Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                Orientation="Vertical">
         <StackPanel Orientation="Vertical" Margin="0 0 0 12" HorizontalAlignment="Stretch">
             <Label HorizontalAlignment="Left" Target="{Binding ElementName=Description}">
                 <TextBlock Classes="LabelLarge" Text="Description" />
@@ -27,7 +28,8 @@
                     Command="{Binding Save}" Margin="0 0 6 0">
                 <WrapPanel>
                     <TextBlock IsVisible="{Binding !IsLoading}" Classes="TitleSmall" Text="Save" />
-                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall" Text="Loading..." />
+                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall"
+                               Text="Loading..." />
                 </WrapPanel>
             </Button>
 

@@ -14,7 +14,7 @@ public class SaveBellTimeUseCase
     public async Task Handle(Models.BellTime bellTime, int? id = null)
     {
         ValidateBellTime(bellTime);
-        
+
         var token = CancellationToken.None;
 
         await CheckToOriginality(bellTime, token, id);

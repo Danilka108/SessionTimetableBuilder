@@ -29,7 +29,10 @@ public class LinkedEntity<TEntity> : IResourceConsumer
     /// </summary>
     /// <param name="token">A token that may be used to cancel the async operation.</param>
     /// <returns>An Entity contained by link.</returns>
-    /// <exception cref="DereferenceLinkedEntityException">Throw if failed to load storage data or could not find Entity by id.</exception>
+    /// <exception cref="DereferenceLinkedEntityException">
+    ///     Throw if failed to load storage data or could
+    ///     not find Entity by id.
+    /// </exception>
     public async Task<TEntity> Dereference(CancellationToken token)
     {
         try

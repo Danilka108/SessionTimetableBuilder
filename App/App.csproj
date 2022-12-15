@@ -11,6 +11,7 @@
     <ItemGroup>
         <AvaloniaResource Include="Assets\**" />
         <None Remove=".gitignore" />
+        <None Include="Project\Browser\BrowsedViewHost.axaml" />
     </ItemGroup>
     <ItemGroup>
         <!--This helps with theme dll-s trimming.
@@ -38,6 +39,7 @@
         <UpToDateCheckInput Remove="Project\AudienceSpecificity\AudienceSpecificityView.axaml" />
         <UpToDateCheckInput Remove="Project\AudienceExplorer\AudienceExplorerView.axaml" />
         <UpToDateCheckInput Remove="Project\BellTimeCard\BellTimeCardView.axaml" />
+        <UpToDateCheckInput Remove="Project\Browser\BrowsedViewHost.axaml" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Data\Data.csproj" />

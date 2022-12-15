@@ -1,7 +1,6 @@
 using System;
 using System.Reactive;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Mixins;
 using Avalonia.Markup.Xaml;
@@ -24,7 +23,7 @@ public partial class ExplorerListView : ReactiveUserControl<ExplorerListViewMode
                     .DisposeWith(d);
             }
         );
-        
+
         InitializeComponent();
     }
 

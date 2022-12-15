@@ -3,30 +3,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:explorer="clr-namespace:App.Project.Explorer"
-        xmlns:projectWindow="clr-namespace:App.Project.ProjectWindow"
+        xmlns:local="clr-namespace:App.Project.ProjectWindow"
+        xmlns:browser="clr-namespace:App.Project.Browser"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="App.Project.ProjectWindow.ProjectWindow"
         Title="ProjectWindow">
 
     <Design.DataContext>
-        <projectWindow:ProjectWindowViewModel />
+        <local:ProjectWindowViewModel />
     </Design.DataContext>
 
-    <Grid ClipToBounds="True" ColumnDefinitions="*,Auto,4*">
-        <ScrollViewer Grid.Column="0">
-            <StackPanel>
-                <explorer:ExplorerView
-                    DataContext="{Binding ExplorerViewModel}" />
-            </StackPanel>
-        </ScrollViewer>
+    <StackPanel VerticalAlignment="Stretch" Orientation="Vertical">
+        <Button Command="{Binding Browse}">Click me!</Button>
 
-        <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False" HorizontalAlignment="Center"
-                      VerticalAlignment="Stretch">
-            <GridSplitter.Background>
-                <SolidColorBrush Color="Black" Opacity="0.15" />
-            </GridSplitter.Background>
-        </GridSplitter>
+        <Grid VerticalAlignment="Stretch" ClipToBounds="True" ColumnDefinitions="*,Auto,4*">
+            <ScrollViewer Grid.Column="0">
+                <StackPanel>
+                    <explorer:ExplorerView
+                        DataContext="{Binding ExplorerViewModel}" />
+                </StackPanel>
+            </ScrollViewer>
 
-        <StackPanel Grid.Column="2" />
-    </Grid>
+            <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch">
+                <GridSplitter.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.15" />
+                </GridSplitter.Background>
+            </GridSplitter>
+
+            <browser:BrowserViewHost Grid.Column="2" Browser="{Binding BrowserState}">
+                <browser:BrowserViewHost.ViewLocator>
+                    <local:BrowserViewLocator />
+                </browser:BrowserViewHost.ViewLocator>
+                <browser:BrowserViewHost.DefaultPage>
+                    <TextBlock>
+                        This is default page
+                    </TextBlock>
+                </browser:BrowserViewHost.DefaultPage>
+            </browser:BrowserViewHost>
+        </Grid>
+    </StackPanel>
 </Window>

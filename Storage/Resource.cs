@@ -18,7 +18,7 @@ internal class Resource : IDisposable
         _path = path;
         // _cachedStorageSets = null;
         _cachedStorageSets = new BehaviorSubject<Dictionary<string, SerializableStorageSet>?>(null);
-        
+
         StorageSets = _cachedStorageSets.AsObservable()
             .SelectMany
             (

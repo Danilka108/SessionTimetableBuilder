@@ -54,7 +54,8 @@ public class SaveAudienceUseCase
     {
         try
         {
-            await _audienceRepository.Update(new IdentifiedModel<Models.Audience>(id, audience), token);
+            await _audienceRepository.Update(new IdentifiedModel<Models.Audience>(id, audience),
+                token);
         }
         catch (Exception e)
         {

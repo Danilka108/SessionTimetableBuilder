@@ -1,12 +1,13 @@
 using System.Reactive.Linq;
+using Domain.Project.Repositories;
 
 namespace Domain.Project.UseCases.Discipline;
 
 public class ObserveAllDisciplinesUseCase
 {
-    private readonly Repositories.IDisciplineRepository _repository;
+    private readonly IDisciplineRepository _repository;
 
-    public ObserveAllDisciplinesUseCase(Repositories.IDisciplineRepository repository)
+    public ObserveAllDisciplinesUseCase(IDisciplineRepository repository)
     {
         _repository = repository;
     }

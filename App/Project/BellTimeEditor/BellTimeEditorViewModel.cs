@@ -4,7 +4,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using App.CommonControls.ConfirmWindow;
 using App.CommonControls.MessageWindow;
 using Domain;
 using Domain.Project.Models;
@@ -17,14 +16,14 @@ public class BellTimeEditorViewModel : ViewModelBase, IActivatableViewModel
 {
     public delegate BellTimeEditorViewModel Factory(IdentifiedModel<BellTime>? bellTime);
 
-    private string _hour;
-    private string _minute;
-    private readonly int? _id;
-
     private readonly ObservableAsPropertyHelper<bool> _canBeSaved;
+    private readonly int? _id;
     private readonly ObservableAsPropertyHelper<bool> _isLoading;
 
     private readonly SaveBellTimeUseCase _saveUseCase;
+
+    private string _hour;
+    private string _minute;
 
     public BellTimeEditorViewModel
     (
@@ -81,28 +80,6 @@ public class BellTimeEditorViewModel : ViewModelBase, IActivatableViewModel
         );
     }
 
-    private async Task<Unit> HandleSavingErrors
-    (
-        Exception e,
-        int _,
-        CancellationToken token
-    )
-    {
-        var messageViewModel = new MessageWindowViewModel("Error", e.Message);
-        await OpenMessageDialog.Handle(messageViewModel);
-
-        return Unit.Default;
-    }
-
-    private async Task TrySave()
-    {
-        var parsedHour = ParseInt(nameof(Hour), Hour);
-        var parsedMinute = ParseInt(nameof(Minute), Minute);
-        var model = new BellTime(parsedMinute, parsedHour);
-
-        await _saveUseCase.Handle(model, _id);
-    }
-
     public bool CanBeSaved => _canBeSaved.Value;
 
     public bool IsLoading => _isLoading.Value;
@@ -126,6 +103,28 @@ public class BellTimeEditorViewModel : ViewModelBase, IActivatableViewModel
     }
 
     public ViewModelActivator Activator { get; }
+
+    private async Task<Unit> HandleSavingErrors
+    (
+        Exception e,
+        int _,
+        CancellationToken token
+    )
+    {
+        var messageViewModel = new MessageWindowViewModel("Error", e.Message);
+        await OpenMessageDialog.Handle(messageViewModel);
+
+        return Unit.Default;
+    }
+
+    private async Task TrySave()
+    {
+        var parsedHour = ParseInt(nameof(Hour), Hour);
+        var parsedMinute = ParseInt(nameof(Minute), Minute);
+        var model = new BellTime(parsedMinute, parsedHour);
+
+        await _saveUseCase.Handle(model, _id);
+    }
 
     private static int ParseInt(string nameofProperty, string value)
     {

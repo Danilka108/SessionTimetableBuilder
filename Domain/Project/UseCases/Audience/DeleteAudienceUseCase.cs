@@ -27,7 +27,8 @@ public class DeleteAudienceUseCase
 
 public class DeleteAudienceException : Exception
 {
-    internal DeleteAudienceException(string msg, Exception innerException) : base(msg, innerException)
+    internal DeleteAudienceException(string msg, Exception innerException) : base(msg,
+        innerException)
     {
     }
 }

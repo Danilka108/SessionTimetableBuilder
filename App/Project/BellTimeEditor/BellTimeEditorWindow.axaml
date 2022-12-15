@@ -13,7 +13,8 @@
         <bellTimeEditor:BellTimeEditorViewModel />
     </Design.DataContext>
 
-    <StackPanel Margin="24 12" VerticalAlignment="Center" HorizontalAlignment="Stretch" Orientation="Vertical">
+    <StackPanel Margin="24 12" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                Orientation="Vertical">
         <DockPanel HorizontalAlignment="Stretch">
             <StackPanel Margin="0 0 12 24" Width="90" Orientation="Vertical" DockPanel.Dock="Left">
                 <TextBlock Classes="LabelLarge" Text="Hour" />
@@ -32,7 +33,8 @@
                     Command="{Binding Save}" Margin="0 0 6 0">
                 <WrapPanel>
                     <TextBlock IsVisible="{Binding !IsLoading}" Classes="TitleSmall" Text="Save" />
-                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall" Text="Loading..." />
+                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall"
+                               Text="Loading..." />
                 </WrapPanel>
             </Button>
 

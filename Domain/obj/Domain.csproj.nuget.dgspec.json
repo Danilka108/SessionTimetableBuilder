@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/danilka108/SessionTimetableBuilder/Domain/Domain.csproj": {}
+    "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj": {}
   },
   "projects": {
-    "/home/danilka108/SessionTimetableBuilder/Domain/Domain.csproj": {
+    "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/danilka108/SessionTimetableBuilder/Domain/Domain.csproj",
+        "projectUniqueName": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "/home/danilka108/SessionTimetableBuilder/Domain/Domain.csproj",
+        "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj",
         "packagesPath": "/home/danilka108/.nuget/packages/",
-        "outputPath": "/home/danilka108/SessionTimetableBuilder/Domain/obj/",
+        "outputPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/danilka108/.nuget/NuGet/NuGet.Config"
@@ -41,6 +41,10 @@
             "Autofac": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "System.Reactive": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [
@@ -58,7 +62,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/dotnet6-6.0.110/sdk/6.0.110/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.111/RuntimeIdentifierGraph.json"
         }
       }
     }

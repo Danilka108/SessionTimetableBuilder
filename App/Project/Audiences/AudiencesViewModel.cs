@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 using App.Project.AudienceCard;
 using App.Project.AudienceEditor;
 using App.Project.ExplorerList;
-using Domain.Project.UseCases;
 using Domain.Project.UseCases.Audience;
 using ReactiveUI;
 
@@ -15,10 +13,11 @@ namespace App.Project.Audiences;
 public class AudiencesViewModel : ExplorerListViewModel, IRoutableViewModel
 {
     public delegate AudiencesViewModel Factory(IScreen hostScreen);
-    
-    private readonly ObserveAllAudiencesUseCase _observeAllUseCase;
-    private readonly AudienceEditorViewModel.Factory _editorViewModelFactory;
+
     private readonly AudienceCardViewModel.Factory _cardViewModelFactory;
+    private readonly AudienceEditorViewModel.Factory _editorViewModelFactory;
+
+    private readonly ObserveAllAudiencesUseCase _observeAllUseCase;
 
     public AudiencesViewModel
     (
@@ -28,14 +27,17 @@ public class AudiencesViewModel : ExplorerListViewModel, IRoutableViewModel
         AudienceCardViewModel.Factory cardViewModelFactory
     )
     {
-        HostScreen = hostScreen; 
-        
+        HostScreen = hostScreen;
+
         _observeAllUseCase = observeAllUseCase;
         _editorViewModelFactory = editorViewModelFactory;
         _cardViewModelFactory = cardViewModelFactory;
 
         Init();
     }
+
+    public string? UrlPathSegment => "/Audiences";
+    public IScreen HostScreen { get; }
 
     protected override IObservable<IEnumerable<ViewModelBase>> ObserveCards()
     {
@@ -53,7 +55,4 @@ public class AudiencesViewModel : ExplorerListViewModel, IRoutableViewModel
     {
         return _editorViewModelFactory.Invoke(null);
     }
-
-    public string? UrlPathSegment => "/Audiences";
-    public IScreen HostScreen { get; }
 }

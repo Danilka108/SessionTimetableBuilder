@@ -1,15 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using App.Project.AudienceSpecificityCard;
 using App.Project.AudienceSpecificityEditor;
 using App.Project.ExplorerList;
-using Domain;
-using Domain.Project.Models;
-using Domain.Project.UseCases;
 using Domain.Project.UseCases.AudienceSpecificity;
 using ReactiveUI;
 
@@ -19,9 +14,10 @@ public class AudienceSpecificitiesViewModel : ExplorerListViewModel, IRoutableVi
 {
     public delegate AudienceSpecificitiesViewModel Factory(IScreen hostScreen);
 
-    private readonly ObserveAllAudienceSpecificitiesUseCase _observeAllUseCase;
-    private readonly AudienceSpecificityEditorViewModel.Factory _editorViewModelFactory;
     private readonly AudienceSpecificityCardViewModel.Factory _cardViewModelFactory;
+    private readonly AudienceSpecificityEditorViewModel.Factory _editorViewModelFactory;
+
+    private readonly ObserveAllAudienceSpecificitiesUseCase _observeAllUseCase;
 
     public AudienceSpecificitiesViewModel
     (
@@ -41,6 +37,9 @@ public class AudienceSpecificitiesViewModel : ExplorerListViewModel, IRoutableVi
         Init();
     }
 
+    public string? UrlPathSegment { get; } = "/AudienceSpecificities";
+    public IScreen HostScreen { get; }
+
     protected override IObservable<IEnumerable<ViewModelBase>> ObserveCards()
     {
         return _observeAllUseCase.Handle()
@@ -57,7 +56,4 @@ public class AudienceSpecificitiesViewModel : ExplorerListViewModel, IRoutableVi
     {
         return _editorViewModelFactory.Invoke(null);
     }
-
-    public string? UrlPathSegment { get; } = "/AudienceSpecificities";
-    public IScreen HostScreen { get; }
 }

@@ -15,7 +15,8 @@
         <Label Margin="12 12 12 4" Target="{Binding ElementName=ExploredSet}">
             <TextBlock Classes="HeadlineMedium" Text="Explored set" />
         </Label>
-        <ComboBox Margin="12 4 12 12" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+        <ComboBox Margin="12 4 12 12" HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Left"
                   SelectedIndex="{Binding ExploredSet}" x:Name="ExploredSet">
             <ComboBoxItem>
                 <TextBlock Classes="TitleMedium">Audiences</TextBlock>

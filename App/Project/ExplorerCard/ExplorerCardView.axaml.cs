@@ -4,8 +4,6 @@ using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using App.CommonControls.ConfirmWindow;
 using App.CommonControls.MessageWindow;
-using App.Project.AudienceSpecificityEditor;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;

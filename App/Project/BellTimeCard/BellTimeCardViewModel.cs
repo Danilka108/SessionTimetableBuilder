@@ -11,10 +11,10 @@ public class BellTimeCardViewModel : ExplorerCardViewModel
 {
     public delegate BellTimeCardViewModel Factory(IdentifiedModel<BellTime> bellTime);
 
+    private readonly IdentifiedModel<BellTime> _bellTime;
+
     private readonly DeleteBellTimeUseCase _deleteUseCase;
     private readonly BellTimeEditorViewModel.Factory _editorViewModelFactory;
-
-    private readonly IdentifiedModel<BellTime> _bellTime;
 
     public BellTimeCardViewModel
     (
@@ -31,9 +31,12 @@ public class BellTimeCardViewModel : ExplorerCardViewModel
             (bellTime.Model.Hour < 10 ? "0" : "") + bellTime.Model.Hour +
             ":" +
             (bellTime.Model.Minute < 10 ? "0" : "") + bellTime.Model.Minute;
-        
+
         ConfirmDeleteMessage = $"Delete bell time '{Title}'?";
     }
+
+    protected override string ConfirmDeleteMessage { get; }
+    public sealed override string Title { get; }
 
     protected override ViewModelBase ProvideEditorViewModel()
     {
@@ -44,7 +47,4 @@ public class BellTimeCardViewModel : ExplorerCardViewModel
     {
         await _deleteUseCase.Handle(_bellTime.Id);
     }
-
-    protected override string ConfirmDeleteMessage { get; }
-    public sealed override string Title { get; }
 }

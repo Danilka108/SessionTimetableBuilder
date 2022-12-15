@@ -78,13 +78,11 @@ public class ProjectInitializer
         }
 
         for (var i = 0; i < 20; i++)
-        {
             await audienceRepository.Create
             (
                 new Audience(i, 30, audienceSpecificities),
                 CancellationToken.None
             );
-        }
     }
 
     private ILifetimeScope InitializeDiContainer()

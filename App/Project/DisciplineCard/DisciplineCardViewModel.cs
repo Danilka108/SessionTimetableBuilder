@@ -16,8 +16,8 @@ public class DisciplineCardViewModel : ExplorerCardViewModel
     private readonly DisciplineEditorViewModel.Factory _editorViewModelFactory;
 
     public DisciplineCardViewModel
-        (IdentifiedModel<Discipline> discipline, DeleteDisciplineUseCase deleteUseCase,
-            DisciplineEditorViewModel.Factory editorViewModelFactory)
+    (IdentifiedModel<Discipline> discipline, DeleteDisciplineUseCase deleteUseCase,
+        DisciplineEditorViewModel.Factory editorViewModelFactory)
     {
         _editorViewModelFactory = editorViewModelFactory;
         _deleteUseCase = deleteUseCase;
@@ -26,6 +26,9 @@ public class DisciplineCardViewModel : ExplorerCardViewModel
         Title = discipline.Model.Name;
         ConfirmDeleteMessage = $"Delete discipline with name '{discipline.Model.Name}'?";
     }
+
+    protected override string ConfirmDeleteMessage { get; }
+    public sealed override string Title { get; }
 
     protected override ViewModelBase ProvideEditorViewModel()
     {
@@ -36,7 +39,4 @@ public class DisciplineCardViewModel : ExplorerCardViewModel
     {
         await _deleteUseCase.Handle(_discipline.Id);
     }
-
-    protected override string ConfirmDeleteMessage { get; }
-    public sealed override string Title { get; }
 }

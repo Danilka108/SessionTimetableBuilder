@@ -1,7 +1,7 @@
-using System;
 using App.Project.DisciplineEditor;
 using App.Project.ExplorerCard;
 using Avalonia.Controls;
+
 namespace App.Project.DisciplineCard;
 
 public class DisciplineCardView : ExplorerCardView

@@ -1,9 +1,9 @@
+using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using App.CommonControls.MessageWindow;
 using Avalonia;
-using System;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;

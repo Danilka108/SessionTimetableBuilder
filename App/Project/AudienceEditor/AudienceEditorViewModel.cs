@@ -8,7 +8,6 @@ using App.CommonControls.MessageWindow;
 using Avalonia.Controls.Mixins;
 using Domain;
 using Domain.Project.Models;
-using Domain.Project.UseCases;
 using Domain.Project.UseCases.Audience;
 using Domain.Project.UseCases.AudienceSpecificity;
 using ReactiveUI;
@@ -24,17 +23,17 @@ public class AudienceEditorViewModel : ViewModelBase, IActivatableViewModel
 
     private readonly ObservableAsPropertyHelper<bool> _canBeSaved;
 
+    private readonly int? _id;
+
     private readonly ObservableAsPropertyHelper<bool> _isLoading;
-
-    private IEnumerable<IdentifiedModel<AudienceSpecificity>> _selectedSpecificities;
-
-    private string _number;
-
-    private string _capacity;
 
     private readonly SaveAudienceUseCase _saveUseCase;
 
-    private readonly int? _id;
+    private string _capacity;
+
+    private string _number;
+
+    private IEnumerable<IdentifiedModel<AudienceSpecificity>> _selectedSpecificities;
 
     public AudienceEditorViewModel
     (
@@ -96,28 +95,6 @@ public class AudienceEditorViewModel : ViewModelBase, IActivatableViewModel
         );
     }
 
-    private async Task<Unit> HandleSavingErrors
-    (
-        Exception e,
-        int _,
-        CancellationToken token
-    )
-    {
-        var messageViewModel = new MessageWindowViewModel("Error", e.Message);
-        await OpenMessageDialog.Handle(messageViewModel);
-
-        return Unit.Default;
-    }
-
-    private async Task TrySave()
-    {
-        int parsedNumber = ParseInt(nameof(Number), Number);
-        int parsedCapacity = ParseInt(nameof(Capacity), Capacity);
-
-        var audience = new Audience(parsedNumber, parsedCapacity, SelectedSpecificities);
-        await _saveUseCase.Handle(audience, _id);
-    }
-
     public ReactiveCommand<Unit, Unit> Save { get; }
 
     public ReactiveCommand<Unit, Unit> Close { get; }
@@ -150,6 +127,28 @@ public class AudienceEditorViewModel : ViewModelBase, IActivatableViewModel
     public bool IsLoading => _isLoading.Value;
 
     public ViewModelActivator Activator { get; }
+
+    private async Task<Unit> HandleSavingErrors
+    (
+        Exception e,
+        int _,
+        CancellationToken token
+    )
+    {
+        var messageViewModel = new MessageWindowViewModel("Error", e.Message);
+        await OpenMessageDialog.Handle(messageViewModel);
+
+        return Unit.Default;
+    }
+
+    private async Task TrySave()
+    {
+        var parsedNumber = ParseInt(nameof(Number), Number);
+        var parsedCapacity = ParseInt(nameof(Capacity), Capacity);
+
+        var audience = new Audience(parsedNumber, parsedCapacity, SelectedSpecificities);
+        await _saveUseCase.Handle(audience, _id);
+    }
 
     private static int ParseInt(string nameofProperty, string value)
     {

@@ -2,13 +2,11 @@ using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using App.CommonControls.MessageWindow;
 using Domain;
 using Domain.Project.Models;
-using Domain.Project.UseCases;
 using Domain.Project.UseCases.AudienceSpecificity;
 using ReactiveUI;
 
@@ -19,13 +17,13 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
     public delegate AudienceSpecificityEditorViewModel Factory
         (IdentifiedModel<AudienceSpecificity>? specificity);
 
-    private string _description;
-
     private readonly ObservableAsPropertyHelper<bool> _canBeSaved;
 
     private readonly ObservableAsPropertyHelper<bool> _isLoading;
 
     private readonly SaveAudienceSpecificityUseCase _saveAudienceSpecificityUseCase;
+
+    private string _description;
 
     public AudienceSpecificityEditorViewModel
     (
@@ -38,9 +36,7 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
 
         Close = ReactiveCommand.Create
         (
-            () =>
-            {
-            }
+            () => { }
         );
 
         _saveAudienceSpecificityUseCase = saveAudienceSpecificityUseCase;
@@ -85,14 +81,6 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
         );
     }
 
-    private async Task<Unit> HandleSavingErrors(Exception e, int _, CancellationToken token)
-    {
-        var messageViewModel = new MessageWindowViewModel("Error", e.Message);
-        await OpenMessageDialog.Handle(messageViewModel);
-
-        return Unit.Default;
-    }
-
     public ReactiveCommand<Unit, Unit> Save { get; }
 
     public string Description
@@ -110,4 +98,12 @@ public class AudienceSpecificityEditorViewModel : ViewModelBase, IActivatableVie
     public Interaction<MessageWindowViewModel, Unit> OpenMessageDialog { get; }
 
     public ViewModelActivator Activator { get; }
+
+    private async Task<Unit> HandleSavingErrors(Exception e, int _, CancellationToken token)
+    {
+        var messageViewModel = new MessageWindowViewModel("Error", e.Message);
+        await OpenMessageDialog.Handle(messageViewModel);
+
+        return Unit.Default;
+    }
 }

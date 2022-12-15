@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "DCujnLedNPu4Gur0oEFrZHtnkKxdeAe04Pqz3tsgglo2imb+epcKfm32wiV78c/Z5DSEUo7eF1tLLMXm4h8MgQ==",
+  "dgSpecHash": "msx1vAxl6Pm857Nk+c728l0Am36aYE6ezCOx6RmvdW02+4/OJO7HdxBINH9+i+AYRYdDmTH2D9LkuYlyJ6GPdA==",
   "success": true,
-  "projectFilePath": "/home/danilka108/SessionTimetableBuilder/Domain/Domain.csproj",
+  "projectFilePath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj",
   "expectedPackageFiles": [
     "/home/danilka108/.nuget/packages/autofac/6.4.0/autofac.6.4.0.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/system.diagnostics.diagnosticsource/4.7.1/system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
+    "/home/danilka108/.nuget/packages/system.diagnostics.diagnosticsource/4.7.1/system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512",
+    "/home/danilka108/.nuget/packages/system.reactive/5.0.0/system.reactive.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }

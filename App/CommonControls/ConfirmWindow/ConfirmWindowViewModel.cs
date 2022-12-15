@@ -13,16 +13,12 @@ public class ConfirmWindowViewModel : ViewModelBase
 
         Confirm = ReactiveCommand.Create
         (
-            () =>
-            {
-            }
+            () => { }
         );
 
         Close = ReactiveCommand.Create
         (
-            () =>
-            {
-            }
+            () => { }
         );
     }
 

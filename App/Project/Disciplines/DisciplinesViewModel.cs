@@ -14,9 +14,10 @@ public class DisciplinesViewModel : ExplorerListViewModel, IRoutableViewModel
 {
     public delegate DisciplinesViewModel Factory(IScreen hostScreen);
 
-    private readonly ObserveAllDisciplinesUseCase _observeAllUseCase;
     private readonly DisciplineCardViewModel.Factory _cardViewModelFactory;
     private readonly DisciplineEditorViewModel.Factory _editorViewModelFactory;
+
+    private readonly ObserveAllDisciplinesUseCase _observeAllUseCase;
 
     public DisciplinesViewModel
     (
@@ -27,13 +28,16 @@ public class DisciplinesViewModel : ExplorerListViewModel, IRoutableViewModel
     )
     {
         HostScreen = hostScreen;
-        
+
         _editorViewModelFactory = editorViewModelFactory;
         _observeAllUseCase = observeAllUseCase;
         _cardViewModelFactory = cardViewModelFactory;
 
         Init();
     }
+
+    public string? UrlPathSegment => "/Disciplines";
+    public IScreen HostScreen { get; }
 
     protected override IObservable<IEnumerable<ViewModelBase>> ObserveCards()
     {
@@ -49,7 +53,4 @@ public class DisciplinesViewModel : ExplorerListViewModel, IRoutableViewModel
     {
         return _editorViewModelFactory.Invoke(null);
     }
-
-    public string? UrlPathSegment => "/Disciplines";
-    public IScreen HostScreen { get; }
 }
