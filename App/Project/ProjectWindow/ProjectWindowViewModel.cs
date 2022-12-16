@@ -11,6 +11,8 @@ namespace App.Project.ProjectWindow;
 
 public class ProjectWindowViewModel : ViewModelBase, IBrowser
 {
+    private int i = 0;
+    
     public ProjectWindowViewModel
     (
         ExplorerViewModel.Factory explorerViewModelFactory,
@@ -27,7 +29,12 @@ public class ProjectWindowViewModel : ViewModelBase, IBrowser
         );
 
         Browse = ReactiveCommand.CreateFromObservable
-            (() => BrowserState.Browse.Execute(teacherEditorViewModelFactory.Invoke(teacher)));
+            (() =>
+            {
+                var a = BrowserState.Browse.Execute(teacherEditorViewModelFactory.Invoke(teacher, i));
+                i++;
+                return a;
+            });
     }
 
     public ReactiveCommand<Unit, Unit> Browse { get; }

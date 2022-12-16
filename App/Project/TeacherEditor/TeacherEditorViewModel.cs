@@ -6,11 +6,11 @@ namespace App.Project.TeacherEditor;
 
 public class TeacherEditorViewModel : ViewModelBase, IBrowserPage
 {
-    public delegate TeacherEditorViewModel Factory(IdentifiedModel<Teacher>? teacher);
+    public delegate TeacherEditorViewModel Factory(IdentifiedModel<Teacher>? teacher, int i);
 
-    public TeacherEditorViewModel(IdentifiedModel<Teacher>? teacher)
+    public TeacherEditorViewModel(IdentifiedModel<Teacher>? teacher, int i)
     {
-        Name = teacher?.Model.Surname ?? "";
+        Name = teacher?.Model.Surname + i ?? "";
     }
 
     public string Name { get; }

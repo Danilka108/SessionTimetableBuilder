@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
@@ -18,11 +20,6 @@ using DynamicData.Kernel;
 using ReactiveUI;
 
 namespace App.Project.Browser;
-
-class DefaultBrowserPage : IBrowserPage
-{
-    public string Name => "DefaultPage";
-}
 
 public struct BrowsingItem
 {
@@ -42,7 +39,7 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
     public static readonly StyledProperty<BrowserState?> BrowserProperty =
         AvaloniaProperty.Register<BrowserViewHost, BrowserState?>(nameof(Browser));
 
-    public readonly static StyledProperty<IControl> DefaultPageProperty =
+    public static readonly StyledProperty<IControl> DefaultPageProperty =
         AvaloniaProperty.Register<BrowserViewHost, IControl>(nameof(DefaultPage));
 
     public BrowserState? Browser
@@ -65,29 +62,40 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
 
     Type IStyleable.StyleKey => typeof(ContentControl);
 
-    private int _defaultItemIndex;
+    // private static FuncDataTemplate<BrowsingItem> ItemTemplate => new(
+    //     (item, _) => new TextBlock { Text = item.Page.Name }
+    // );
 
-    private static readonly FuncDataTemplate<BrowsingItem> ItemTemplate = new(
-        (item, _) => new TextBlock { Text = item.Page.Name }
+    private readonly ReactiveCommand<IBrowserPage, Unit> _close;
+
+    private FuncDataTemplate<BrowsingItem> TabItemTemplate => new(
+        (item, _) => new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            Children =
+            {
+                new TextBlock { Text = item.Page.Name },
+                new Button { CommandParameter = item.Page, Command = _close }
+            }
+        }
     );
 
-    private static readonly FuncDataTemplate<BrowsingItem> ContentTemplate = new(
+    private FuncDataTemplate<BrowsingItem> TabContentTemplate => new(
         (item, _) => item.Control
     );
 
     public BrowserViewHost()
     {
+        _close = ReactiveCommand.Create<IBrowserPage>(ClosePage);
+
         _browsingItems = new AvaloniaList<BrowsingItem>();
 
         _tabControl = new TabControl
         {
             Items = _browsingItems,
-            SelectedIndex = 0,
-            ItemTemplate = ItemTemplate,
-            ContentTemplate = ContentTemplate
+            ItemTemplate = TabItemTemplate,
+            ContentTemplate = TabContentTemplate
         };
-
-        Content = _tabControl;
 
         this.WhenActivated(d =>
         {
@@ -103,7 +111,7 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
 
             this
                 .GetObservable(DefaultPageProperty)
-                .Subscribe(OnDefaultControlUpdating)
+                .Subscribe(_ => DisplayLastPage())
                 .DisposeWith(d);
         });
     }
@@ -121,24 +129,16 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
         }
     }
 
-    private void OnDefaultControlUpdating(IControl defaultControl)
+    private void DisplayLastPage()
     {
-        var defaultItem = new BrowsingItem(new DefaultBrowserPage(), defaultControl);
-
-        var defaultPageIndex = _browsingItems
-            .GetPages()
-            .IndexOf(defaultItem.Page, new IBrowserPage.Comparer());
-
-        if (defaultPageIndex > 0)
+        if (_browsingItems.Count == 0)
         {
-            _defaultItemIndex = defaultPageIndex;
-            _browsingItems[_defaultItemIndex] = defaultItem;
+            Content = DefaultPage;
+            return;
         }
-        else
-        {
-            _browsingItems.Add(defaultItem);
-            _defaultItemIndex = _browsingItems.Count - 1;
-        }
+
+        Content = _tabControl;
+        _tabControl.SelectedIndex = _browsingItems.Count - 1;
     }
 
     private IControl ResolvePage(IBrowserPage page)
@@ -166,8 +166,9 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
 
     private void BrowsePage(IBrowserPage page)
     {
+        Content = _tabControl;
+        
         var maybeSamePair = _browsingItems
-            .SkipAt(_defaultItemIndex)
             .GetPages()
             .FirstOrNull(page, new IBrowserPage.Comparer());
 
@@ -188,48 +189,29 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
             _browsingItems.Add(itemToBrowse);
         }
 
-        _tabControl.SelectedIndex = _browsingItems.Count - 1;
+        DisplayLastPage();
     }
 
     private void ClosePage(IBrowserPage page)
     {
-        var maybeSamePair = _browsingItems
-            .SkipAt(_defaultItemIndex)
-            .GetPages()
-            .FirstOrNull(page, new IBrowserPage.Comparer());
-
-        if (maybeSamePair is null) return;
-        
+        Content = _tabControl;
         
         var pageToRemoveIndex = _browsingItems.GetPages()
             .IndexOf(page, new IBrowserPage.Comparer());
+
+        if (pageToRemoveIndex < 0) return;
+
         _browsingItems.RemoveAt(pageToRemoveIndex);
-        
-        _tabControl.SelectedIndex = _browsingItems.Count - 1;
+
+        DisplayLastPage();
     }
 }
 
 public static class EnumerableExtensions
 {
-    public static IEnumerable<T> SkipAt<T>(this IEnumerable<T> enumerable, int index)
-    {
-        var oldCollection = new List<T>(enumerable);
-        var newCollection = new List<T>();
-
-        newCollection.AddRange(oldCollection.Take(index));
-        newCollection.AddRange(oldCollection.Skip(index + 1));
-
-        return newCollection;
-    }
-
     public static IEnumerable<IBrowserPage> GetPages(this IEnumerable<BrowsingItem> items)
     {
         return items.Select(item => item.Page);
-    }
-
-    public static IEnumerable<IControl> GetControls(this IEnumerable<BrowsingItem> items)
-    {
-        return items.Select(item => item.Control);
     }
 
     public static T? FirstOrNull<T>(this IEnumerable<T> enumerable, T itemToFind,
