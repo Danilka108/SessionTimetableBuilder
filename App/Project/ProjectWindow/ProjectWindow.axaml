@@ -13,35 +13,31 @@
         <local:ProjectWindowViewModel />
     </Design.DataContext>
 
-    <StackPanel VerticalAlignment="Stretch" Orientation="Vertical">
-        <Button Command="{Binding Browse}">Click me!</Button>
+    <Grid VerticalAlignment="Stretch" ClipToBounds="True" ColumnDefinitions="*,Auto,4*">
+        <ScrollViewer Grid.Column="0">
+            <StackPanel>
+                <explorer:ExplorerView
+                    DataContext="{Binding ExplorerViewModel}" />
+            </StackPanel>
+        </ScrollViewer>
 
-        <Grid VerticalAlignment="Stretch" ClipToBounds="True" ColumnDefinitions="*,Auto,4*">
-            <ScrollViewer Grid.Column="0">
-                <StackPanel>
-                    <explorer:ExplorerView
-                        DataContext="{Binding ExplorerViewModel}" />
-                </StackPanel>
-            </ScrollViewer>
+        <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch">
+            <GridSplitter.Background>
+                <SolidColorBrush Color="Black" Opacity="0.15" />
+            </GridSplitter.Background>
+        </GridSplitter>
 
-            <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Stretch">
-                <GridSplitter.Background>
-                    <SolidColorBrush Color="Black" Opacity="0.15" />
-                </GridSplitter.Background>
-            </GridSplitter>
-
-            <browser:BrowserViewHost Grid.Column="2" Browser="{Binding BrowserState}">
-                <browser:BrowserViewHost.ViewLocator>
-                    <local:BrowserViewLocator />
-                </browser:BrowserViewHost.ViewLocator>
-                <browser:BrowserViewHost.DefaultPage>
-                    <TextBlock>
-                        This is default page
-                    </TextBlock>
-                </browser:BrowserViewHost.DefaultPage>
-            </browser:BrowserViewHost>
-        </Grid>
-    </StackPanel>
+        <browser:BrowserViewHost Grid.Column="2" Browser="{Binding BrowserState}">
+            <browser:BrowserViewHost.ViewLocator>
+                <local:BrowserViewLocator />
+            </browser:BrowserViewHost.ViewLocator>
+            <browser:BrowserViewHost.DefaultPage>
+                <TextBlock>
+                    This is default page
+                </TextBlock>
+            </browser:BrowserViewHost.DefaultPage>
+        </browser:BrowserViewHost>
+    </Grid>
 </Window>

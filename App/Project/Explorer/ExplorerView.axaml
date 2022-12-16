@@ -12,25 +12,34 @@
     </Design.DataContext>
 
     <StackPanel>
-        <Label Margin="12 12 12 4" Target="{Binding ElementName=ExploredSet}">
-            <TextBlock Classes="HeadlineMedium" Text="Explored set" />
+        <Label Margin="12 8 12 0" Target="{Binding ElementName=ExploredSet}">
+            <TextBlock Classes="HeadlineSmall" Text="Explorer" />
         </Label>
-        <ComboBox Margin="12 4 12 12" HorizontalAlignment="Stretch"
-                  HorizontalContentAlignment="Left"
-                  SelectedIndex="{Binding ExploredSet}" x:Name="ExploredSet">
-            <ComboBoxItem>
-                <TextBlock Classes="TitleMedium">Audiences</TextBlock>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock Classes="TitleMedium">Audiences specificities</TextBlock>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock Classes="TitleMedium">Bell times</TextBlock>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock Classes="TitleMedium">Disciplines</TextBlock>
-            </ComboBoxItem>
-        </ComboBox>
+
+        <Grid Margin="12 8 12 4" RowSpan="0" ColumnSpan="0" RowDefinitions="Auto"
+              VerticalAlignment="Center" ColumnDefinitions="*, Auto">
+            <ComboBox Grid.Column="0" HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Left" VerticalAlignment="Center"
+                      VerticalContentAlignment="Stretch"
+                      SelectedIndex="{Binding ExploredSet}" x:Name="ExploredSet">
+                <ComboBoxItem>
+                    <TextBlock Classes="TitleMedium">Audiences</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Classes="TitleMedium">Audiences specificities</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Classes="TitleMedium">Bell times</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Classes="TitleMedium">Disciplines</TextBlock>
+                </ComboBoxItem>
+            </ComboBox>
+            <Button Command="{Binding Create}" Margin="12 0 0 0" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                    Grid.Column="1">
+                <Image Width="24" Height="24" Source="{SvgImage /Assets/add_icon.svg}" />
+            </Button>
+        </Grid>
 
         <rxui:RoutedViewHost Router="{Binding Router}">
             <rxui:RoutedViewHost.ViewLocator>

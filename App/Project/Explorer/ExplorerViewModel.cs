@@ -1,4 +1,5 @@
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using App.Project.Audiences;
 using App.Project.AudienceSpecificities;
@@ -30,6 +31,7 @@ public class ExplorerViewModel : ViewModelBase, IScreen
         DisciplinesViewModel.Factory disciplinesViewModelFactory
     )
     {
+        Create = ReactiveCommand.Create(() => {});
         Router = new RoutingState();
 
         NavigateToExploredItem = this
@@ -40,11 +42,11 @@ public class ExplorerViewModel : ViewModelBase, IScreen
                 {
                     IRoutableViewModel navigatedViewModel = (ExploredSetItem)exploredSet switch
                     {
-                        ExploredSetItem.Audiences => audiencesViewModelFactory.Invoke(this),
+                        ExploredSetItem.Audiences => audiencesViewModelFactory.Invoke(this, Create),
                         ExploredSetItem.AudienceSpecificities => specificitiesViewModelFactory
-                            .Invoke(this),
-                        ExploredSetItem.BellTimes => bellTimesViewModelFactory.Invoke(this),
-                        ExploredSetItem.Disciplines => disciplinesViewModelFactory.Invoke(this),
+                            .Invoke(this, Create),
+                        ExploredSetItem.BellTimes => bellTimesViewModelFactory.Invoke(this, Create),
+                        ExploredSetItem.Disciplines => disciplinesViewModelFactory.Invoke(this, Create),
                         _ => throw new ArgumentNullException(nameof(exploredSet))
                     };
 
@@ -52,6 +54,8 @@ public class ExplorerViewModel : ViewModelBase, IScreen
                 }
             );
     }
+    
+    public ReactiveCommand<Unit, Unit> Create { get; }
 
     public IObservable<IRoutableViewModel> NavigateToExploredItem { get; }
 

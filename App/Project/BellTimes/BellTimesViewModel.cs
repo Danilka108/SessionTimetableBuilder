@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using App.Project.BellTimeCard;
 using App.Project.BellTimeEditor;
@@ -12,7 +13,7 @@ namespace App.Project.BellTimes;
 
 public class BellTimesViewModel : ExplorerListViewModel, IRoutableViewModel
 {
-    public delegate BellTimesViewModel Factory(IScreen hostScreen);
+    public delegate BellTimesViewModel Factory(IScreen hostScreen, IObservable<Unit> creating);
 
     private readonly BellTimeCardViewModel.Factory _cardViewModelFactory;
     private readonly BellTimeEditorViewModel.Factory _editorViewModelFactory;
@@ -22,10 +23,11 @@ public class BellTimesViewModel : ExplorerListViewModel, IRoutableViewModel
     public BellTimesViewModel
     (
         IScreen hostScreen,
+        IObservable<Unit> creating,
         BellTimeCardViewModel.Factory cardViewModelFactory,
         ObserveAllBellTimesUseCase observeAllUseCase,
         BellTimeEditorViewModel.Factory editorViewModelFactory
-    )
+    ) : base(creating)
     {
         HostScreen = hostScreen;
 

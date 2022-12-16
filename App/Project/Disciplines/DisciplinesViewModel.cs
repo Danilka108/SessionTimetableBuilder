@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using App.Project.DisciplineCard;
 using App.Project.DisciplineEditor;
@@ -12,7 +13,7 @@ namespace App.Project.Disciplines;
 
 public class DisciplinesViewModel : ExplorerListViewModel, IRoutableViewModel
 {
-    public delegate DisciplinesViewModel Factory(IScreen hostScreen);
+    public delegate DisciplinesViewModel Factory(IScreen hostScreen, IObservable<Unit> creating);
 
     private readonly DisciplineCardViewModel.Factory _cardViewModelFactory;
     private readonly DisciplineEditorViewModel.Factory _editorViewModelFactory;
@@ -22,10 +23,11 @@ public class DisciplinesViewModel : ExplorerListViewModel, IRoutableViewModel
     public DisciplinesViewModel
     (
         IScreen hostScreen,
+        IObservable<Unit> creating,
         ObserveAllDisciplinesUseCase observeAllUseCase,
         DisciplineCardViewModel.Factory cardViewModelFactory,
         DisciplineEditorViewModel.Factory editorViewModelFactory
-    )
+    ) : base(creating)
     {
         HostScreen = hostScreen;
 

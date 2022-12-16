@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using App.Project.AudienceSpecificityCard;
 using App.Project.AudienceSpecificityEditor;
@@ -12,7 +13,7 @@ namespace App.Project.AudienceSpecificities;
 
 public class AudienceSpecificitiesViewModel : ExplorerListViewModel, IRoutableViewModel
 {
-    public delegate AudienceSpecificitiesViewModel Factory(IScreen hostScreen);
+    public delegate AudienceSpecificitiesViewModel Factory(IScreen hostScreen, IObservable<Unit> creating);
 
     private readonly AudienceSpecificityCardViewModel.Factory _cardViewModelFactory;
     private readonly AudienceSpecificityEditorViewModel.Factory _editorViewModelFactory;
@@ -22,10 +23,11 @@ public class AudienceSpecificitiesViewModel : ExplorerListViewModel, IRoutableVi
     public AudienceSpecificitiesViewModel
     (
         IScreen hostScreen,
+        IObservable<Unit> creating,
         ObserveAllAudienceSpecificitiesUseCase observeAllAudienceSpecificitiesUseCase,
         AudienceSpecificityEditorViewModel.Factory editorViewModelFactory,
         AudienceSpecificityCardViewModel.Factory cardViewModelFactory
-    )
+    ) : base(creating)
     {
         HostScreen = hostScreen;
 
