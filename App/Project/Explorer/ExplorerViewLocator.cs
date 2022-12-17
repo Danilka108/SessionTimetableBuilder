@@ -3,6 +3,7 @@ using App.Project.Audiences;
 using App.Project.AudienceSpecificities;
 using App.Project.BellTimes;
 using App.Project.Disciplines;
+using App.Project.Teachers;
 using ReactiveUI;
 
 namespace App.Project.Explorer;
@@ -28,6 +29,10 @@ public class ExplorerViewLocator : IViewLocator
             DisciplinesViewModel context => new DisciplinesView
             {
                 DataContext = context
+            },
+            TeachersViewModel context => new TeachersView
+            {
+                ViewModel = context,
             },
             _ => throw new ArgumentNullException(nameof(viewModel))
         };

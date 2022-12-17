@@ -12,7 +12,7 @@ public abstract class ExplorerListViewModel : ViewModelBase, IActivatableViewMod
 {
     private ObservableAsPropertyHelper<IEnumerable<ViewModelBase>> _cards;
 
-    public ExplorerListViewModel(IObservable<Unit> creating)
+    protected ExplorerListViewModel(IObservable<Unit> creating)
     {
         Activator = new ViewModelActivator();
         OpenEditor = new Interaction<ViewModelBase, Unit>();
@@ -30,7 +30,7 @@ public abstract class ExplorerListViewModel : ViewModelBase, IActivatableViewMod
 
     public Interaction<ViewModelBase, Unit> OpenEditor { get; }
 
-    public void Init()
+    protected void Init()
     {
         _cards = ObserveCards()
             .ToProperty(this, vm => vm.Cards);

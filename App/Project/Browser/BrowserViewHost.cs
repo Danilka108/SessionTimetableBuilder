@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
@@ -14,7 +15,11 @@ using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Data.Core;
 using Avalonia.Layout;
+using Avalonia.Markup.Xaml;
+using Avalonia.Media;
+using Avalonia.Platform;
 using Avalonia.Styling;
+using Avalonia.Svg;
 using DynamicData;
 using DynamicData.Kernel;
 using ReactiveUI;
@@ -36,13 +41,13 @@ public struct BrowsingItem
 
 public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
 {
-    public static readonly StyledProperty<BrowserState?> BrowserProperty =
-        AvaloniaProperty.Register<BrowserViewHost, BrowserState?>(nameof(Browser));
+    public static readonly StyledProperty<BrowserManager?> BrowserProperty =
+        AvaloniaProperty.Register<BrowserViewHost, BrowserManager?>(nameof(Browser));
 
     public static readonly StyledProperty<IControl> DefaultPageProperty =
         AvaloniaProperty.Register<BrowserViewHost, IControl>(nameof(DefaultPage));
 
-    public BrowserState? Browser
+    public BrowserManager? Browser
     {
         get => GetValue(BrowserProperty);
         set => SetValue(BrowserProperty, value);
@@ -62,20 +67,42 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
 
     Type IStyleable.StyleKey => typeof(ContentControl);
 
-    // private static FuncDataTemplate<BrowsingItem> ItemTemplate => new(
-    //     (item, _) => new TextBlock { Text = item.Page.Name }
-    // );
-
     private readonly ReactiveCommand<IBrowserPage, Unit> _close;
+
+    private Image CloseButtonIcon => new()
+    {
+        Width = 18,
+        Height = 18,
+        Source = new SvgImage
+        {
+            Source = SvgSource.Load("/Assets/close_icon.svg", new Uri("avares://App"))
+        }
+    };
 
     private FuncDataTemplate<BrowsingItem> TabItemTemplate => new(
         (item, _) => new StackPanel
         {
             Orientation = Orientation.Horizontal,
+            VerticalAlignment = VerticalAlignment.Center,
             Children =
             {
-                new TextBlock { Text = item.Page.Name },
-                new Button { CommandParameter = item.Page, Command = _close }
+                new TextBlock
+                {
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(0, 0, 6, 2),
+                    Classes = new Classes("TitleMedium"),
+                    [!TextBlock.TextProperty] = new Binding("Page.PageName"),
+                },
+                new Button
+                {
+                    Background = new SolidColorBrush
+                    {
+                        Color = Color.FromArgb(0, 0, 0, 0)
+                    },
+                    CommandParameter = item.Page,
+                    Command = _close,
+                    Content = CloseButtonIcon
+                }
             }
         }
     );
@@ -101,10 +128,10 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
         {
             this
                 .GetObservable(BrowserProperty)
-                .SelectMany(state =>
-                    state?.Changed ??
+                .SelectMany(manager =>
+                    manager?.BrowsingChanged ??
                     Observable
-                        .Empty<BrowserStateChange>()
+                        .Empty<BrowsingChange>()
                 )
                 .Subscribe(OnBrowserChanging)
                 .DisposeWith(d);
@@ -116,14 +143,14 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
         });
     }
 
-    private void OnBrowserChanging(BrowserStateChange change)
+    private void OnBrowserChanging(BrowsingChange change)
     {
         switch (change)
         {
-            case BrowserStateChange.Browse browseChange:
+            case BrowsingChange.Browse browseChange:
                 BrowsePage(browseChange.Page);
                 break;
-            case BrowserStateChange.Close closeChange:
+            case BrowsingChange.Close closeChange:
                 ClosePage(closeChange.Page);
                 break;
         }
@@ -167,7 +194,7 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
     private void BrowsePage(IBrowserPage page)
     {
         Content = _tabControl;
-        
+
         var maybeSamePair = _browsingItems
             .GetPages()
             .FirstOrNull(page, new IBrowserPage.Comparer());
@@ -195,7 +222,7 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
     private void ClosePage(IBrowserPage page)
     {
         Content = _tabControl;
-        
+
         var pageToRemoveIndex = _browsingItems.GetPages()
             .IndexOf(page, new IBrowserPage.Comparer());
 

@@ -46,7 +46,7 @@
         </Button>
 
         <Button Command="{Binding Delete}"
-                Classes="DeleteButton" Grid.Column="1" Margin="4 0 0 0 ">
+                Classes="DeleteButton" Grid.Column="1" Margin="12 0 0 0 ">
             <Image Width="24" Height="24" Source="{SvgImage /Assets/delete_icon.svg}"/>
         </Button>
     </Grid>

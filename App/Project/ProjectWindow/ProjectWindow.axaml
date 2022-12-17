@@ -29,7 +29,7 @@
             </GridSplitter.Background>
         </GridSplitter>
 
-        <browser:BrowserViewHost Grid.Column="2" Browser="{Binding BrowserState}">
+        <browser:BrowserViewHost Grid.Column="2" Browser="{Binding Manager}">
             <browser:BrowserViewHost.ViewLocator>
                 <local:BrowserViewLocator />
             </browser:BrowserViewHost.ViewLocator>

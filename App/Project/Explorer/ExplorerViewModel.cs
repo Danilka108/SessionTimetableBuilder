@@ -4,7 +4,9 @@ using System.Reactive.Linq;
 using App.Project.Audiences;
 using App.Project.AudienceSpecificities;
 using App.Project.BellTimes;
+using App.Project.Browser;
 using App.Project.Disciplines;
+using App.Project.Teachers;
 using ReactiveUI;
 
 namespace App.Project.Explorer;
@@ -14,21 +16,24 @@ internal enum ExploredSetItem : byte
     Audiences = 0,
     AudienceSpecificities,
     BellTimes,
-    Disciplines
+    Disciplines,
+    Teachers,
 }
 
 public class ExplorerViewModel : ViewModelBase, IScreen
 {
-    public delegate ExplorerViewModel Factory();
+    public delegate ExplorerViewModel Factory(IBrowser browser);
 
     private byte _exploredSet = (byte)ExploredSetItem.Disciplines;
 
     public ExplorerViewModel
     (
+        IBrowser browser,
         AudiencesViewModel.Factory audiencesViewModelFactory,
         AudienceSpecificitiesViewModel.Factory specificitiesViewModelFactory,
         BellTimesViewModel.Factory bellTimesViewModelFactory,
-        DisciplinesViewModel.Factory disciplinesViewModelFactory
+        DisciplinesViewModel.Factory disciplinesViewModelFactory,
+        TeachersViewModel.Factory teachersViewModelFactory
     )
     {
         Create = ReactiveCommand.Create(() => {});
@@ -47,6 +52,7 @@ public class ExplorerViewModel : ViewModelBase, IScreen
                             .Invoke(this, Create),
                         ExploredSetItem.BellTimes => bellTimesViewModelFactory.Invoke(this, Create),
                         ExploredSetItem.Disciplines => disciplinesViewModelFactory.Invoke(this, Create),
+                        ExploredSetItem.Teachers => teachersViewModelFactory.Invoke(this, browser, Create),
                         _ => throw new ArgumentNullException(nameof(exploredSet))
                     };
 

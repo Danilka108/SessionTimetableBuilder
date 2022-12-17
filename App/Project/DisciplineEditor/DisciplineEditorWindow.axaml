@@ -29,6 +29,11 @@
             <ScrollViewer Margin="0 0 0 12" Height="300" x:Name="AudienceRequirements">
                 <ListBox SelectionMode="Multiple,Toggle" Items="{Binding AllRequirements}"
                          SelectedItems="{Binding SelectedRequirements}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="6" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Classes="BodyMedium" Text="{Binding Model.Description}" />
