@@ -19,6 +19,8 @@ namespace App.Project.TeacherEditor;
 
 public class TeacherEditorViewModel : ViewModelBase, IBrowserPage, IActivatableViewModel
 {
+    private const string DefaultPageName = "Unnamed Teacher"; 
+    
     public delegate TeacherEditorViewModel Factory(IdentifiedModel<Teacher>? teacher,
         IBrowser browser);
 
@@ -80,7 +82,7 @@ public class TeacherEditorViewModel : ViewModelBase, IBrowserPage, IActivatableV
     public string PageName
     {
         get => _pageName;
-        private set => this.RaiseAndSetIfChanged(ref _pageName, value);
+        private set => this.RaiseAndSetIfChanged(ref _pageName, value.Trim().Length == 0 ? DefaultPageName : value.Trim());
     }
 
     public string Name

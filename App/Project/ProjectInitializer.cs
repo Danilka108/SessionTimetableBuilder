@@ -64,6 +64,8 @@ public class ProjectInitializer
 
         var audienceRepository = container.Resolve<IAudienceRepository>();
 
+        var disciplineRepository = container.Resolve<IDisciplineRepository>();
+
         var audienceSpecificities = new List<IdentifiedModel<AudienceSpecificity>>();
 
         for (var i = 0; i < 20; i++)
@@ -83,6 +85,13 @@ public class ProjectInitializer
                 new Audience(i, 30, audienceSpecificities),
                 CancellationToken.None
             );
+
+        for (var i = 0; i < 20; i++)
+        {
+            var a = new IdentifiedModel<AudienceSpecificity>[] { };
+            await disciplineRepository.Create(new Discipline($"Discipline {i}", a),
+                CancellationToken.None);
+        }
     }
 
     private ILifetimeScope InitializeDiContainer()

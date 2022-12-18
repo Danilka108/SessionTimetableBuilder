@@ -6,11 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.4.0"/>
+        <PackageReference Include="Autofac" Version="6.4.0" />
+        <PackageReference Include="Material.Avalonia" Version="3.0.0-avalonia10-preview2.126-nightly" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Domain\Domain.csproj"/>
-        <ProjectReference Include="..\Storage\Storage.csproj"/>
+        <ProjectReference Include="..\Domain\Domain.csproj" />
+        <ProjectReference Include="..\Storage\Storage.csproj" />
     </ItemGroup>
 </Project>

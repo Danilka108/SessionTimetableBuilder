@@ -2,7 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:assist="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+             xmlns:materialControls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
              xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
+             xmlns:materialIcons="using:Material.Icons.Avalonia"
              xmlns:explorer="clr-namespace:App.Project.Explorer"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="App.Project.Explorer.ExplorerView">
@@ -11,43 +14,45 @@
         <explorer:ExplorerViewModel />
     </Design.DataContext>
 
-    <StackPanel>
-        <Label Margin="12 8 12 0" Target="{Binding ElementName=ExploredSet}">
-            <TextBlock Classes="HeadlineSmall" Text="Explorer" />
-        </Label>
+    <materialControls:ColorZone Mode="Light" Opacity="0.8">
+        <StackPanel>
+            <Label Margin="16 8 16 0" Target="{Binding ElementName=ExploredSet}">
+                <TextBlock Classes="Headline4" Text="Explorer" />
+            </Label>
 
-        <Grid Margin="12 8 12 4" RowSpan="0" ColumnSpan="0" RowDefinitions="Auto"
-              VerticalAlignment="Center" ColumnDefinitions="*, Auto">
-            <ComboBox Grid.Column="0" HorizontalAlignment="Stretch"
-                      HorizontalContentAlignment="Left" VerticalAlignment="Center"
-                      VerticalContentAlignment="Stretch"
-                      SelectedIndex="{Binding ExploredSet}" x:Name="ExploredSet">
-                <ComboBoxItem>
-                    <TextBlock Classes="TitleMedium">Audiences</TextBlock>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Classes="TitleMedium">Audiences specificities</TextBlock>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Classes="TitleMedium">Bell times</TextBlock>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Classes="TitleMedium">Disciplines</TextBlock>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Classes="TitleMedium">Teachers</TextBlock>
-                </ComboBoxItem>
-            </ComboBox>
-            <Button Command="{Binding Create}" Margin="12 0 0 0" VerticalAlignment="Center" VerticalContentAlignment="Center"
-                    Grid.Column="1">
-                <Image Width="24" Height="24" Source="{SvgImage /Assets/add_icon.svg}" />
-            </Button>
-        </Grid>
+            <Grid Margin="16 0 16 8" x:Name="ExploredSet" VerticalAlignment="Center"
+                  RowDefinitions="*"
+                  ColumnDefinitions="*, 12, Auto">
+                <ComboBox ToolTip.Tip="Select an item" Grid.Column="0"
+                          SelectedIndex="{Binding ExploredSet}">
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Audiences</TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Audiences specificities</TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Bell times</TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Disciplines</TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Teachers</TextBlock>
+                    </ComboBoxItem>
+                </ComboBox>
+                <Button Grid.Column="2" Command="{Binding Create}" Classes="Flat"
+                        ToolTip.Tip="Add new item">
+                    <materialIcons:MaterialIcon Kind="Add" Width="24" Height="24"
+                                                FontWeight="Bold" />
+                </Button>
+            </Grid>
 
-        <rxui:RoutedViewHost Router="{Binding Router}">
-            <rxui:RoutedViewHost.ViewLocator>
-                <explorer:ExplorerViewLocator />
-            </rxui:RoutedViewHost.ViewLocator>
-        </rxui:RoutedViewHost>
-    </StackPanel>
+            <rxui:RoutedViewHost PageTransition="{x:Null}" Router="{Binding Router}">
+                <rxui:RoutedViewHost.ViewLocator>
+                    <explorer:ExplorerViewLocator />
+                </rxui:RoutedViewHost.ViewLocator>
+            </rxui:RoutedViewHost>
+        </StackPanel>
+    </materialControls:ColorZone>
 </UserControl>

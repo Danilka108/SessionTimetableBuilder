@@ -10,18 +10,19 @@
         <local:TeacherEditorViewModel />
     </Design.DataContext>
 
-
-    <Grid Margin="12" ColumnSpan="12" ColumnDefinitions="*, *">
-        <StackPanel MaxWidth="400" Spacing="12" Grid.Column="0">
+    <Grid Margin="12" ColumnSpan="12" RowDefinitions="Auto" ColumnDefinitions="Auto, Auto, *">
+        <StackPanel HorizontalAlignment="Left" MinWidth="300" VerticalAlignment="Center"
+                    x:Name="Info" Grid.Column="0">
             <Label Target="{Binding ElementName=Name}">
                 <TextBlock Classes="LabelLarge" Text="Name" />
             </Label>
-            <TextBox x:Name="Name" Classes="BodyMedium" Text="{Binding Name}" />
+            <TextBox Margin="0 0 0 12" x:Name="Name" Classes="BodyMedium" Text="{Binding Name}" />
 
             <Label Target="{Binding ElementName=Surname}">
                 <TextBlock Classes="LabelLarge" Text="Surname" />
             </Label>
-            <TextBox x:Name="Surname" Classes="BodyMedium" Text="{Binding Surname}" />
+            <TextBox Margin="0 0 0 12" x:Name="Surname" Classes="BodyMedium"
+                     Text="{Binding Surname}" />
 
             <Label Target="{Binding ElementName=Patronymic}">
                 <TextBlock Classes="LabelLarge" Text="Patronymic" />
@@ -29,24 +30,43 @@
             <TextBox x:Name="Patronymic" Classes="BodyMedium" Text="{Binding Patronymic}" />
         </StackPanel>
 
-        <StackPanel Grid.Column="1" MaxWidth="400">
-            <Label Target="{Binding ElementName=Disciplines}">
-                <TextBlock Classes="LabelLarge" Text="Disciplines" />
-            </Label>
-            <ListBox x:Name="Disciplines" SelectionMode="Multiple, Toggle"
-                     Items="{Binding AllDisciplines}"
-                     SelectedItems="{Binding SelectedDisciplines}">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Spacing="6" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Classes="BodyMedium" Text="{Binding Model.Name}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
+        <Border Padding="12" Grid.Column="1" BorderThickness="1.5" CornerRadius="8">
+            <Border.BorderBrush>
+                <SolidColorBrush Color="Black" Opacity="0.8" />
+            </Border.BorderBrush>
+
+            <Grid MinWidth="300" HorizontalAlignment="Left" ClipToBounds="True"
+                  RowDefinitions="Auto, *"
+                  Height="{Binding Bounds.Height, ElementName=Info}">
+
+                <Label Margin="0 0 0 12" Grid.Row="0" Target="{Binding ElementName=Disciplines}">
+                    <TextBlock Classes="LabelLarge" Text="Disciplines" />
+                </Label>
+
+                <Border Grid.Row="1" BorderThickness="1.5"
+                        CornerRadius="4">
+                    <ScrollViewer VerticalAlignment="Stretch"
+                                  VerticalContentAlignment="Stretch">
+                        <ListBox ClipToBounds="True" x:Name="Disciplines"
+                                 SelectionMode="Multiple, Toggle"
+                                 Items="{Binding AllDisciplines}"
+                                 SelectedItems="{Binding SelectedDisciplines}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="8" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Classes="BodyMedium" Text="{Binding Model.Name}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+        </Border>
+
     </Grid>
 </UserControl>
