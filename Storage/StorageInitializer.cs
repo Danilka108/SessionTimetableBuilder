@@ -1,3 +1,5 @@
+using Storage.StorageSet;
+
 namespace Storage;
 
 /// <summary>
@@ -5,22 +7,22 @@ namespace Storage;
 /// </summary>
 public class StorageInitializer : IDisposable
 {
-    private readonly Resource _resource;
+    private readonly IStorageResource _storageResource;
     private readonly Dictionary<string, SerializableStorageSet> _storageSets;
 
     /// <summary>
     ///     Creation of storage initializer.
     /// </summary>
-    /// <param name="metadata">Storage metadata.</param>
-    public StorageInitializer(StorageMetadata metadata)
+    /// <param name="storageResource">Storage resource.</param>
+    public StorageInitializer(IStorageResource storageResource)
     {
-        _resource = new Resource(metadata.FullPath);
+        _storageResource = storageResource;
         _storageSets = new Dictionary<string, SerializableStorageSet>();
     }
 
     public void Dispose()
     {
-        _resource.Dispose();
+        _storageResource.Dispose();
     }
 
     /// <summary>
@@ -43,7 +45,7 @@ public class StorageInitializer : IDisposable
     {
         try
         {
-            await _resource.Serialize(_storageSets, token);
+            await _storageResource.Serialize(_storageSets, token);
         }
         catch (Exception e)
         {

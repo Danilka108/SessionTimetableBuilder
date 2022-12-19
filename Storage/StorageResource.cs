@@ -1,6 +1,8 @@
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text.Json;
+using Storage.Entity;
+using Storage.StorageSet;
 
 namespace Storage;
 
@@ -9,11 +11,11 @@ public abstract class StorageResource : IDisposable
     private readonly BehaviorSubject<Dictionary<string, SerializableStorageSet>?>
         _cachedStorageSets;
 
-    private readonly string _path;
+    protected readonly string Path;
 
     public StorageResource(string path)
     {
-        _path = path;
+        Path = path;
         _cachedStorageSets = new BehaviorSubject<Dictionary<string, SerializableStorageSet>?>(null);
 
         StorageSets = _cachedStorageSets.AsObservable()
@@ -43,33 +45,20 @@ public abstract class StorageResource : IDisposable
         _cachedStorageSets.Dispose();
     }
 
-    // public Stream GetStream()
-    // {
-    //     try
-    //     {
-    //         return CreateStream();
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         throw new AccessStorageResourceException
-    //             ("Failed to create stream of storage resource ", e);
-    //     }
-    // }
-
-    public abstract Stream GetStream();
-
-    private Stream CreateStream()
+    public Stream GetStream()
     {
-        return new FileStream
-        (
-            _path,
-            FileMode.OpenOrCreate,
-            FileAccess.ReadWrite,
-            FileShare.ReadWrite,
-            4096,
-            FileOptions.Asynchronous
-        );
+        try
+        {
+            return CreateStream();
+        }
+        catch (Exception e)
+        {
+            throw new AccessStorageResourceException
+                ("Failed to create stream of storage resource ", e);
+        }
     }
+
+    protected abstract Stream CreateStream();
 
     internal async Task Serialize
     (
@@ -154,6 +143,10 @@ public abstract class StorageResource : IDisposable
     }
 }
 
+internal interface IResourceConsumer
+{
+    void ConsumeResource(StorageResource resource);
+}
 
 public class AccessStorageResourceException : Exception
 {

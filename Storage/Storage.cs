@@ -1,4 +1,5 @@
 using System.Reactive.Linq;
+using Storage.StorageSet;
 
 namespace Storage;
 
@@ -12,16 +13,16 @@ namespace Storage;
 /// </remarks>
 public class Storage : IDisposable
 {
-    private readonly Resource _resource;
+    private readonly StorageResource _storageResource;
 
-    public Storage(StorageMetadata metadata)
+    public Storage(StorageResource storageResource)
     {
-        _resource = new Resource(metadata.FullPath);
+        _storageResource = storageResource;
     }
 
     public void Dispose()
     {
-        _resource.Dispose();
+        _storageResource.Dispose();
     }
 
     /// <summary>
@@ -31,7 +32,7 @@ public class Storage : IDisposable
     /// <typeparam name="TEntity">Type of loaded entities.</typeparam>
     /// <returns>Enumerable of Identified Entities.</returns>
     /// <exception cref="LoadStorageEntitiesException">Throw if failed to load storage set.</exception>
-    public async Task<IEnumerable<Identified<TEntity>>> FromSetOf<TEntity>(CancellationToken token)
+    public async Task<IEnumerable<IdentifiedEntity<TEntity>>> FromSetOf<TEntity>(CancellationToken token)
     {
         try
         {
@@ -53,9 +54,9 @@ public class Storage : IDisposable
     /// <typeparam name="TEntity">Type of entities.</typeparam>
     /// <returns>The event is generated when a storage set is updated.</returns>
     /// <exception cref="MissingStorageSetException">Throw if could not find storage set.</exception>
-    public IObservable<IEnumerable<Identified<TEntity>>> ObserveFromSetOf<TEntity>()
+    public IObservable<IEnumerable<IdentifiedEntity<TEntity>>> ObserveFromSetOf<TEntity>()
     {
-        return _resource
+        return _storageResource
             .StorageSets
             .Select
             (
@@ -72,12 +73,12 @@ public class Storage : IDisposable
             );
     }
 
-    private async Task<IEnumerable<Identified<TEntity>>> TryGetFromSetOf<TEntity>
+    private async Task<IEnumerable<IdentifiedEntity<TEntity>>> TryGetFromSetOf<TEntity>
         (CancellationToken token)
     {
-        var scheme = await _resource.Deserialize(token);
+        var scheme = await _storageResource.Deserialize(token);
         var set = scheme.GetSetOf<TEntity>();
-        (set as IResourceConsumer).ConsumeResource(_resource);
+        (set as IResourceConsumer).ConsumeResource(_storageResource);
 
         return set;
     }
@@ -93,7 +94,7 @@ public class Storage : IDisposable
     {
         try
         {
-            return await StorageTransaction.CreateWithResource(_resource, token);
+            return await StorageTransaction.CreateWithResource(_storageResource, token);
         }
         catch (Exception e)
         {
