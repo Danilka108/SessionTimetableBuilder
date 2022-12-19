@@ -1,29 +1,31 @@
-using Data.Project.Entities;
+using Adapter.Project.StorageEntities;
 using Storage;
 
-namespace Data.Project;
+namespace Adapter.Project;
 
-public class ProjectStorageInitializer
+public class ProjectStorageInitializer : IDisposable
 {
-    private readonly StorageMetadata _metadata;
+    private readonly StorageInitializer _initializer;
 
-    public ProjectStorageInitializer(StorageMetadata metadata)
+    public ProjectStorageInitializer(IStorageResource resource)
     {
-        _metadata = metadata;
+        _initializer = new StorageInitializer(resource);
     }
 
     public async Task Initialize(CancellationToken token)
     {
-        using var initializer = new StorageInitializer(_metadata);
-
-        await initializer
-            .AddEntity<TeacherEntity>()
-            .AddEntity<GroupEntity>()
-            .AddEntity<ExamEntity>()
-            .AddEntity<DisciplineEntity>()
-            .AddEntity<AudienceEntity>()
-            .AddEntity<AudienceSpecificityEntity>()
-            .AddEntity<BellTimeEntity>()
+        await _initializer
+            .AddEntity<StorageLecturer>()
+            .AddEntity<StorageGroup>()
+            .AddEntity<StorageExam>()
+            .AddEntity<StorageDiscipline>()
+            .AddEntity<StorageClassroom>()
+            .AddEntity<StorageClassroomFeature>()
             .Initialize(token);
+    }
+
+    public void Dispose()
+    {
+        _initializer.Dispose();
     }
 }

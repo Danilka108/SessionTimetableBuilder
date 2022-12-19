@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace App.Project.Browser;
+namespace Adapter.Project.Browser;
 
 public interface IBrowserPage
 {

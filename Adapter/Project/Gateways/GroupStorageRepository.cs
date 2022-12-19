@@ -1,35 +1,30 @@
-using Data.Project.Entities;
-using Domain;
-using Domain.Project.Models;
-using Domain.Project.Repositories;
+using Adapter.Project.StorageEntities;
+using Application.Project.Gateways;
+using Domain.Project;
 
 namespace Adapter.Project.Gateways;
 
-internal class GroupStorageRepository : BaseStorageRepository<GroupSet, Group>, IGroupRepository
+internal class GroupStorageRepository : BaseStorageGateway<Group, StorageGroup>, IGroupGateway
 {
-    private readonly IBaseRepository<Discipline> _disciplineBaseRepository;
+    private readonly IDisciplineGateway _disciplineGateway;
 
-    public GroupStorageRepository
-        (StorageProvider storageProvider, IBaseRepository<Discipline> disciplineBaseRepository)
-        : base(storageProvider.ProvideStorage(), new GroupSet.Helper())
+    public GroupStorageRepository(Storage.Storage storage, IDisciplineGateway disciplineGateway)
+        : base(storage, new StorageGroup.Converter())
     {
-        _disciplineBaseRepository = disciplineBaseRepository;
+        _disciplineGateway = disciplineGateway;
     }
 
-    protected override async Task<Group> ProduceModelByEntity
-    (
-        GroupSet groupSet,
-        CancellationToken token
-    )
+    protected override async Task<Group> ProduceEntity(StorageGroup storageEntity,
+        CancellationToken token)
     {
-        var modelDisciplines = new List<IdentifiedModel<Discipline>>();
+        var disciplines = new List<Identified<Discipline>>();
 
-        foreach (var linkedDiscipline in groupSet.ExaminationDisciplines)
+        foreach (var linkedDiscipline in storageEntity.Disciplines)
         {
-            var modelDiscipline = await _disciplineBaseRepository.Read(linkedDiscipline.Id, token);
-            modelDisciplines.Add(modelDiscipline);
+            var discipline = await _disciplineGateway.Read(linkedDiscipline.Id, token);
+            disciplines.Add(discipline);
         }
 
-        return new Group(groupSet.Name, groupSet.StudentsNumber, modelDisciplines);
+        return new Group(storageEntity.Name, storageEntity.StudentsNumber, disciplines);
     }
 }

@@ -5,25 +5,22 @@ using Domain.Project;
 namespace Adapter.Project.Gateways;
 
 internal class ClassroomFeatureStorageGateway
-    : BaseStorageGateway<Classroom, ClassroomSet>, IClassroomGateway
+    : BaseStorageGateway<ClassroomFeature, StorageClassroomFeature>, IClassroomFeatureGateway
 {
-    public ClassroomFeatureStorageGateway(I storageProvider) : base
+    public ClassroomFeatureStorageGateway(Storage.Storage storage) : base
     (
-        storageProvider.ProvideStorage(),
-        new ClassroomFeatureSet.Helper()
+        storage,
+        new StorageClassroomFeature.Converter()
     )
     {
     }
 
-    protected override Task<AudienceSpecificity> ProduceModelByEntity
+    protected override async Task<ClassroomFeature> ProduceEntity
     (
-        ClassroomFeatureSet entity,
+        StorageClassroomFeature storageEntity,
         CancellationToken token
     )
     {
-        return Task.FromResult
-        (
-            new AudienceSpecificity(entity.Description)
-        );
+        return new ClassroomFeature(storageEntity.Description);
     }
 }

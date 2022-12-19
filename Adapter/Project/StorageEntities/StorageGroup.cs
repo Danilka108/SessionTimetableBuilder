@@ -1,5 +1,6 @@
-using Data;
 using Domain.Project;
+using Storage;
+using Storage.Entity;
 
 namespace Adapter.Project.StorageEntities;
 
@@ -7,20 +8,16 @@ internal record StorageGroup
 (
     string Name,
     int StudentsNumber,
-    IEnumerable<ILinkedSet<StorageDiscipline>> Disciplines
+    IEnumerable<LinkedEntity<StorageDiscipline>> Disciplines
 )
 {
-    public class Converter : EntityToSetConverter<Group, StorageGroup>
+    public class Converter : ConverterToStorageEntity<Group, StorageGroup>
     {
-        public Converter(ILinkedSetFactory linkedSetFactory) : base(linkedSetFactory)
+        public override StorageGroup ToStorageEntity(Group entity)
         {
-        }
-
-        public override StorageGroup ConvertEntityToSet(Group entity)
-        {
-            var disciplineConverter = new StorageDiscipline.Converter(LinkedSetFactory);
+            var disciplineConverter = new StorageDiscipline.Converter();
             var disciplines =
-                disciplineConverter.LinkedSetsFromIdentifiedEntities(entity.Disciplines);
+                disciplineConverter.ToLinkedEntities(entity.Disciplines);
 
             return new StorageGroup(entity.Name, entity.StudentsNumber, disciplines);
         }

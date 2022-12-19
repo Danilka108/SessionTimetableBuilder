@@ -1,8 +1,7 @@
 using ReactiveUI;
 
-namespace Adapter.Project;
+namespace Adapter;
 
 public class BaseViewModel : ReactiveObject
 {
-    
 }

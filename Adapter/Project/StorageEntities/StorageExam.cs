@@ -1,30 +1,27 @@
-using Data;
 using Domain.Project;
+using Storage;
+using Storage.Entity;
 
 namespace Adapter.Project.StorageEntities;
 
 internal record StorageExam
 (
-    ILinkedSet<StorageLecturer> Lecturer,
-    ILinkedSet<StorageGroup> Group,
-    ILinkedSet<StorageDiscipline> Discipline,
-    ILinkedSet<StorageClassroom> Classroom,
+    LinkedEntity<StorageLecturer> Lecturer,
+    LinkedEntity<StorageGroup> Group,
+    LinkedEntity<StorageDiscipline> Discipline,
+    LinkedEntity<StorageClassroom> Classroom,
     DateTime StartTime
 )
 {
-    public class Converter : EntityToSetConverter<Exam, StorageExam>
+    public class Converter : ConverterToStorageEntity<Exam, StorageExam>
     {
-        public Converter(ILinkedSetFactory linkedSetFactory) : base(linkedSetFactory)
-        {
-        }
-
-        public override StorageExam ConvertEntityToSet(Exam entity)
+        public override StorageExam ToStorageEntity(Exam entity)
         {
             return new StorageExam(
-                LinkedSetFactory.Provide<StorageLecturer>(entity.Lecturer.Id),
-                LinkedSetFactory.Provide<StorageGroup>(entity.Group.Id),
-                LinkedSetFactory.Provide<StorageDiscipline>(entity.Discipline.Id),
-                LinkedSetFactory.Provide<StorageClassroom>(entity.Classroom.Id),
+                new LinkedEntity<StorageLecturer>(entity.Lecturer.Id),
+                new LinkedEntity<StorageGroup>(entity.Group.Id),
+                new LinkedEntity<StorageDiscipline>(entity.Discipline.Id),
+                new LinkedEntity<StorageClassroom>(entity.Classroom.Id),
                 entity.StartTime
             );
         }

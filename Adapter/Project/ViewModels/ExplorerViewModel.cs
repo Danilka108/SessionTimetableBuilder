@@ -1,15 +1,10 @@
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
-using App.Project.Audiences;
-using App.Project.AudienceSpecificities;
-using App.Project.BellTimes;
-using App.Project.Browser;
-using App.Project.Disciplines;
-using App.Project.Teachers;
+using Adapter.Project.Browser;
 using ReactiveUI;
 
-namespace App.Project.Explorer;
+namespace Adapter.Project.ViewModels;
 
 internal enum ExploredSetItem : byte
 {
@@ -20,11 +15,11 @@ internal enum ExploredSetItem : byte
     Teachers,
 }
 
-public class ExplorerViewModel : ViewModelBase, IScreen
+public class ExplorerViewModel : BaseViewModel, IScreen
 {
     public delegate ExplorerViewModel Factory(IBrowser browser);
 
-    private byte _exploredSet = (byte)ExploredSetItem.Disciplines;
+    private ExploredSetItem _exploredSet = ExploredSetItem.Disciplines;
 
     public ExplorerViewModel
     (

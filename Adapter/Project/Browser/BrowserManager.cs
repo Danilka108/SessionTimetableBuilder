@@ -1,10 +1,9 @@
-using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using ReactiveUI;
 
-namespace App.Project.Browser;
+namespace Adapter.Project.Browser;
 
 public class BrowserManager : IDisposable
 {

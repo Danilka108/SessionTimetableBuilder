@@ -1,25 +1,22 @@
-using Data;
 using Domain.Project;
+using Storage;
+using Storage.Entity;
 
 namespace Adapter.Project.StorageEntities;
 
 internal record StorageDiscipline
 (
     string Name,
-    IEnumerable<ILinkedSet<StorageClassroomFeature>> Requirements
+    IEnumerable<LinkedEntity<StorageClassroomFeature>> Requirements
 )
 {
-    public class Converter : EntityToSetConverter<Discipline, StorageDiscipline>
+    public class Converter : ConverterToStorageEntity<Discipline, StorageDiscipline>
     {
-        public Helper(ILinkedSetFactory linkedSetFactory) : base(linkedSetFactory)
+        public override StorageDiscipline ToStorageEntity(Discipline entity)
         {
-        }
-
-        public override StorageDiscipline ConvertEntityToSet(Discipline entity)
-        {
-            var requirementsConverter = new StorageClassroomFeature.Converter(LinkedSetFactory);
+            var requirementsConverter = new StorageClassroomFeature.Converter();
             var requirements = requirementsConverter
-                .LinkedSetsFromIdentifiedEntities(entity.Requirements);
+                .ToLinkedEntities(entity.Requirements);
 
             return new StorageDiscipline(entity.Name, requirements);
         }

@@ -2,128 +2,131 @@
 
 using System.Reactive.Linq;
 using Application;
+using Domain.Project;
+using Storage;
 
 namespace Adapter;
 
-internal abstract class BaseStorageGateway<TSet, TEntity> : IBaseGateway<TEntity>
+internal abstract class BaseStorageGateway<TEntity, TStorageEntity> : IBaseGateway<TEntity>
 {
-    protected readonly EntityModelHelper<TEntity, TModel> Helper;
-    protected readonly Storage.Storage Storage;
+    private readonly ConverterToStorageEntity<TEntity, TStorageEntity> _converter;
+    private readonly Storage.Storage _storage;
 
     protected BaseStorageGateway
     (
         Storage.Storage storage,
-        EntityModelHelper<TEntity, TModel> helper
+        ConverterToStorageEntity<TEntity, TStorageEntity> converter
     )
     {
-        Storage = storage;
-        Helper = helper;
+        _storage = storage;
+        _converter = converter;
     }
 
     public async Task Delete(int id, CancellationToken token)
     {
-        await using var transaction = await Storage.StartTransaction(token);
+        await using var transaction = await _storage.StartTransaction(token);
 
         transaction
-            .InSetOf<TEntity>()
+            .InSetOf<TStorageEntity>()
             .Delete(id)
             .Save();
 
         await transaction.Commit();
     }
 
-    public async Task<IdentifiedModel<TModel>> Create(TModel model, CancellationToken token)
+    public async Task<Identified<TEntity>> Create(TEntity entity, CancellationToken token)
     {
-        var entity = Helper.ConvertModelToEntity(model);
+        var storageEntity = _converter.ToStorageEntity(entity);
 
-        await using var transaction = await Storage.StartTransaction(token);
+        await using var transaction = await _storage.StartTransaction(token);
 
         transaction
-            .InSetOf<TEntity>()
-            .Add(entity, out var id)
+            .InSetOf<TStorageEntity>()
+            .Add(storageEntity, out var id)
             .Save();
         await transaction.Commit();
 
-        return new IdentifiedModel<TModel>(id, model);
+        return new Identified<TEntity>(id, entity);
     }
 
-    public async Task Update(IdentifiedModel<TModel> identifiedModel, CancellationToken token)
+    public async Task Update(Identified<TEntity> identifiedEntity, CancellationToken token)
     {
-        await using var transaction = await Storage.StartTransaction(token);
+        await using var transaction = await _storage.StartTransaction(token);
 
         transaction
-            .InSetOf<TEntity>()
-            .Update(Helper.ConvertModelToEntity(identifiedModel))
+            .InSetOf<TStorageEntity>()
+            .Update(_converter.ToStorageEntity(identifiedEntity))
             .Save();
 
         await transaction.Commit();
     }
 
-    public async Task<IdentifiedModel<TModel>> Read(int id, CancellationToken token)
+    public async Task<Identified<TEntity>> Read(int id, CancellationToken token)
     {
-        var entities = await Storage
-            .FromSetOf<TEntity>(token);
+        var storageEntities = await _storage
+            .FromSetOf<TStorageEntity>(token);
 
-        var identifiedEntity = entities.WhereId(id);
-        var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
+        var identifiedSetItem = storageEntities.WhereId(id);
+        var entity = await ProduceEntity(identifiedSetItem.Entity, token);
 
-        return new IdentifiedModel<TModel>(identifiedEntity.Id, model);
+        return new Identified<TEntity>(identifiedSetItem.Id, entity);
     }
 
-    public async Task<IEnumerable<IdentifiedModel<TModel>>> ReadAll(CancellationToken token)
+    public async Task<IEnumerable<Identified<TEntity>>> ReadAll(CancellationToken token)
     {
-        var identifiedEntities = await Storage.FromSetOf<TEntity>(token);
-        var identifiedModels = new List<IdentifiedModel<TModel>>();
+        var identifiedStorageEntities = await _storage.FromSetOf<TStorageEntity>(token);
+        var identifiedEntities = new List<Identified<TEntity>>();
 
-        foreach (var identifiedEntity in identifiedEntities)
+        foreach (var identifiedStorageEntity in identifiedStorageEntities)
         {
-            var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
-            identifiedModels.Add(new IdentifiedModel<TModel>(identifiedEntity.Id, model));
+            var entity = await ProduceEntity(identifiedStorageEntity.Entity, token);
+            identifiedEntities.Add(new Identified<TEntity>(identifiedStorageEntity.Id, entity));
         }
 
-        return identifiedModels;
+        return identifiedEntities;
     }
 
-    public IObservable<IdentifiedModel<TModel>> Observe(int id)
+    public IObservable<Identified<TEntity>> Observe(int id)
     {
-        return Storage
-            .ObserveFromSetOf<TEntity>()
+        return _storage
+            .ObserveFromSetOf<TStorageEntity>()
             .WhereId(id)
             .SelectMany
             (
-                async (identifiedEntity, token) =>
+                async (identifiedStorageEntity, token) =>
                 {
-                    var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
-                    return new IdentifiedModel<TModel>(identifiedEntity.Id, model);
+                    var entity = await ProduceEntity(identifiedStorageEntity.Entity, token);
+                    return new Identified<TEntity>(identifiedStorageEntity.Id, entity);
                 }
             );
     }
 
-    public IObservable<IEnumerable<IdentifiedModel<TModel>>> ObserveAll()
+    public IObservable<IEnumerable<Identified<TEntity>>> ObserveAll()
     {
-        return Storage
-            .ObserveFromSetOf<TEntity>()
+        return _storage
+            .ObserveFromSetOf<TStorageEntity>()
             .SelectMany
             (
-                async (identifiedEntities, token) =>
+                async (identifiedStorageEntities, token) =>
                 {
-                    var identifiedModels = new List<IdentifiedModel<TModel>>();
+                    var identifiedEntities = new List<Identified<TEntity>>();
 
-                    foreach (var identifiedEntity in identifiedEntities)
+                    foreach (var identifiedStorageEntity in identifiedStorageEntities)
                     {
-                        var model = await ProduceModelByEntity(identifiedEntity.Entity, token);
-                        identifiedModels.Add
-                            (new IdentifiedModel<TModel>(identifiedEntity.Id, model));
+                        var entity =
+                            await ProduceEntity(identifiedStorageEntity.Entity, token);
+                        identifiedEntities.Add
+                            (new Identified<TEntity>(identifiedStorageEntity.Id, entity));
                     }
 
-                    return identifiedModels;
+                    return identifiedEntities;
                 }
             );
     }
 
-    protected abstract Task<TModel> ProduceModelByEntity
+    protected abstract Task<TEntity> ProduceEntity
     (
-        TEntity entity,
+        TStorageEntity storageEntity,
         CancellationToken token
     );
 }

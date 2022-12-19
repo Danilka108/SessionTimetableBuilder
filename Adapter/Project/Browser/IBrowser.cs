@@ -1,4 +1,4 @@
-namespace App.Project.Browser;
+namespace Adapter.Project.Browser;
 
 public interface IBrowser
 {

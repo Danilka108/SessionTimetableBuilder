@@ -4,15 +4,16 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Adapter;
 using App.Project.Browser;
 using App.Project.TeacherCard;
 using App.Project.TeacherEditor;
 using Domain.Project.useCases.Teacher;
 using ReactiveUI;
 
-namespace App.Project.Teachers;
+namespace Adapter.Project.ViewModels;
 
-public class TeachersViewModel : ViewModelBase, IRoutableViewModel, IActivatableViewModel
+public class TeachersViewModel : BaseViewModel, IRoutableViewModel, IActivatableViewModel
 {
     public delegate TeachersViewModel Factory(IScreen screen, IBrowser browser,
         IObservable<Unit> creating);

@@ -1,40 +1,26 @@
-
-using Adapter.Storage;
+using System.Reflection;
 using Autofac;
+using Module = Autofac.Module;
 
 namespace Adapter.Project;
 
 public class AdapterProjectModule : Module
 {
-    public StorageMetadata Metadata { get; init; }
-
     protected override void Load(ContainerBuilder builder)
     {
-        RegisterStorage(builder);
-
-        RegisterRepositories(builder);
-
-        base.Load(builder);
-    }
-
-    private void RegisterStorage(ContainerBuilder builder)
-    {
-        builder.Register<StorageMetadata>(_ => Metadata);
-        
-        builder.RegisterType<ProjectStorageInitializer>().AsSelf();
-
         builder
-            .Register(_ => new StorageProvider(Metadata))
-            .AsSelf()
-            .OnRelease(p => p.Dispose())
-            .SingleInstance();
-    }
-
-    private static void RegisterRepositories(ContainerBuilder builder)
-    {
+            .RegisterType<Storage.Storage>()
+            .OnRelease(s => s.Dispose());
+        
+        builder
+            .RegisterType<ProjectStorageInitializer>()
+            .OnRelease(s => s.Dispose());
+        
         builder
             .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-            .Where(t => t.FullName.EndsWith("Repository") && t.FullName.Contains("Project"))
+            .Where(t => t.FullName.EndsWith("Gateway") && t.FullName.Contains("Project"))
             .AsImplementedInterfaces();
+
+        base.Load(builder);
     }
 }

@@ -1,40 +1,36 @@
-using Data.Project.Entities;
-using Domain;
-using Domain.Project.Models;
-using Domain.Project.Repositories;
+using Adapter.Project.StorageEntities;
+using Application.Project.Gateways;
+using Domain.Project;
 
-namespace Data.Project.Repositories;
+namespace Adapter.Project.Gateways;
 
-internal class
-    DisciplineStorageRepository : BaseStorageRepository<DisciplineSet, Discipline>,
-        IDisciplineRepository
+internal class DisciplineStorageRepository : BaseStorageGateway<Discipline, StorageDiscipline>,
+    IDisciplineGateway
 {
-    private readonly IBaseRepository<AudienceSpecificity> _requirementsBaseRepository;
+    private readonly IClassroomFeatureGateway _featureGateway;
 
-    public DisciplineStorageRepository
-    (
-        StorageProvider storageProvider,
-        IBaseRepository<AudienceSpecificity> requirementsBaseRepository
-    ) : base(storageProvider.ProvideStorage(), new DisciplineSet.Helper())
+    public DisciplineStorageRepository(Storage.Storage storage,
+        IClassroomFeatureGateway featureGateway) : base(storage,
+        new StorageDiscipline.Converter())
     {
-        _requirementsBaseRepository = requirementsBaseRepository;
+        _featureGateway = featureGateway;
     }
 
-    protected override async Task<Discipline> ProduceModelByEntity
-    (
-        DisciplineSet disciplineSet,
-        CancellationToken token
-    )
+    protected override async Task<Discipline> ProduceEntity(StorageDiscipline storageEntity,
+        CancellationToken token)
     {
-        var modelRequirements = new List<IdentifiedModel<AudienceSpecificity>>();
+        var requirements = new List<Identified<ClassroomFeature>>();
 
-        foreach (var linkedRequirement in disciplineSet.AudienceRequirements)
+        foreach (var linkedRequirement in storageEntity.Requirements)
         {
-            var modelRequirement = await _requirementsBaseRepository.Read
-                (linkedRequirement.Id, token);
-            modelRequirements.Add(modelRequirement);
+            var requirement = await _featureGateway.Read(linkedRequirement.Id, token);
+            requirements.Add(requirement);
         }
 
-        return new Discipline(disciplineSet.Name, modelRequirements);
+        return new Discipline
+        (
+            storageEntity.Name,
+            requirements
+        );
     }
 }

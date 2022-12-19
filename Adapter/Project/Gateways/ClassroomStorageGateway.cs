@@ -1,7 +1,5 @@
-using Adapter;
 using Adapter.Project.StorageEntities;
 using Application.Project.Gateways;
-using Domain;
 using Domain.Project;
 
 namespace Adapter.Project.Gateways;

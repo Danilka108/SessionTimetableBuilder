@@ -1,5 +1,6 @@
-using Data;
 using Domain.Project;
+using Storage;
+using Storage.Entity;
 
 namespace Adapter.Project.StorageEntities;
 
@@ -7,20 +8,15 @@ internal record StorageClassroom
 (
     int Number,
     int Capacity,
-    IEnumerable<ILinkedSet<StorageClassroomFeature>> Features
+    IEnumerable<LinkedEntity<StorageClassroomFeature>> Features
 )
 {
-    public class Converter : EntityToSetConverter<Classroom, StorageClassroom>
+    public class Converter : ConverterToStorageEntity<Classroom, StorageClassroom>
     {
-        public Helper(ILinkedSetFactory linkedSetFactory) : base(linkedSetFactory)
+        public override StorageClassroom ToStorageEntity(Classroom entity)
         {
-        }
-
-        public override StorageClassroom ConvertEntityToSet(Classroom entity)
-        {
-            var featureConverter = new StorageClassroomFeature.Converter(LinkedSetFactory);
-            var features = featureConverter
-                .LinkedSetsFromIdentifiedEntities(entity.Features);
+            var featureConverter = new StorageClassroomFeature.Converter();
+            var features = featureConverter.ToLinkedEntities(entity.Features);
 
             return new StorageClassroom(entity.Number, entity.Capacity, features);
         }

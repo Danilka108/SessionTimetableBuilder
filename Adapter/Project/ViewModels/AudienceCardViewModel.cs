@@ -5,7 +5,7 @@ using Domain;
 using Domain.Project.Models;
 using Domain.Project.UseCases.Audience;
 
-namespace App.Project.AudienceCard;
+namespace Adapter.Project.ViewModels;
 
 public class AudienceCardViewModel : ExplorerCardViewModel
 {
