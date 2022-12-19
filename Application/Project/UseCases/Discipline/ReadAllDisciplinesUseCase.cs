@@ -1,18 +1,19 @@
-using Domain.Project.Repositories;
+using Application.Project.Gateways;
+using Domain.Project;
 
-namespace Domain.Project.UseCases.Discipline;
+namespace Application.Project.UseCases.Discipline;
 
 public class ReadAllDisciplinesUseCase
 {
-    private readonly IDisciplineRepository _disciplineRepository;
+    private readonly IDisciplineGateway _gateway;
     
-    public ReadAllDisciplinesUseCase(IDisciplineRepository disciplineRepository)
+    public ReadAllDisciplinesUseCase(IDisciplineGateway gateway)
     {
-        _disciplineRepository = disciplineRepository;
+        _gateway = gateway;
     }
 
-    public Task<IEnumerable<IdentifiedModel<Models.Discipline>>> Handle()
+    public Task<IEnumerable<Identified<Domain.Project.Discipline>>> Handle()
     {
-        return _disciplineRepository.ReadAll(CancellationToken.None);
+        return _gateway.ReadAll(CancellationToken.None);
     }
 }

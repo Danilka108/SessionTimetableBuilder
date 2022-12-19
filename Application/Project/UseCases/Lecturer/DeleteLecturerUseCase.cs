@@ -1,14 +1,14 @@
-using Domain.Project.Repositories;
+using Application.Project.Gateways;
 
-namespace Domain.Project.useCases.Teacher;
+namespace Application.Project.useCases.Lecturer;
 
 public class DeleteLecturerUseCase
 {
-    private readonly ITeacherGateWay _teacherGateWay;
+    private readonly ILecturerGateway _gateway;
 
-    public DeleteLecturerUseCase(ITeacherGateWay teacherGateWay)
+    public DeleteLecturerUseCase(ILecturerGateway gateway)
     {
-        _teacherGateWay = teacherGateWay;
+        _gateway = gateway;
     }
 
     public async Task Handle(int id)
@@ -16,18 +16,18 @@ public class DeleteLecturerUseCase
         var token = CancellationToken.None;
         try
         {
-            await _teacherGateWay.Delete(id, token);
+            await _gateway.Delete(id, token);
         }
         catch (Exception e)
         {
-            throw new DeleteTeacherException("Failed to delete teacher.", e);
+            throw new DeleteLecturerException("Failed to delete lecturer.", e);
         }
     }
 }
 
-public class DeleteTeacherException : Exception
+public class DeleteLecturerException : Exception
 {
-    public DeleteTeacherException(string msg, Exception innerException) : base(msg, innerException)
+    public DeleteLecturerException(string msg, Exception innerException) : base(msg, innerException)
     {
     }
 }

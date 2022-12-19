@@ -1,7 +1,7 @@
 using Domain.Project;
 
-namespace Application.Project.Gateway;
+namespace Application.Project.Gateways;
 
-public interface IClassroomFeatureGateWay : IBaseGateWay<ClassroomFeature>
+public interface IClassroomFeatureGateway : IBaseGateway<ClassroomFeature>
 {
 }

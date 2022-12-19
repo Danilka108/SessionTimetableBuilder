@@ -1,4 +1,5 @@
 using Application.Project.Gateways;
+using Domain.Project;
 
 namespace Application.Project.useCases.Lecturer;
 
@@ -6,12 +7,12 @@ public class SaveLecturerUseCase
 {
     private readonly ILecturerGateway _gateway;
 
-    public SaveLecturerUseCase(ITeacherGateWay gateway)
+    public SaveLecturerUseCase(ILecturerGateway gateway)
     {
         _gateway = gateway;
     }
 
-    public async Task Handle(Models.Teacher model, int? id = null)
+    public async Task Handle(Domain.Project.Lecturer model, int? id = null)
     {
         var token = CancellationToken.None;
 
@@ -24,55 +25,55 @@ public class SaveLecturerUseCase
     }
 
     private async Task CheckToOriginality
-        (CancellationToken token, Models.Teacher model, int? id = null)
+        (CancellationToken token, Domain.Project.Lecturer lecturer, int? id = null)
     {
-        var allDisciplines = await _gateway.ReadAll(token);
+        var allLecturers = await _gateway.ReadAll(token);
 
-        var disciplineWithSameName =
-            allDisciplines.FirstOrDefault
+        var lecturerWithSameName =
+            allLecturers.FirstOrDefault
             (
-                d => d.Model.Name == model.Name && d.Model.Surname == model.Surname &&
-                     d.Model.Patronymic == model.Patronymic
+                d => d.Entity.Name == lecturer.Name && d.Entity.Surname == lecturer.Surname &&
+                     d.Entity.Patronymic == lecturer.Patronymic
             );
 
-        if (disciplineWithSameName?.Id == id) return;
+        if (lecturerWithSameName?.Id == id) return;
 
-        if (disciplineWithSameName is { })
-            throw new SaveTeacherException("Full name of teacher must be original");
+        if (lecturerWithSameName is { })
+            throw new SaveLecturerException("Full name of lecturer must be original");
     }
 
-    private async Task Create(Models.Teacher model, CancellationToken token)
+    private async Task Create(Domain.Project.Lecturer lecturer, CancellationToken token)
     {
         try
         {
-            await _gateway.Create(model, token);
+            await _gateway.Create(lecturer, token);
         }
         catch (Exception e)
         {
-            throw new SaveTeacherException("Failed to create teacher.", e);
+            throw new SaveLecturerException("Failed to create lecturer.", e);
         }
     }
 
-    private async Task Update(Models.Teacher model, int id, CancellationToken token)
+    private async Task Update(Domain.Project.Lecturer lecturer, int id, CancellationToken token)
     {
         try
         {
-            await _gateway.Update(new IdentifiedModel<Models.Teacher>(id, model), token);
+            await _gateway.Update(new Identified<Domain.Project.Lecturer>(id, lecturer), token);
         }
         catch (Exception e)
         {
-            throw new SaveTeacherException("Failed to update teacher.", e);
+            throw new SaveLecturerException("Failed to update lecturer.", e);
         }
     }
 }
 
-public class SaveTeacherException : Exception
+public class SaveLecturerException : Exception
 {
-    internal SaveTeacherException(string msg) : base(msg)
+    internal SaveLecturerException(string msg) : base(msg)
     {
     }
 
-    internal SaveTeacherException(string msg, Exception innerException) : base
+    internal SaveLecturerException(string msg, Exception innerException) : base
         (msg, innerException)
     {
     }

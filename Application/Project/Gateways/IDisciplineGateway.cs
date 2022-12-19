@@ -1,7 +1,7 @@
 using Domain.Project;
 
-namespace Application.Project.GateWays;
+namespace Application.Project.Gateways;
 
-public interface IDisciplineGateway : IBaseGateWay<Discipline>
+public interface IDisciplineGateway : IBaseGateway<Discipline>
 {
 }

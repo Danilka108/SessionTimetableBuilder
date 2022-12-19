@@ -1,24 +1,26 @@
+using System.Collections;
 using System.Reactive.Linq;
-using Domain.Project.Repositories;
+using Application.Project.Gateways;
+using Domain.Project;
 
-namespace Domain.Project.UseCases.Discipline;
+namespace Application.Project.UseCases.Discipline;
 
 public class ObserveAllDisciplinesUseCase
 {
-    private readonly IDisciplineRepository _repository;
+    private readonly IDisciplineGateway _gateway;
 
-    public ObserveAllDisciplinesUseCase(IDisciplineRepository repository)
+    public ObserveAllDisciplinesUseCase(IDisciplineGateway gateway)
     {
-        _repository = repository;
+        _gateway = gateway;
     }
 
-    public IObservable<IEnumerable<IdentifiedModel<Models.Discipline>>> Handle()
+    public IObservable<IEnumerable<Identified<Domain.Project.Discipline>>> Handle()
     {
-        return _repository
+        return _gateway
             .ObserveAll()
-            .Catch<IEnumerable<IdentifiedModel<Models.Discipline>>, Exception>
+            .Catch<IEnumerable<Identified<Domain.Project.Discipline>>, Exception>
             (
-                e => Observable.Throw<IEnumerable<IdentifiedModel<Models.Discipline>>>
+                e => Observable.Throw<IEnumerable<Identified<Domain.Project.Discipline>>>
                     (new ObserveAllDisciplinesException("Failed to get all disciplines.", e))
             );
     }

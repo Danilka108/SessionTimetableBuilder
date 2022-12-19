@@ -1,14 +1,14 @@
-using Domain.Project.Repositories;
+using Application.Project.Gateways;
 
-namespace Domain.Project.UseCases.Discipline;
+namespace Application.Project.UseCases.Discipline;
 
 public class DeleteDisciplineUseCase
 {
-    private readonly IDisciplineRepository _repository;
+    private readonly IDisciplineGateway _gateway;
 
-    public DeleteDisciplineUseCase(IDisciplineRepository repository)
+    public DeleteDisciplineUseCase(IDisciplineGateway gateway)
     {
-        _repository = repository;
+        _gateway = gateway;
     }
 
     public async Task Handle(int id)
@@ -17,7 +17,7 @@ public class DeleteDisciplineUseCase
 
         try
         {
-            await _repository.Delete(id, token);
+            await _gateway.Delete(id, token);
         }
         catch (Exception e)
         {

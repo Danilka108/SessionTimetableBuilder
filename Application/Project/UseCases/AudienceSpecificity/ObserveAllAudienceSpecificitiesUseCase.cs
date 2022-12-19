@@ -5,17 +5,17 @@ namespace Domain.Project.UseCases.AudienceSpecificity;
 
 public class ObserveAllAudienceSpecificitiesUseCase
 {
-    private readonly IAudienceSpecificityRepository _specificitiesRepository;
+    private readonly IClassroomFeatureGateWay _specificitiesGateWay;
 
     public ObserveAllAudienceSpecificitiesUseCase
-        (IAudienceSpecificityRepository specificitiesRepository)
+        (IClassroomFeatureGateWay specificitiesGateWay)
     {
-        _specificitiesRepository = specificitiesRepository;
+        _specificitiesGateWay = specificitiesGateWay;
     }
 
     public IObservable<IEnumerable<IdentifiedModel<Models.AudienceSpecificity>>> Handle()
     {
-        return _specificitiesRepository.ObserveAll()
+        return _specificitiesGateWay.ObserveAll()
             .Catch<IEnumerable<IdentifiedModel<Models.AudienceSpecificity>>, Exception>
             (
                 e => Observable.Throw<IEnumerable<IdentifiedModel<Models.AudienceSpecificity>>>

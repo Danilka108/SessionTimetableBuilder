@@ -1,32 +1,33 @@
 using System.Reactive.Linq;
-using Domain.Project.Repositories;
+using Application.Project.Gateways;
+using Domain.Project;
 
 namespace Application.Project.UseCases.classroom;
 
 public class ObserveAllClassroomsUseCase
 {
-    private readonly IAudienceRepository _audienceRepository;
+    private readonly IClassroomGateway _gateway;
 
-    public ObserveAllClassroomsUseCase(IAudienceRepository audienceRepository)
+    public ObserveAllClassroomsUseCase(IClassroomGateway gateway)
     {
-        _audienceRepository = audienceRepository;
+        _gateway = gateway;
     }
 
-    public IObservable<IEnumerable<IdentifiedModel<Models.Audience>>> Handle()
+    public IObservable<IEnumerable<Identified<Domain.Project.Classroom>>> Handle()
     {
-        return _audienceRepository
+        return _gateway
             .ObserveAll()
-            .Catch<IEnumerable<IdentifiedModel<Models.Audience>>, Exception>
+            .Catch<IEnumerable<Identified<Domain.Project.Classroom>>, Exception>
             (
-                e => Observable.Throw<IEnumerable<IdentifiedModel<Models.Audience>>>
-                    (new ObserveAllAudiencesException("Failed to get all audiences", e))
+                e => Observable.Throw<IEnumerable<Identified<Domain.Project.Classroom>>>
+                    (new ObserveAllClassroomsException("Failed to get all classrooms", e))
             );
     }
 }
 
-public class ObserveAllAudiencesException : Exception
+public class ObserveAllClassroomsException : Exception
 {
-    internal ObserveAllAudiencesException(string msg, Exception innerException) : base
+    internal ObserveAllClassroomsException(string msg, Exception innerException) : base
         (msg, innerException)
     {
     }

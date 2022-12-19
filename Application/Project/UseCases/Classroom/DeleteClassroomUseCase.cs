@@ -1,11 +1,13 @@
 
+using Application.Project.Gateways;
+
 namespace Application.Project.UseCases.Classroom;
 
 public class DeleteClassroomUseCase
 {
-    private readonly I _gateway;
+    private readonly IClassroomGateway _gateway;
 
-    public DeleteClassroomUseCase(IAudienceRepository gateway)
+    public DeleteClassroomUseCase(IClassroomGateway gateway)
     {
         _gateway = gateway;
     }
@@ -19,14 +21,14 @@ public class DeleteClassroomUseCase
         }
         catch (Exception e)
         {
-            throw new DeleteAudienceException("Failed to delete audience", e);
+            throw new DeleteClassroomException("Failed to delete classroom", e);
         }
     }
 }
 
-public class DeleteAudienceException : Exception
+public class DeleteClassroomException : Exception
 {
-    internal DeleteAudienceException(string msg, Exception innerException) : base(msg,
+    internal DeleteClassroomException(string msg, Exception innerException) : base(msg,
         innerException)
     {
     }

@@ -1,6 +1,6 @@
 using System.Reactive.Linq;
 using Application.Project.Gateways;
-using Domain.Project.Repositories;
+using Domain.Project;
 
 namespace Application.Project.useCases.Lecturer;
 
@@ -8,26 +8,26 @@ public class ObserveAllLecturersUseCase
 {
     private readonly ILecturerGateway _gateway;
 
-    public ObserveAllLecturersUseCase(ITeacherGateWay gateway)
+    public ObserveAllLecturersUseCase(ILecturerGateway gateway)
     {
         _gateway = gateway;
     }
 
-    public IObservable<IEnumerable<IdentifiedModel<Models.Teacher>>> Handle()
+    public IObservable<IEnumerable<Identified<Domain.Project.Lecturer>>> Handle()
     {
         return _gateway
             .ObserveAll()
-            .Catch<IEnumerable<IdentifiedModel<Models.Teacher>>, Exception>
+            .Catch<IEnumerable<Identified<Domain.Project.Lecturer>>, Exception>
             (
-                e => Observable.Throw<IEnumerable<IdentifiedModel<Models.Teacher>>>
-                    (new ObserveAllTeachersException("Failed to get all teachers.", e))
+                e => Observable.Throw<IEnumerable<Identified<Domain.Project.Lecturer>>>
+                    (new ObserveAllLecturersException("Failed to get all lecturers.", e))
             );
     }
 }
 
-public class ObserveAllTeachersException : Exception
+public class ObserveAllLecturersException : Exception
 {
-    internal ObserveAllTeachersException(string msg, Exception innerException) : base
+    internal ObserveAllLecturersException(string msg, Exception innerException) : base
         (msg, innerException)
     {
     }

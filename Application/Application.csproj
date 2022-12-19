@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Project\UseCases" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Autofac">
+        <HintPath>..\..\..\.nuget\packages\autofac\6.4.0\lib\net6.0\Autofac.dll</HintPath>
+      </Reference>
+      <Reference Include="System.Reactive">
+        <HintPath>..\..\..\.nuget\packages\system.reactive\5.0.0\lib\net5.0\System.Reactive.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

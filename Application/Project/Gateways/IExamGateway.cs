@@ -1,7 +1,7 @@
 using Domain.Project;
 
-namespace Application.Project.GateWays;
+namespace Application.Project.Gateways;
 
-public interface IExamGateway : IBaseGateWay<Exam>
+public interface IExamGateway : IBaseGateway<Exam>
 {
 }

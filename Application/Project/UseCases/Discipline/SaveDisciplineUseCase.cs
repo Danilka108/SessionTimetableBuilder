@@ -1,35 +1,36 @@
-using Domain.Project.Repositories;
+using Application.Project.Gateways;
+using Domain.Project;
 
-namespace Domain.Project.UseCases.Discipline;
+namespace Application.Project.UseCases.Discipline;
 
 public class SaveDisciplineUseCase
 {
-    private readonly IDisciplineRepository _repository;
+    private readonly IDisciplineGateway _gateway;
 
-    public SaveDisciplineUseCase(IDisciplineRepository repository)
+    public SaveDisciplineUseCase(IDisciplineGateway gateway)
     {
-        _repository = repository;
+        _gateway = gateway;
     }
 
-    public async Task Handle(Models.Discipline model, int? id = null)
+    public async Task Handle(Domain.Project.Discipline entity, int? id = null)
     {
         var token = CancellationToken.None;
 
-        await CheckNameToOriginality(token, model, id);
+        await CheckNameToOriginality(token, entity, id);
 
         if (id is { } notNullId)
-            await Update(model, notNullId, token);
+            await Update(entity, notNullId, token);
         else
-            await Create(model, token);
+            await Create(entity, token);
     }
 
     private async Task CheckNameToOriginality
-        (CancellationToken token, Models.Discipline model, int? id = null)
+        (CancellationToken token, Domain.Project.Discipline entity, int? id = null)
     {
-        var allDisciplines = await _repository.ReadAll(token);
+        var allDisciplines = await _gateway.ReadAll(token);
 
         var disciplineWithSameName =
-            allDisciplines.FirstOrDefault(d => d.Model.Name == model.Name);
+            allDisciplines.FirstOrDefault(d => d.Entity.Name == entity.Name);
 
         if (disciplineWithSameName?.Id == id) return;
 
@@ -37,11 +38,11 @@ public class SaveDisciplineUseCase
             throw new SaveDisciplineException("Name of discipline must be original");
     }
 
-    private async Task Create(Models.Discipline model, CancellationToken token)
+    private async Task Create(Domain.Project.Discipline model, CancellationToken token)
     {
         try
         {
-            await _repository.Create(model, token);
+            await _gateway.Create(model, token);
         }
         catch (Exception e)
         {
@@ -49,11 +50,11 @@ public class SaveDisciplineUseCase
         }
     }
 
-    private async Task Update(Models.Discipline model, int id, CancellationToken token)
+    private async Task Update(Domain.Project.Discipline entity, int id, CancellationToken token)
     {
         try
         {
-            await _repository.Update(new IdentifiedModel<Models.Discipline>(id, model), token);
+            await _gateway.Update(new Identified<Domain.Project.Discipline>(id, entity), token);
         }
         catch (Exception e)
         {

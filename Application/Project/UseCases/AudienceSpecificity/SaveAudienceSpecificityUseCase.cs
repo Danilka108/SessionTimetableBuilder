@@ -4,12 +4,12 @@ namespace Domain.Project.UseCases.AudienceSpecificity;
 
 public class SaveAudienceSpecificityUseCase
 {
-    private readonly IAudienceSpecificityRepository _specificityRepository;
+    private readonly IClassroomFeatureGateWay _specificityGateWay;
 
     public SaveAudienceSpecificityUseCase
-        (IAudienceSpecificityRepository specificityRepository)
+        (IClassroomFeatureGateWay specificityGateWay)
     {
-        _specificityRepository = specificityRepository;
+        _specificityGateWay = specificityGateWay;
     }
 
     public async Task Handle
@@ -28,7 +28,7 @@ public class SaveAudienceSpecificityUseCase
     private async Task CheckDescriptionToOriginality
         (string description, CancellationToken token, int? id = null)
     {
-        var allSpecificities = await _specificityRepository.ReadAll(token);
+        var allSpecificities = await _specificityGateWay.ReadAll(token);
 
         var specificityWithSameDescription = allSpecificities
             .FirstOrDefault
@@ -46,7 +46,7 @@ public class SaveAudienceSpecificityUseCase
     {
         try
         {
-            await _specificityRepository.Create(specificity, token);
+            await _specificityGateWay.Create(specificity, token);
         }
         catch (Exception e)
         {
@@ -63,7 +63,7 @@ public class SaveAudienceSpecificityUseCase
             var identifiedSpecificity =
                 new IdentifiedModel<Models.AudienceSpecificity>(id, specificity);
 
-            await _specificityRepository.Update
+            await _specificityGateWay.Update
                 (identifiedSpecificity, token);
         }
         catch (Exception e)

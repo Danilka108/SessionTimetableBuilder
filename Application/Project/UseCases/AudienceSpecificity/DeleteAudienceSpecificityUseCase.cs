@@ -4,12 +4,12 @@ namespace Domain.Project.UseCases.AudienceSpecificity;
 
 public class DeleteAudienceSpecificityUseCase
 {
-    private readonly IAudienceSpecificityRepository _specificityRepository;
+    private readonly IClassroomFeatureGateWay _specificityGateWay;
 
     public DeleteAudienceSpecificityUseCase
-        (IAudienceSpecificityRepository specificityRepository)
+        (IClassroomFeatureGateWay specificityGateWay)
     {
-        _specificityRepository = specificityRepository;
+        _specificityGateWay = specificityGateWay;
     }
 
     public async Task Handle(int id)
@@ -18,7 +18,7 @@ public class DeleteAudienceSpecificityUseCase
 
         try
         {
-            await _specificityRepository.Delete(id, token);
+            await _specificityGateWay.Delete(id, token);
         }
         catch (Exception e)
         {

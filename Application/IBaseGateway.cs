@@ -2,7 +2,7 @@ using Domain.Project;
 
 namespace Application;
 
-public interface IBaseGateWay<TEntity>
+public interface IBaseGateway<TEntity>
 {
     Task<Identified<TEntity>> Create(TEntity entity, CancellationToken token);
 

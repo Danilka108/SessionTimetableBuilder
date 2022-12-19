@@ -1,75 +1,78 @@
+using Application.Project.Gateways;
+using Domain.Project;
+
 namespace Application.Project.UseCases.Classroom;
 
 public class SaveClassroomUseCase
 {
-    private readonly IAudienceRepository _audienceRepository;
+    private readonly IClassroomGateway _gateway;
 
-    public SaveClassroomUseCase(IAudienceRepository audienceRepository)
+    public SaveClassroomUseCase(IClassroomGateway gateway)
     {
-        _audienceRepository = audienceRepository;
+        _gateway = gateway;
     }
 
-    public async Task Handle(Models.Audience audience, int? id = null)
+    public async Task Handle(Domain.Project.Classroom classroom, int? id = null)
     {
         var token = CancellationToken.None;
 
-        await CheckNumberToOriginality(token, audience.Number, id);
+        await CheckNumberToOriginality(token, classroom.Number, id);
 
         if (id is { } notNullId)
         {
-            await Update(audience, notNullId, token);
+            await Update(classroom, notNullId, token);
             return;
         }
 
-        await Create(audience, token);
+        await Create(classroom, token);
     }
 
     private async Task CheckNumberToOriginality(CancellationToken token, int number, int? id = null)
     {
-        var allAudiences = await _audienceRepository.ReadAll(token);
-        var audienceWithSaveNumber = allAudiences.FirstOrDefault(a => a.Model.Number == number);
+        var allClassroom = await _gateway.ReadAll(token);
+        var classroomWithSameNumber = allClassroom.FirstOrDefault(a => a.Model.Number == number);
 
-        if (audienceWithSaveNumber?.Id == id) return;
+        if (classroomWithSameNumber?.Id == id) return;
 
-        if (audienceWithSaveNumber is { })
-            throw new SaveAudienceException("Number of audience must be original");
+        if (classroomWithSameNumber is { })
+            throw new SaveClassroomException("Number of classroom must be original");
     }
 
-    private async Task Create(Models.Audience audience, CancellationToken token)
+    private async Task Create(Domain.Project.Classroom classroom, CancellationToken token)
     {
         try
         {
-            await _audienceRepository.Create(audience, token);
+            await _gateway.Create(classroom, token);
         }
         catch (Exception e)
         {
-            throw new SaveAudienceException
-                ($"Failed to create audience with number '{audience.Number}'", e);
+            throw new SaveClassroomException
+                ($"Failed to create classroom with number '{classroom.Number}'", e);
         }
     }
 
-    private async Task Update(Models.Audience audience, int id, CancellationToken token)
+    private async Task Update(Domain.Project.Classroom classroom, int id, CancellationToken token)
     {
         try
         {
-            await _audienceRepository.Update(new IdentifiedModel<Models.Audience>(id, audience),
+            await _gateway.Update(new Identified<Domain.Project.Classroom>(id, classroom),
                 token);
         }
         catch (Exception e)
         {
-            throw new SaveAudienceException
-                ($"Failed to update audience with number '{audience.Number}'", e);
+            throw new SaveClassroomException
+                ($"Failed to update classroom with number '{classroom.Number}'", e);
         }
     }
 }
 
-public class SaveAudienceException : Exception
+public class SaveClassroomException : Exception
 {
-    internal SaveAudienceException(string msg) : base(msg)
+    internal SaveClassroomException(string msg) : base(msg)
     {
     }
 
-    internal SaveAudienceException(string msg, Exception innerException) : base(msg, innerException)
+    internal SaveClassroomException(string msg, Exception innerException) : base(msg, innerException)
     {
     }
 }
