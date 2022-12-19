@@ -1,0 +1,68 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:audienceEditor="clr-namespace:App.Project.AudienceEditor"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="App.Project.AudienceEditor.AudienceEditorWindow"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        Title="AudienceEditorWindow">
+
+    <Design.DataContext>
+        <audienceEditor:AudienceEditorViewModel />
+    </Design.DataContext>
+
+    <StackPanel Width="350" Margin="24" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                Orientation="Vertical">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Number}">
+                <TextBlock Classes="LabelLarge" Text="Number" />
+            </Label>
+            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch"
+                     x:Name="Number"
+                     Text="{Binding Number}" />
+
+            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Capacity}">
+                <TextBlock Classes="LabelLarge" Text="Capacity" />
+            </Label>
+            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch"
+                     x:Name="Capacity"
+                     Text="{Binding Capacity}" />
+
+            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Specificities}">
+                <TextBlock Classes="LabelLarge" Text="Specificities" />
+            </Label>
+            <ScrollViewer Margin="0 0 0 12" Height="300" x:Name="Specificities">
+                <ListBox SelectionMode="Multiple,Toggle" Items="{Binding AllSpecificities}"
+                         SelectedItems="{Binding SelectedSpecificities}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="6" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Classes="BodyMedium" Text="{Binding Model.Description}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button IsEnabled="{Binding CanBeSaved}"
+                    Command="{Binding Save}" Margin="0 0 6 0">
+                <WrapPanel>
+                    <TextBlock IsVisible="{Binding !IsLoading}" Classes="TitleSmall" Text="Save" />
+                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall"
+                               Text="Loading..." />
+                </WrapPanel>
+            </Button>
+
+            <Button Command="{Binding Close}">
+                <TextBlock Classes="TitleSmall" Text="Cancel" />
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

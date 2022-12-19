@@ -6,16 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.4.0" />
-        <PackageReference Include="Material.Avalonia" Version="3.0.0-avalonia10-preview2.126-nightly" />
-        <PackageReference Include="System.Reactive" Version="5.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Reference Include="System.Reactive">
-            <HintPath>..\..\.nuget\packages\system.reactive\5.0.0\lib\net5.0\System.Reactive.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-
 </Project>

@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:assist="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+             xmlns:materialControls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+             xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
+             xmlns:materialIcons="using:Material.Icons.Avalonia"
+             xmlns:explorer="clr-namespace:App.Project.Explorer"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Project.Explorer.ExplorerView">
+
+    <Design.DataContext>
+        <explorer:ExplorerViewModel />
+    </Design.DataContext>
+
+    <materialControls:ColorZone Mode="Light" Opacity="0.8">
+        <StackPanel>
+            <Label Margin="16 8 16 0" Target="{Binding ElementName=ExploredSet}">
+                <TextBlock Classes="Headline4" Text="Explorer" />
+            </Label>
+
+            <Grid Margin="16 0 16 8" x:Name="ExploredSet" VerticalAlignment="Center"
+                  RowDefinitions="*"
+                  ColumnDefinitions="*, 12, Auto">
+                <ComboBox ToolTip.Tip="Select an item" Grid.Column="0"
+                          SelectedIndex="{Binding ExploredSet}">
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Audiences</TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Audiences specificities</TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Bell times</TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Disciplines</TextBlock>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Classes="Headline6">Teachers</TextBlock>
+                    </ComboBoxItem>
+                </ComboBox>
+                <Button Grid.Column="2" Command="{Binding Create}" Classes="Flat"
+                        ToolTip.Tip="Add new item">
+                    <materialIcons:MaterialIcon Kind="Add" Width="24" Height="24"
+                                                FontWeight="Bold" />
+                </Button>
+            </Grid>
+
+            <rxui:RoutedViewHost PageTransition="{x:Null}" Router="{Binding Router}">
+                <rxui:RoutedViewHost.ViewLocator>
+                    <explorer:ExplorerViewLocator />
+                </rxui:RoutedViewHost.ViewLocator>
+            </rxui:RoutedViewHost>
+        </StackPanel>
+    </materialControls:ColorZone>
+</UserControl>

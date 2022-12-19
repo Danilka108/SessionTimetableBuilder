@@ -1,0 +1,61 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:disciplineEditor="clr-namespace:App.Project.DisciplineEditor"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="App.Project.DisciplineEditor.DisciplineEditorWindow"
+        Title="DisciplineEditorWindow">
+
+    <Design.DataContext>
+        <disciplineEditor:DisciplineEditorViewModel />
+    </Design.DataContext>
+
+    <StackPanel Width="300" Margin="24 12" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                Orientation="Vertical">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+            <Label HorizontalAlignment="Left" Target="{Binding ElementName=Name}">
+                <TextBlock Classes="LabelLarge" Text="Name" />
+            </Label>
+            <TextBox Margin="0 0 0 12" Classes="BodyMedium" HorizontalAlignment="Stretch"
+                     x:Name="Name"
+                     Text="{Binding Name}" />
+
+            <Label HorizontalAlignment="Left" Target="{Binding ElementName=AudienceRequirements}">
+                <TextBlock Classes="LabelLarge" Text="Audience requirements" />
+            </Label>
+            <ScrollViewer Margin="0 0 0 12" Height="300" x:Name="AudienceRequirements">
+                <ListBox SelectionMode="Multiple,Toggle" Items="{Binding AllRequirements}"
+                         SelectedItems="{Binding SelectedRequirements}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="6" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Classes="BodyMedium" Text="{Binding Model.Description}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button IsEnabled="{Binding CanBeSaved}"
+                    Command="{Binding Save}" Margin="0 0 6 0">
+                <WrapPanel>
+                    <TextBlock IsVisible="{Binding !IsLoading}" Classes="TitleSmall" Text="Save" />
+                    <TextBlock IsVisible="{Binding IsLoading}" Classes="TitleSmall"
+                               Text="Loading..." />
+                </WrapPanel>
+            </Button>
+
+            <Button Command="{Binding Close}">
+                <TextBlock Classes="TitleSmall" Text="Cancel" />
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</Window>
