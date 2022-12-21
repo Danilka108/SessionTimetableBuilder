@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
+        xmlns:views="clr-namespace:Infrastructure.Project.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Infrastructure.Project.Views.ProjectWindow"
         Title="ProjectWindow">
@@ -12,9 +13,7 @@
     </Design.DataContext>
 
     <Grid ColumnDefinitions="*, Auto, 4*">
-        <StackPanel Grid.Column="0">
-            <TextBlock Text="Test"/>
-        </StackPanel>
+        <views:ExplorerView DataContext="{Binding ExplorerViewModel}"/>
 
         <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False" HorizontalAlignment="Center"
                       VerticalAlignment="Stretch">

@@ -6,7 +6,10 @@ public class ProjectViewModel : BaseViewModel
 {
     public delegate ProjectViewModel Factory(); 
     
-    public ProjectViewModel()
+    public ExplorerViewModel ExplorerViewModel { get; }
+    
+    public ProjectViewModel(ExplorerViewModel.Factory explorerFactory)
     {
+        ExplorerViewModel = explorerFactory.Invoke();
     }
 }

@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialControls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
+             xmlns:project="clr-namespace:Infrastructure.Project"
+             x:Name="explorerView"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Infrastructure.Project.Views.ExplorerView">
+
+    <Design.DataContext>
+        <viewModels:ExplorerViewModel />
+    </Design.DataContext>
+
+    <StackPanel Height="{Binding Bounds.Height, ElementName=explorerView}">
+        <Grid VerticalAlignment="Center" RowDefinitions="*" ColumnDefinitions="*, 12, Auto">
+            <ComboBox Grid.Column="0" SelectedIndex="{Binding ExploredSet}"
+                      Items="{project:ExploredSetConverter}"/>
+            <Button Grid.Column="2" Classes="Flat">
+                <materialIcons:MaterialIcon Kind="Add" />
+            </Button>
+        </Grid>
+    </StackPanel>
+</UserControl>
