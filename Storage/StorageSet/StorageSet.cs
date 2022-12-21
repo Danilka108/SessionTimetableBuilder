@@ -43,7 +43,7 @@ public class StorageSet<TEntity> : IEnumerable<IdentifiedEntity<TEntity>>, IReso
         return _entities.GetEnumerator();
     }
 
-    void IResourceConsumer.ConsumeResource(IStorageResource storageResource)
+    void IResourceConsumer.ConsumeResource(StorageResource storageResource)
     {
         foreach (var identifiedEntity in _entities)
             identifiedEntity.Entity.ProvideResourceToFields(storageResource);

@@ -85,6 +85,11 @@
         <entry key="App/Views/TeachersView.axaml" value="App/App.csproj" />
         <entry key="AvaloniaCrossPlatformApplication1/AvaloniaCrossPlatformApplication1/Views/MainWindow.axaml" value="AvaloniaCrossPlatformApplication1/AvaloniaCrossPlatformApplication1.Desktop/AvaloniaCrossPlatformApplication1.Desktop.csproj" />
         <entry key="Browser/BrowsedViewHost.axaml" value="App/App.csproj" />
+        <entry key="Desktop/MainWindow.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Desktop/Project/Views/ProjectWindow.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Infrastructure/App.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/MainWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ProjectWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="ProjectPresentation/ProjectWindow.axaml" value="ProjectPresentation/ProjectPresentation.csproj" />
         <entry key="ProjectPresentation/Views/AudienceSpecificitiesView.axaml" value="App/App.csproj" />
         <entry key="ProjectPresentation/Views/AudienceSpecificityView.axaml" value="App/App.csproj" />

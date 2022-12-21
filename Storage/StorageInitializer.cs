@@ -7,14 +7,14 @@ namespace Storage;
 /// </summary>
 public class StorageInitializer : IDisposable
 {
-    private readonly IStorageResource _storageResource;
+    private readonly StorageResource _storageResource;
     private readonly Dictionary<string, SerializableStorageSet> _storageSets;
 
     /// <summary>
     ///     Creation of storage initializer.
     /// </summary>
     /// <param name="storageResource">Storage resource.</param>
-    public StorageInitializer(IStorageResource storageResource)
+    public StorageInitializer(StorageResource storageResource)
     {
         _storageResource = storageResource;
         _storageSets = new Dictionary<string, SerializableStorageSet>();

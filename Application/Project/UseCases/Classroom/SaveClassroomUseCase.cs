@@ -30,7 +30,8 @@ public class SaveClassroomUseCase
     private async Task CheckNumberToOriginality(CancellationToken token, int number, int? id = null)
     {
         var allClassroom = await _gateway.ReadAll(token);
-        var classroomWithSameNumber = allClassroom.FirstOrDefault(a => a.Model.Number == number);
+        var classroomWithSameNumber =
+            allClassroom.FirstOrDefault(classroom => classroom.Entity.Number == number);
 
         if (classroomWithSameNumber?.Id == id) return;
 
@@ -72,7 +73,8 @@ public class SaveClassroomException : Exception
     {
     }
 
-    internal SaveClassroomException(string msg, Exception innerException) : base(msg, innerException)
+    internal SaveClassroomException(string msg, Exception innerException) : base(msg,
+        innerException)
     {
     }
 }

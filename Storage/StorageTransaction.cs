@@ -7,14 +7,14 @@ namespace Storage;
 /// </summary>
 public class StorageTransaction : IAsyncDisposable
 {
-    private readonly IStorageResource _storageResource;
+    private readonly StorageResource _storageResource;
     private readonly Dictionary<string, SerializableStorageSet> _storageSets;
     private readonly Stream _stream;
     private readonly CancellationToken _token;
 
     private StorageTransaction
     (
-        IStorageResource storageResource,
+        StorageResource storageResource,
         Dictionary<string, SerializableStorageSet> storageSets,
         Stream stream,
         CancellationToken token
