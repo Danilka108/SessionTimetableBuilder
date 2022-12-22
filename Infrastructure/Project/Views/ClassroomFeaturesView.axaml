@@ -4,37 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
              xmlns:views="clr-namespace:Infrastructure.Project.Views"
-             xmlns:materialControls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Infrastructure.Project.Views.ClassroomFeaturesView">
 
     <Design.DataContext>
         <viewModels:ClassroomFeaturesViewModel />
     </Design.DataContext>
-    
-    <UserControl.Styles>
-        <StyleInclude Source="/Styles/ExplorerItem.axaml"/>
-    </UserControl.Styles>
 
-    <ItemsControl Items="{Binding Features}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <materialControls:Card>
-                    <StackPanel>
-                        <WrapPanel>
-                            <TextBlock Classes="TitleSmall" Text="{Binding Entity.Description}" />
-                        </WrapPanel>
-                        <WrapPanel>
-                            <Button Classes="Flat">
-                                <TextBlock Classes="LabelSmall" Text="EDIT" />
-                            </Button>
-                            <Button Classes="Flat">
-                                <TextBlock Classes="LabelSmall" Text="SAVE" />
-                            </Button>
-                        </WrapPanel>
-                    </StackPanel>
-                </materialControls:Card>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <ItemsControl Items="{Binding Cards}"/>
 </UserControl>

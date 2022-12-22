@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+        xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Infrastructure.Project.Views.ClassroomFeatureEditorWindow"
+        Title="ClassroomFeatureEditorWindow">
+
+    <Design.DataContext>
+        <viewModels:ClassroomFeatureEditorViewModel />
+    </Design.DataContext>
+
+    <Window.Styles>
+        <StyleInclude Source="/Styles/Editor.axaml" />
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto, *">
+        <ProgressBar IsIndeterminate="{Binding IsLoading}" />
+
+        <StackPanel>
+            <TextBox Margin="12" Text="{Binding Description}"
+                     VerticalAlignment="Stretch"
+                     UseFloatingWatermark="True"
+                     assists:TextFieldAssist.Label="Description" Classes="outline" />
+
+            <WrapPanel>
+                <Button Command="{Binding Save}">
+                    <TextBlock Text="Save" Classes="LabelSmall" />
+                </Button>
+                <Button Command="{Binding Close}">
+                    <TextBlock Text="Close" Classes="LabelSmall" />
+                </Button>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</Window>

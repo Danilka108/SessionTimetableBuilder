@@ -89,12 +89,15 @@
         <entry key="Desktop/Project/Views/ProjectWindow.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Infrastructure/App.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/MainWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomFeatureCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomFeatureEditorWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ClassroomFeaturesView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ClassroomFeaturesViewModel.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ClassroomsView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/Explorer.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ExplorerView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ProjectWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Styles/Editor.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Styles/ExplorerItem.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Styles/Typography.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="ProjectPresentation/ProjectWindow.axaml" value="ProjectPresentation/ProjectPresentation.csproj" />
