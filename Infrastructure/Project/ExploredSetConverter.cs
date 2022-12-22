@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Adapters.Project.ViewModels;
 using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using DynamicData;
 
@@ -9,7 +10,7 @@ namespace Infrastructure.Project;
 
 public class ExploredSetConverter : MarkupExtension
 {
-    public override object ProvideValue(IServiceProvider serviceProvider)
+    public override string[] ProvideValue(IServiceProvider serviceProvider)
     {
         var exploredSets = Enum
             .GetValues<ExploredSet>();
@@ -18,18 +19,17 @@ public class ExploredSetConverter : MarkupExtension
 
         for (var i = 0; i < exploredSets.Length; i++)
         {
-            if (exploredSets[i] == ExploredSet.ClassroomFeature)
+            if (exploredSets[i] == ExploredSet.ClassroomFeatures)
             {
-                convertedExploredSets[i] = "Classroom feature";
-            } 
+                convertedExploredSets[i] = "Classroom features";
+            }
+
+            if (exploredSets[i] == ExploredSet.Classrooms)
+            {
+                convertedExploredSets[i] = "Classrooms";
+            }
         }
 
-        return convertedExploredSets.Select(s => new ComboBoxItem
-        {
-            Content = new TextBlock
-            {
-                Text = s
-            }
-        });
+        return convertedExploredSets;
     }
 }

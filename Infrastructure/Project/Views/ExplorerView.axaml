@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:materialControls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
              xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
              xmlns:project="clr-namespace:Infrastructure.Project"
+             xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
              x:Name="explorerView"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Infrastructure.Project.Views.ExplorerView">
@@ -14,13 +14,24 @@
         <viewModels:ExplorerViewModel />
     </Design.DataContext>
 
-    <StackPanel Height="{Binding Bounds.Height, ElementName=explorerView}">
-        <Grid VerticalAlignment="Center" RowDefinitions="*" ColumnDefinitions="*, 12, Auto">
-            <ComboBox Grid.Column="0" SelectedIndex="{Binding ExploredSet}"
-                      Items="{project:ExploredSetConverter}"/>
-            <Button Grid.Column="2" Classes="Flat">
-                <materialIcons:MaterialIcon Kind="Add" />
-            </Button>
-        </Grid>
-    </StackPanel>
+    <Grid RowDefinitions="Auto, Auto, *" HorizontalAlignment="Stretch"
+          Height="{Binding Bounds.Height, ElementName=explorerView}">
+        <TextBlock Margin="16 8 16 0" Grid.Row="0" Classes="HeadlineMedium" HorizontalAlignment="Left" Text="Explorer"/>
+        <ComboBox Margin="16 0 16 12" Grid.Row="1" SelectedIndex="{Binding ExploredSet}"
+                  Items="{project:ExploredSetConverter}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"
+                               Padding="0" Classes="TitleMedium" Text="{Binding}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ScrollViewer Grid.Row="2">
+            <rxui:RoutedViewHost PageTransition="{x:Null}" Router="{Binding Router}">
+                <rxui:RoutedViewHost.ViewLocator>
+                    <project:ExplorerViewLocator />
+                </rxui:RoutedViewHost.ViewLocator>
+            </rxui:RoutedViewHost>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

@@ -14,13 +14,13 @@
         <TrimmerRootDescriptor Include="Roots.xml" />
     </ItemGroup>
 
-<!--    <ItemGroup>-->
-<!--        &lt;!&ndash;This helps with theme dll-s trimming.-->
-<!--        If you will publish your application in self-contained mode with p:PublishTrimmed=true and it will use Fluent theme Default theme will be trimmed from the output and vice versa.-->
-<!--        https://github.com/AvaloniaUI/Avalonia/issues/5593 &ndash;&gt;-->
-<!--        <TrimmableAssembly Include="Avalonia.Themes.Fluent" />-->
-<!--        <TrimmableAssembly Include="Avalonia.Themes.Default" />-->
-<!--    </ItemGroup>-->
+    <!--    <ItemGroup>-->
+    <!--        &lt;!&ndash;This helps with theme dll-s trimming.-->
+    <!--        If you will publish your application in self-contained mode with p:PublishTrimmed=true and it will use Fluent theme Default theme will be trimmed from the output and vice versa.-->
+    <!--        https://github.com/AvaloniaUI/Avalonia/issues/5593 &ndash;&gt;-->
+    <!--        <TrimmableAssembly Include="Avalonia.Themes.Fluent" />-->
+    <!--        <TrimmableAssembly Include="Avalonia.Themes.Default" />-->
+    <!--    </ItemGroup>-->
 
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.18" />
@@ -35,17 +35,25 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Adapters\Adapters.csproj" />
-      <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\Storage\Storage.csproj" />
+        <ProjectReference Include="..\Adapters\Adapters.csproj" />
+        <ProjectReference Include="..\Application\Application.csproj" />
+        <ProjectReference Include="..\Storage\Storage.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Resource Include="Assets\Fonts\*\**.ttf" />
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Autofac">
-        <HintPath>..\..\..\.nuget\packages\autofac\6.4.0\lib\net6.0\Autofac.dll</HintPath>
-      </Reference>
-      <Reference Include="Avalonia.ReactiveUI">
-        <HintPath>..\..\..\.nuget\packages\avalonia.reactiveui\0.10.18\lib\netstandard2.0\Avalonia.ReactiveUI.dll</HintPath>
-      </Reference>
+        <Reference Include="Autofac">
+            <HintPath>..\..\..\.nuget\packages\autofac\6.4.0\lib\net6.0\Autofac.dll</HintPath>
+        </Reference>
+        <Reference Include="Avalonia.ReactiveUI">
+            <HintPath>..\..\..\.nuget\packages\avalonia.reactiveui\0.10.18\lib\netstandard2.0\Avalonia.ReactiveUI.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Assets\Fonts" />
     </ItemGroup>
 </Project>

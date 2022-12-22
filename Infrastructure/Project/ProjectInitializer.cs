@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Adapters.Project;
 using Adapters.Project.ViewModels;
 using Application.Project;
+using Application.Project.Gateways;
 using Autofac;
 using Avalonia.Controls.Mixins;
+using Domain.Project;
 using Infrastructure.Project.Views;
 using Infrastructure.Storage;
 using ReactiveUI;
@@ -45,7 +47,7 @@ public class ProjectInitializer
 
         var container = autofacBuilder.Build();
 
-        await InitializeStorage(container);
+        await CreateTestData(container);
 
         var projectViewModelFactory = container.Resolve<ProjectViewModel.Factory>();
         var projectWindow = new ProjectWindow
@@ -58,50 +60,24 @@ public class ProjectInitializer
         return projectWindow;
     }
 
-    private async Task InitializeStorage(ILifetimeScope rootScope)
+    private async Task InitializeStorage(IComponentContext diContext)
     {
-        using var projectStorageInitializer = rootScope.Resolve<ProjectStorageInitializer>();
+        using var projectStorageInitializer = diContext.Resolve<ProjectStorageInitializer>();
         await projectStorageInitializer.Initialize(CancellationToken.None);
     }
 
-    private async Task CreateTestData(IComponentContext container)
+    private async Task CreateTestData(IComponentContext diContext)
     {
-        var storageInitializer = container.Resolve<ProjectStorageInitializer>();
+        await InitializeStorage(diContext);
 
-        await storageInitializer.Initialize(CancellationToken.None);
+        var classroomFeatureGateway = diContext.Resolve<IClassroomFeatureGateway>();
 
-        // var audienceSpecificitiesRepository =
-        //     container.Resolve<IAudienceSpecificityRepository>();
-        //
-        // var audienceRepository = container.Resolve<IAudienceRepository>();
-        //
-        // var disciplineRepository = container.Resolve<IDisciplineRepository>();
-        //
-        // var audienceSpecificities = new List<IdentifiedModel<AudienceSpecificity>>();
-        //
-        // for (var i = 0; i < 20; i++)
-        // {
-        //     var specificity = await audienceSpecificitiesRepository.Create
-        //     (
-        //         new AudienceSpecificity($"Specificity {i}"),
-        //         CancellationToken.None
-        //     );
-        //
-        //     audienceSpecificities.Add(specificity);
-        // }
-        //
-        // for (var i = 0; i < 20; i++)
-        //     await audienceRepository.Create
-        //     (
-        //         new Audience(i, 30, audienceSpecificities),
-        //         CancellationToken.None
-        //     );
-        //
-        // for (var i = 0; i < 20; i++)
-        // {
-        //     var a = new IdentifiedModel<AudienceSpecificity>[] { };
-        //     await disciplineRepository.Create(new Discipline($"Discipline {i}", a),
-        //         CancellationToken.None);
-        // }
+        for (var i = 0; i < 30; i++)
+        {
+            await classroomFeatureGateway.Create(
+                new ClassroomFeature($"Test classroom feature {i}"),
+                CancellationToken.None
+            );
+        }
     }
 }

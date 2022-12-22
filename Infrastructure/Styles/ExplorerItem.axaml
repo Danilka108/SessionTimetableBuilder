@@ -1,0 +1,51 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialControls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <materialControls:Card>
+                <StackPanel>
+                    <WrapPanel>
+                        <TextBlock Classes="TitleSmall" Text="Test Description" />
+                    </WrapPanel>
+                    <WrapPanel>
+                        <Button Classes="Flat">
+                            <TextBlock Classes="LabelSmall" Text="EDIT" />
+                        </Button>
+                        <Button Classes="Flat">
+                            <TextBlock Classes="LabelSmall" Text="SAVE" />
+                        </Button>
+                    </WrapPanel>
+                </StackPanel>
+            </materialControls:Card>
+        </Border>
+    </Design.PreviewWith>
+
+
+    <Style Selector="materialControls|Card">
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="16, 6" />
+    </Style>
+
+    <Style Selector="materialControls|Card > StackPanel">
+        <Setter Property="Spacing" Value="16" />
+        <Setter Property="Orientation" Value="Vertical" />
+    </Style>
+
+    <Style Selector="materialControls|Card > StackPanel > WrapPanel">
+        <Setter Property="Orientation" Value="Horizontal" />
+    </Style>
+
+    <Style Selector="materialControls|Card > StackPanel > WrapPanel:nth-child(2n)">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+
+    <Style
+        Selector="materialControls|Card > StackPanel > WrapPanel > TextBlock:nth-child(2n+1)">
+        <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+    </Style>
+
+    <Style Selector="materialControls|Card > StackPanel > WrapPanel > Button">
+        <Setter Property="Margin" Value="0 0 4 0" />
+    </Style>
+</Styles>
