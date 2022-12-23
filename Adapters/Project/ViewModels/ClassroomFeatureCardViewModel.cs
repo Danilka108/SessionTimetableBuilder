@@ -21,7 +21,7 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
 
         Edit = ReactiveCommand.CreateFromTask(async () =>
         {
-            await OpenEditor.Handle(editorFactory.Invoke(feature.Id));
+            await OpenEditor.Handle(editorFactory.Invoke(feature));
         });
     }
     

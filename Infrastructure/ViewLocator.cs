@@ -1,4 +1,5 @@
 using System;
+using Adapters;
 using Adapters.Project.ViewModels;
 using Adapters.ViewModels;
 using Avalonia.Controls;

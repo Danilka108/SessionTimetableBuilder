@@ -26,10 +26,10 @@
                      assists:TextFieldAssist.Label="Description" Classes="outline" />
 
             <WrapPanel>
-                <Button Command="{Binding Save}">
+                <Button Classes="Outline" Command="{Binding Save}">
                     <TextBlock Text="Save" Classes="LabelSmall" />
                 </Button>
-                <Button Command="{Binding Close}">
+                <Button Classes="Outline" Command="{Binding Close}">
                     <TextBlock Text="Close" Classes="LabelSmall" />
                 </Button>
             </WrapPanel>

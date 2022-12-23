@@ -26,7 +26,7 @@ public partial class ProjectWindow : ReactiveWindow<ProjectViewModel>
     public static Window? GetCurrent()
     {
         if (
-            App.Current?.ApplicationLifetime
+            Avalonia.Application.Current?.ApplicationLifetime
                 is IClassicDesktopStyleApplicationLifetime desktop
             && desktop.Windows.FirstOrDefault(w => w is ProjectWindow)
                 is { } window

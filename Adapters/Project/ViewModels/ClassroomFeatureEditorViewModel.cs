@@ -1,6 +1,7 @@
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Adapters.Common.ViewModels;
 using Adapters.ViewModels;
 using Application.Project.Gateways;
 using Application.Project.UseCases.ClassroomFeature;
@@ -11,7 +12,7 @@ namespace Adapters.Project.ViewModels;
 
 public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewModel
 {
-    public delegate ClassroomFeatureEditorViewModel Factory(int? featureId);
+    public delegate ClassroomFeatureEditorViewModel Factory(Identified<ClassroomFeature>? feature);
 
     private readonly int? _featureId;
 
@@ -21,21 +22,27 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
 
     private readonly ObservableAsPropertyHelper<bool> _isLoading;
 
+    private readonly MessageViewModel.Factory _messageDialogFactory;
+
     private string _description;
 
     public ClassroomFeatureEditorViewModel(
-        int? featureId,
+        Identified<ClassroomFeature>? feature,
         IClassroomFeatureGateway gateway,
-        SaveClassroomFeatureUseCase saveUseCase
+        SaveClassroomFeatureUseCase saveUseCase,
+        MessageViewModel.Factory messageDialogFactory
     )
     {
         Activator = new ViewModelActivator();
+        OpenMessageDialog = new Interaction<MessageViewModel, Unit>();
+        CloseSelf = new Interaction<Unit, Unit>();
 
+        _messageDialogFactory = messageDialogFactory;
         _gateway = gateway;
         _saveUseCase = saveUseCase;
-        _featureId = featureId;
 
-        LoadDescription();
+        _featureId = feature?.Id;
+        Description = feature?.Entity.Description ?? "";
 
         var canBeSaved = this
             .WhenAnyValue(vm => vm.Description)
@@ -45,30 +52,16 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
 
         var canBeClosed = Save
             .IsExecuting
-            .Select(v => !v); 
-        
-        Close = ReactiveCommand.Create(() => {}, canBeClosed);
+            .Select(v => !v);
+
+        Close = ReactiveCommand.CreateFromTask(
+            async () => { await CloseSelf.Handle(Unit.Default); }, canBeClosed);
 
         _isLoading = Save
             .IsExecuting
             .ToProperty(this, vm => vm.IsLoading);
-        
-        this.WhenActivated(d =>
-        {
-            Save.DisposeWith(d);
-        });
-    }
 
-    private void LoadDescription()
-    {
-        if (_featureId is null) Description = "";
-
-        _gateway.Read(_featureId!.Value, CancellationToken.None).ContinueWith(
-            async featureTask =>
-            {
-                var feature = await featureTask;
-                Description = feature.Entity.Description;
-            });
+        this.WhenActivated(d => { Save.DisposeWith(d); });
     }
 
     private async Task DoSave()
@@ -78,13 +71,12 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
         try
         {
             await _saveUseCase.Handle(newFeature, _featureId);
+            await CloseSelf.Handle(Unit.Default);
         }
-        catch (SaveClassroomFeatureException)
+        catch (SaveClassroomFeatureException e)
         {
-            throw new NotImplementedException();
+            await OpenMessageDialog.Handle(_messageDialogFactory.Invoke("Error", e.Message));
         }
-
-        // await Close.Execute(Unit.Default);
     }
 
     public string Description
@@ -93,9 +85,13 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
         set => this.RaiseAndSetIfChanged(ref _description, value);
     }
 
+    public Interaction<MessageViewModel, Unit> OpenMessageDialog { get; }
+
     public ReactiveCommand<Unit, Unit> Save { get; }
 
     public ReactiveCommand<Unit, Unit> Close { get; }
+
+    public Interaction<Unit, Unit> CloseSelf { get; }
 
     public bool IsLoading => _isLoading.Value;
 

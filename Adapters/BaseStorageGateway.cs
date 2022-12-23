@@ -22,7 +22,7 @@ internal abstract class BaseStorageGateway<TEntity, TStorageEntity> : IBaseGatew
         _converter = converter;
     }
 
-    public async Task Delete(int id, CancellationToken token)
+    public virtual async Task Delete(int id, CancellationToken token)
     {
         await using var transaction = await _storage.StartTransaction(token);
 
@@ -34,7 +34,7 @@ internal abstract class BaseStorageGateway<TEntity, TStorageEntity> : IBaseGatew
         await transaction.Commit();
     }
 
-    public async Task<Identified<TEntity>> Create(TEntity entity, CancellationToken token)
+    public virtual async Task<Identified<TEntity>> Create(TEntity entity, CancellationToken token)
     {
         var storageEntity = _converter.ToStorageEntity(entity);
 
@@ -49,7 +49,7 @@ internal abstract class BaseStorageGateway<TEntity, TStorageEntity> : IBaseGatew
         return new Identified<TEntity>(id, entity);
     }
 
-    public async Task Update(Identified<TEntity> identifiedEntity, CancellationToken token)
+    public virtual async Task Update(Identified<TEntity> identifiedEntity, CancellationToken token)
     {
         await using var transaction = await _storage.StartTransaction(token);
 
@@ -61,7 +61,7 @@ internal abstract class BaseStorageGateway<TEntity, TStorageEntity> : IBaseGatew
         await transaction.Commit();
     }
 
-    public async Task<Identified<TEntity>> Read(int id, CancellationToken token)
+    public virtual async Task<Identified<TEntity>> Read(int id, CancellationToken token)
     {
         var storageEntities = await _storage
             .FromSetOf<TStorageEntity>(token);
@@ -72,7 +72,7 @@ internal abstract class BaseStorageGateway<TEntity, TStorageEntity> : IBaseGatew
         return new Identified<TEntity>(identifiedSetItem.Id, entity);
     }
 
-    public async Task<IEnumerable<Identified<TEntity>>> ReadAll(CancellationToken token)
+    public virtual async Task<IEnumerable<Identified<TEntity>>> ReadAll(CancellationToken token)
     {
         var identifiedStorageEntities = await _storage.FromSetOf<TStorageEntity>(token);
         var identifiedEntities = new List<Identified<TEntity>>();
@@ -86,7 +86,7 @@ internal abstract class BaseStorageGateway<TEntity, TStorageEntity> : IBaseGatew
         return identifiedEntities;
     }
 
-    public IObservable<Identified<TEntity>> Observe(int id)
+    public virtual IObservable<Identified<TEntity>> Observe(int id)
     {
         return _storage
             .ObserveFromSetOf<TStorageEntity>()
@@ -101,7 +101,7 @@ internal abstract class BaseStorageGateway<TEntity, TStorageEntity> : IBaseGatew
             );
     }
 
-    public IObservable<IEnumerable<Identified<TEntity>>> ObserveAll()
+    public virtual IObservable<IEnumerable<Identified<TEntity>>> ObserveAll()
     {
         return _storage
             .ObserveFromSetOf<TStorageEntity>()

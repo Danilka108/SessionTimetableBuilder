@@ -11,7 +11,7 @@ namespace Storage;
 ///     <c>Storage</c> caches all changes of sets.
 ///     It's recommended to use one instance of <c>Storage</c> while using it.
 /// </remarks>
-public class Storage : IDisposable
+public class Storage : IDisposable, IStorageReader
 {
     private readonly StorageResource _storageResource;
 

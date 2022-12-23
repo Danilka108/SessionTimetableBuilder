@@ -5,7 +5,7 @@ namespace Storage;
 /// <summary>
 ///     <c>StorageTransaction</c> represents atomic changes undone if they fail to apply.
 /// </summary>
-public class StorageTransaction : IAsyncDisposable
+public class StorageTransaction : IAsyncDisposable, IStorageEditor
 {
     private readonly StorageResource _storageResource;
     private readonly Dictionary<string, SerializableStorageSet> _storageSets;
