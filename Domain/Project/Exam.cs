@@ -2,9 +2,10 @@ namespace Domain.Project;
 
 public record Exam
 (
-    Identified<Lecturer> Lecturer,
-    Identified<Group> Group,
-    Identified<Discipline> Discipline,
-    Identified<Classroom> Classroom,
+    int Id,
+    Lecturer Lecturer,
+    Group Group,
+    Discipline Discipline,
+    Classroom Classroom,
     DateTime StartTime
 );

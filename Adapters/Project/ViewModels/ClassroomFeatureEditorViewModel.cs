@@ -2,8 +2,6 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adapters.Common.ViewModels;
-using Adapters.ViewModels;
-using Application.Project.Gateways;
 using Application.Project.UseCases.ClassroomFeature;
 using Domain.Project;
 using ReactiveUI;
@@ -12,11 +10,9 @@ namespace Adapters.Project.ViewModels;
 
 public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewModel
 {
-    public delegate ClassroomFeatureEditorViewModel Factory(Identified<ClassroomFeature>? feature);
+    public delegate ClassroomFeatureEditorViewModel Factory(ClassroomFeature? feature);
 
     private readonly int? _featureId;
-
-    private readonly IClassroomFeatureGateway _gateway;
 
     private readonly SaveClassroomFeatureUseCase _saveUseCase;
 
@@ -27,21 +23,19 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
     private string _description;
 
     public ClassroomFeatureEditorViewModel(
-        Identified<ClassroomFeature>? feature,
-        IClassroomFeatureGateway gateway,
+        ClassroomFeature? feature,
         SaveClassroomFeatureUseCase saveUseCase,
         MessageDialogViewModel.Factory messageDialogFactory
     )
     {
         _featureId = feature?.Id;
-        Description = feature?.Entity.Description ?? "";
+        Description = feature?.Description ?? "";
 
         Activator = new ViewModelActivator();
         OpenMessageDialog = new Interaction<MessageDialogViewModel, Unit>();
         Finish = new Interaction<Unit, Unit>();
 
         _messageDialogFactory = messageDialogFactory;
-        _gateway = gateway;
         _saveUseCase = saveUseCase;
 
         var canBeSaved = this
@@ -54,8 +48,8 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
             .IsExecuting
             .Select(v => !v);
 
-        Close = ReactiveCommand.CreateFromTask(
-            async () => { await Finish.Handle(Unit.Default); }, canBeClosed);
+        Close = ReactiveCommand.CreateFromTask(async () => { await Finish.Handle(Unit.Default); },
+            canBeClosed);
 
         _isLoading = Save
             .IsExecuting
@@ -64,20 +58,33 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
         this.WhenActivated(d => { Save.DisposeWith(d); });
     }
 
-    private async Task DoSave()
+    private async Task DoSave(CancellationToken token)
     {
-        var newFeature = new ClassroomFeature(Description);
-
         try
         {
-            await _saveUseCase.Handle(newFeature, _featureId);
+            await _saveUseCase.Handle(_featureId, Description, token);
             await Finish.Handle(Unit.Default);
         }
-        catch (SaveClassroomFeatureException e)
+        catch (Exception e)
         {
-            await OpenMessageDialog.Handle(_messageDialogFactory.Invoke("Error", e.Message));
+            var errorMessage = MapExceptionToErrorMessage(e);
+
+            var messageDialog = _messageDialogFactory.Invoke(
+                LocalizedMessage.Header.Error,
+                errorMessage
+            );
+            
+            await OpenMessageDialog.Handle(messageDialog);
         }
     }
+
+    private LocalizedMessage MapExceptionToErrorMessage(Exception e) => e switch
+    {
+        CreateClassroomFeatureException => new LocalizedMessage.Error.FailedToCreateClassroomFeature(),
+        UpdateClassroomFeatureException => new LocalizedMessage.Error.FailedToUpdateClassroomFeature(),
+        NotOriginalDescriptionException => new LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal(),
+        _ => new LocalizedMessage.Error.UndefinedError(),
+    };
 
     public string Description
     {

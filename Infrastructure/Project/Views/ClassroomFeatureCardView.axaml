@@ -22,10 +22,10 @@
             </WrapPanel>
             <WrapPanel>
                 <Button Command="{Binding Edit}" Classes="Flat">
-                    <TextBlock Classes="LabelSmall" Text="EDIT" />
+                    <TextBlock Classes="LabelSmall" Text="{StaticResource EditButtonCaptionUpperCase}" />
                 </Button>
                 <Button Command="{Binding Delete}" Classes="Flat">
-                    <TextBlock Classes="LabelSmall" Text="DELETE" />
+                    <TextBlock Classes="LabelSmall" Text="{StaticResource DeleteButtonCaptionUpperCase}" />
                 </Button>
             </WrapPanel>
         </StackPanel>

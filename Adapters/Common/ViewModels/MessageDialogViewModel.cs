@@ -6,9 +6,9 @@ namespace Adapters.Common.ViewModels;
 
 public class MessageDialogViewModel : BaseViewModel
 {
-    public delegate MessageDialogViewModel Factory(string header, string message);
+    public delegate MessageDialogViewModel Factory(LocalizedMessage.Header header, LocalizedMessage message);
 
-    public MessageDialogViewModel(string header, string message)
+    public MessageDialogViewModel(LocalizedMessage.Header header, LocalizedMessage message)
     {
         Finish = new Interaction<Unit, Unit>();
         
@@ -21,9 +21,9 @@ public class MessageDialogViewModel : BaseViewModel
         });
     }
     
-    public string Message { get; }
-    
-    public string Header { get; }
+    public LocalizedMessage Message { get; }
+
+    public LocalizedMessage.Header Header { get; }
     
     public ReactiveCommand<Unit, Unit> Close { get; }
     

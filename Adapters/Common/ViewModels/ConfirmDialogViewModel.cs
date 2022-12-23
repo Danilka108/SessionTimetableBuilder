@@ -6,13 +6,13 @@ namespace Adapters.Common.ViewModels;
 
 public class ConfirmDialogViewModel : BaseViewModel
 {
-    public delegate ConfirmDialogViewModel Factory(string action, string message);
+    public delegate ConfirmDialogViewModel Factory(LocalizedMessage.Header header, LocalizedMessage message);
 
-    public ConfirmDialogViewModel(string action, string message)
+    public ConfirmDialogViewModel(LocalizedMessage.Header header, LocalizedMessage message)
     {
         Finish = new Interaction<bool, Unit>(); 
         
-        Action = action;
+        Header = header;
         Message = message;
 
         Confirm = ReactiveCommand.CreateFromTask(async () =>
@@ -26,9 +26,9 @@ public class ConfirmDialogViewModel : BaseViewModel
         });
     }
     
-    public string Action { get; }
+    public LocalizedMessage.Header Header { get; }
     
-    public string Message { get; }
+    public LocalizedMessage Message { get; }
     
     public ReactiveCommand<Unit, Unit> Confirm { get; }
     

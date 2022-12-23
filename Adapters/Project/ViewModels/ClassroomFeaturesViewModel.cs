@@ -3,7 +3,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adapters.ViewModels;
 using Application.Project.Gateways;
-using Domain.Project;
 using ReactiveUI;
 
 namespace Adapters.Project.ViewModels;

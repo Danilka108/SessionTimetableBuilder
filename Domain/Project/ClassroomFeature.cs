@@ -1,3 +1,3 @@
 namespace Domain.Project;
 
-public record ClassroomFeature(string Description);
+public record ClassroomFeature(int Id, string Description);

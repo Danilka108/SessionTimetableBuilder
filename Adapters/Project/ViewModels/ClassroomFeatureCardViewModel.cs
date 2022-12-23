@@ -1,8 +1,7 @@
 using System.Reactive;
 using System.Reactive.Linq;
 using Adapters.Common.ViewModels;
-using Adapters.ViewModels;
-using Application.Project.Gateways;
+using Application.Project.UseCases.ClassroomFeature;
 using Domain.Project;
 using ReactiveUI;
 
@@ -10,32 +9,33 @@ namespace Adapters.Project.ViewModels;
 
 public class ClassroomFeatureCardViewModel : BaseViewModel
 {
-    public delegate ClassroomFeatureCardViewModel Factory(Identified<ClassroomFeature> feature);
+    public delegate ClassroomFeatureCardViewModel Factory(ClassroomFeature feature);
 
     private readonly ConfirmDialogViewModel.Factory _confirmDialogFactory;
 
-    private readonly IClassroomFeatureGateway _gateway;
-
-    private readonly Identified<ClassroomFeature> _feature;
+    private readonly ClassroomFeature _feature;
 
     private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
+    private readonly DeleteClassroomFeatureUseCase _deleteUseCase;
+
     public ClassroomFeatureCardViewModel(
-        Identified<ClassroomFeature> feature,
+        ClassroomFeature feature,
         ClassroomFeatureEditorViewModel.Factory editorFactory,
         ConfirmDialogViewModel.Factory confirmDialogFactory,
         MessageDialogViewModel.Factory messageDialogFactory,
-        IClassroomFeatureGateway gateway
+        DeleteClassroomFeatureUseCase deleteUseCase
     )
     {
         _feature = feature;
-        Description = feature.Entity.Description;
+        Description = feature.Description;
+
+        _deleteUseCase = deleteUseCase;
 
         OpenMessageDialog = new Interaction<MessageDialogViewModel, Unit>();
         OpenConfirmDialog = new Interaction<ConfirmDialogViewModel, bool>();
         OpenEditor = new Interaction<ClassroomFeatureEditorViewModel, Unit>();
 
-        _gateway = gateway;
         _messageDialogFactory = messageDialogFactory;
         _confirmDialogFactory = confirmDialogFactory;
 
@@ -49,20 +49,35 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
 
     private async Task DoDelete(CancellationToken token)
     {
-        var confirmed = await OpenConfirmDialog.Handle(_confirmDialogFactory.Invoke(
-            "Delete",
-            $"Delete '{Description}' classroom feature?")
+        var confirmDialog = _confirmDialogFactory.Invoke(
+            LocalizedMessage.Header.Delete,
+            new LocalizedMessage.Question.DeleteCalssroomFeature()
         );
 
+        var confirmed = await OpenConfirmDialog.Handle(confirmDialog);
         if (!confirmed) return;
 
         try
         {
-            await _gateway.Delete(_feature.Id, token);
+            await _deleteUseCase.Handle(_feature, token);
         }
-        catch (Exception e)
+        catch (DeleteClassroomFeatureException)
         {
-            await OpenMessageDialog.Handle(_messageDialogFactory.Invoke("Error", e.Message));
+            var messageDialog = _messageDialogFactory.Invoke(
+                LocalizedMessage.Header.Error,
+                new LocalizedMessage.Error.FailedToDeleteClassroomFeature()
+            );
+
+            await OpenMessageDialog.Handle(messageDialog);
+        }
+        catch (Exception)
+        {
+            var messageDialog = _messageDialogFactory.Invoke(
+                LocalizedMessage.Header.Error,
+                new LocalizedMessage.Error.UndefinedError()
+            );
+
+            await OpenMessageDialog.Handle(messageDialog);
         }
     }
 
@@ -75,6 +90,6 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
     public Interaction<ClassroomFeatureEditorViewModel, Unit> OpenEditor { get; }
 
     public Interaction<ConfirmDialogViewModel, bool> OpenConfirmDialog { get; }
-    
+
     public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
 }

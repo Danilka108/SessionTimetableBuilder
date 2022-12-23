@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
-             xmlns:views="clr-namespace:Infrastructure.Project.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Infrastructure.Project.Views.ClassroomFeaturesView">
 

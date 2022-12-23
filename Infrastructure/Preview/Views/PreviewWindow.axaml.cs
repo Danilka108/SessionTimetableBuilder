@@ -33,7 +33,7 @@ public partial class PreviewWindow : ReactiveWindow<PreviewViewModel>
     
     private async Task DoShowProject(InteractionContext<Unit, Unit> context)
     {
-        var initializer = new ProjectInitializer("test", ParentDiScope);
+        var initializer = new ProjectInitializer("тестовый проект", "", ParentDiScope);
         var projectWindow = await initializer.Initialize();
         
         projectWindow.Show();

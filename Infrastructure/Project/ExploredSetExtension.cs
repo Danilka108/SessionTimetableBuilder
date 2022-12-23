@@ -8,7 +8,7 @@ using DynamicData;
 
 namespace Infrastructure.Project;
 
-public class ExploredSetConverter : MarkupExtension
+public class ExploredSetExtension : MarkupExtension
 {
     public override string[] ProvideValue(IServiceProvider serviceProvider)
     {
@@ -21,12 +21,12 @@ public class ExploredSetConverter : MarkupExtension
         {
             if (exploredSets[i] == ExploredSet.ClassroomFeatures)
             {
-                convertedExploredSets[i] = "Classroom features";
+                convertedExploredSets[i] = "ClassroomFeaturesTitle";
             }
 
             if (exploredSets[i] == ExploredSet.Classrooms)
             {
-                convertedExploredSets[i] = "Classrooms";
+                convertedExploredSets[i] = "ClassroomsTitle";
             }
         }
 

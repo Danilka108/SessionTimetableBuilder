@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Adapters.Project;
@@ -20,11 +21,13 @@ namespace Infrastructure.Project;
 public class ProjectInitializer
 {
     private readonly string _storageFullPath;
+    private readonly string _name;
     private readonly ILifetimeScope _parentDiScope;
 
-    public ProjectInitializer(string storageFullPath, ILifetimeScope parentDiScope)
+    public ProjectInitializer(string name, string directoryPath, ILifetimeScope parentDiScope)
     {
-        _storageFullPath = storageFullPath;
+        _storageFullPath = Path.Join(directoryPath, name);
+        _name = name;
         _parentDiScope = parentDiScope;
     }
 
@@ -53,7 +56,7 @@ public class ProjectInitializer
         var projectViewModelFactory = projectDiScope.Resolve<ProjectViewModel.Factory>();
         var projectWindow = new ProjectWindow
         {
-            DataContext = projectViewModelFactory.Invoke()
+            DataContext = projectViewModelFactory.Invoke(_name)
         };
 
         projectWindow.WhenActivated(d => { projectDiScope.DisposeWith(d); });
@@ -76,7 +79,7 @@ public class ProjectInitializer
         for (var i = 0; i < 30; i++)
         {
             await classroomFeatureGateway.Create(
-                new ClassroomFeature($"Test classroom feature {i}"),
+                $"Test classroom feature {i}",
                 CancellationToken.None
             );
         }

@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:Infrastructure.Project.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Infrastructure.Project.Views.ProjectWindow"
-        Title="ProjectWindow">
+        Title="{Binding Name}">
 
     <Design.DataContext>
         <viewModels:ProjectViewModel />

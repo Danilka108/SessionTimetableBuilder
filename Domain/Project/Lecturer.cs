@@ -1,13 +1,12 @@
-using System.Text;
-
 namespace Domain.Project;
 
 public record Lecturer
 (
+    int Id,
     string Name,
     string Surname,
     string Patronymic,
-    IEnumerable<Identified<Discipline>> Disciplines
+    IEnumerable<Discipline> Disciplines
 )
 {
     public static string ProduceFullname(string? name, string? surname, string? patronymic)

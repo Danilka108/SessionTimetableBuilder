@@ -1,5 +1,4 @@
 using Application.Project.Gateways;
-using Domain.Project;
 
 namespace Application.Project.UseCases.ClassroomFeature;
 
@@ -13,17 +12,14 @@ public class SaveClassroomFeatureUseCase
         _featureGateway = featureGateway;
     }
 
-    public async Task Handle
-        (Domain.Project.ClassroomFeature feature, int? id = null)
+    public async Task Handle(int? id, string description, CancellationToken token)
     {
-        var token = CancellationToken.None;
-
-        await CheckDescriptionToOriginality(feature.Description, token, id);
+        await CheckDescriptionToOriginality(description, token, id);
 
         if (id is { } notNullId)
-            await Update(feature, notNullId, token);
+            await Update(notNullId, description, token);
         else
-            await Create(feature, token);
+            await Create(description, token);
     }
 
     private async Task CheckDescriptionToOriginality
@@ -33,59 +29,42 @@ public class SaveClassroomFeatureUseCase
 
         var featureWithSameDescription = allFeatures
             .FirstOrDefault
-                (feature => description == feature.Entity.Description);
+                (feature => description == feature.Description);
 
         if (featureWithSameDescription?.Id == id) return;
 
         if (featureWithSameDescription is { })
-            throw new SaveClassroomFeatureException
-                ("Description of classroom feature must be original");
+            throw new NotOriginalDescriptionException();
     }
 
-    private async Task Create
-        (Domain.Project.ClassroomFeature feature, CancellationToken token)
+    private async Task Create(string description, CancellationToken token)
     {
         try
         {
-            await _featureGateway.Create(feature, token);
+            await _featureGateway.Create(description, token);
         }
         catch (Exception e)
         {
-            throw new SaveClassroomFeatureException
-                ("Failed to create new classroom feature", e);
+            throw new CreateClassroomFeatureException();
         }
     }
 
-    private async Task Update
-        (Domain.Project.ClassroomFeature feature, int id, CancellationToken token)
+    private async Task Update(int id, string description, CancellationToken token)
     {
+        var feature = new Domain.Project.ClassroomFeature(id, description);
         try
         {
-            var identifiedFeature =
-                new Identified<Domain.Project.ClassroomFeature>(id, feature);
-
-            await _featureGateway.Update
-                (identifiedFeature, token);
+            await _featureGateway.Update(feature, token);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new SaveClassroomFeatureException
-            (
-                $"Failed to update classroom feature with '{id}'",
-                e
-            );
+            throw new UpdateClassroomFeatureException();
         }
     }
 }
 
-public class SaveClassroomFeatureException : Exception
-{
-    internal SaveClassroomFeatureException
-        (string msg, Exception innerException) : base(msg, innerException)
-    {
-    }
+public class NotOriginalDescriptionException : Exception {}
 
-    internal SaveClassroomFeatureException(string msg) : base(msg)
-    {
-    }
-}
+public class CreateClassroomFeatureException : Exception {}
+
+public class UpdateClassroomFeatureException : Exception {}

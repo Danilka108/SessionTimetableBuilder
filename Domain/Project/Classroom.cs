@@ -2,7 +2,8 @@ namespace Domain.Project;
 
 public record Classroom
 (
+    int Id,
     int Number,
     int Capacity,
-    IEnumerable<Identified<ClassroomFeature>> Features
+    IEnumerable<ClassroomFeature> Features
 );

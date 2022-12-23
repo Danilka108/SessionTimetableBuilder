@@ -12,17 +12,15 @@ public class DeleteClassroomFeatureUseCase
         _featureGateway = featureGateway;
     }
 
-    public async Task Handle(int id)
+    public async Task Handle(Domain.Project.ClassroomFeature feature, CancellationToken token)
     {
-        var token = CancellationToken.None;
-
         try
         {
-            await _featureGateway.Delete(id, token);
+            await _featureGateway.Delete(feature, token);
         }
         catch (Exception e)
         {
-            throw new DeleteClassroomFeatureException ("Failed to delete classroom feature", e);
+            throw new DeleteClassroomFeatureException("Failed to delete classroom feature", e);
         }
     }
 }

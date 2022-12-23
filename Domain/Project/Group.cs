@@ -2,7 +2,8 @@ namespace Domain.Project;
 
 public record Group
 (
+    int Id,
     string Name,
     int StudentsNumber,
-    IEnumerable<Identified<Discipline>> Disciplines
+    IEnumerable<Discipline> Disciplines
 );
