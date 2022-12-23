@@ -4,11 +4,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Adapters.Common.ViewModels;assembly=Adapters"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Infrastructure.Common.Views.MessageWindow"
-        Title="MessageWindow">
+        x:Class="Infrastructure.Common.Views.MessageDialogWindow"
+        Title="Message dialog">
 
     <Design.DataContext>
-        <viewModels:MessageViewModel />
+        <viewModels:MessageDialogViewModel />
     </Design.DataContext>
 
     <Window.Styles>
@@ -16,12 +16,12 @@
     </Window.Styles>
 
     <StackPanel Margin="12" Width="300" VerticalAlignment="Stretch" HorizontalAlignment="Center">
-        <TextBlock Margin="0 0 0 8" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center"
-                   Classes="HeadlineSmall"
+        <TextBlock Margin="0 0 0 8" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left"
+                   Classes="TitleLarge"
                    Text="{Binding Header}" />
         
-        <TextBlock Margin="0 0 0 20" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center"
-                   Classes="BodyMedium"
+        <TextBlock Margin="0 0 0 20" TextWrapping="WrapWithOverflow" HorizontalAlignment="Stretch"
+                   Classes="BodyLarge"
                    Text="{Binding Message}" />
         
         <Button HorizontalAlignment="Right" Classes="Outline" Command="{Binding Close}">

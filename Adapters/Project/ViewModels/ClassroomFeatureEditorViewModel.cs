@@ -22,7 +22,7 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
 
     private readonly ObservableAsPropertyHelper<bool> _isLoading;
 
-    private readonly MessageViewModel.Factory _messageDialogFactory;
+    private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
     private string _description;
 
@@ -30,19 +30,19 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
         Identified<ClassroomFeature>? feature,
         IClassroomFeatureGateway gateway,
         SaveClassroomFeatureUseCase saveUseCase,
-        MessageViewModel.Factory messageDialogFactory
+        MessageDialogViewModel.Factory messageDialogFactory
     )
     {
+        _featureId = feature?.Id;
+        Description = feature?.Entity.Description ?? "";
+
         Activator = new ViewModelActivator();
-        OpenMessageDialog = new Interaction<MessageViewModel, Unit>();
-        CloseSelf = new Interaction<Unit, Unit>();
+        OpenMessageDialog = new Interaction<MessageDialogViewModel, Unit>();
+        Finish = new Interaction<Unit, Unit>();
 
         _messageDialogFactory = messageDialogFactory;
         _gateway = gateway;
         _saveUseCase = saveUseCase;
-
-        _featureId = feature?.Id;
-        Description = feature?.Entity.Description ?? "";
 
         var canBeSaved = this
             .WhenAnyValue(vm => vm.Description)
@@ -55,7 +55,7 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
             .Select(v => !v);
 
         Close = ReactiveCommand.CreateFromTask(
-            async () => { await CloseSelf.Handle(Unit.Default); }, canBeClosed);
+            async () => { await Finish.Handle(Unit.Default); }, canBeClosed);
 
         _isLoading = Save
             .IsExecuting
@@ -71,7 +71,7 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
         try
         {
             await _saveUseCase.Handle(newFeature, _featureId);
-            await CloseSelf.Handle(Unit.Default);
+            await Finish.Handle(Unit.Default);
         }
         catch (SaveClassroomFeatureException e)
         {
@@ -85,13 +85,13 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
         set => this.RaiseAndSetIfChanged(ref _description, value);
     }
 
-    public Interaction<MessageViewModel, Unit> OpenMessageDialog { get; }
+    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
 
     public ReactiveCommand<Unit, Unit> Save { get; }
 
     public ReactiveCommand<Unit, Unit> Close { get; }
 
-    public Interaction<Unit, Unit> CloseSelf { get; }
+    public Interaction<Unit, Unit> Finish { get; }
 
     public bool IsLoading => _isLoading.Value;
 

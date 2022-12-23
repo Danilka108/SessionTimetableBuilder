@@ -4,20 +4,20 @@ using ReactiveUI;
 
 namespace Adapters.Common.ViewModels;
 
-public class MessageViewModel : BaseViewModel
+public class MessageDialogViewModel : BaseViewModel
 {
-    public delegate MessageViewModel Factory(string header, string message);
+    public delegate MessageDialogViewModel Factory(string header, string message);
 
-    public MessageViewModel(string header, string message)
+    public MessageDialogViewModel(string header, string message)
     {
-        CloseSelf = new Interaction<Unit, Unit>();
+        Finish = new Interaction<Unit, Unit>();
         
         Header = header;
         Message = message;
         
         Close = ReactiveCommand.CreateFromTask(async () =>
         {
-            await CloseSelf.Handle(Unit.Default);
+            await Finish.Handle(Unit.Default);
         });
     }
     
@@ -27,5 +27,5 @@ public class MessageViewModel : BaseViewModel
     
     public ReactiveCommand<Unit, Unit> Close { get; }
     
-    public Interaction<Unit, Unit> CloseSelf { get; }
+    public Interaction<Unit, Unit> Finish { get; }
 }

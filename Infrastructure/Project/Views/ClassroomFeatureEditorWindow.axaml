@@ -23,7 +23,7 @@
             <TextBox Margin="12" Text="{Binding Description}"
                      VerticalAlignment="Stretch"
                      UseFloatingWatermark="True"
-                     assists:TextFieldAssist.Label="Description" Classes="outline" />
+                     assists:TextFieldAssist.Label="Description" Classes="BodyLarge outline" />
 
             <WrapPanel>
                 <Button Classes="Outline" Command="{Binding Save}">

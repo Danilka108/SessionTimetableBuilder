@@ -26,7 +26,7 @@ public class ViewLocator : IDataTemplate
         {
             ClassroomFeatureCardViewModel context => new ClassroomFeatureCardView
             {
-                DataContext = context
+                ViewModel = context
             },
             _ => throw new ArgumentNullException(nameof(data)),
         };

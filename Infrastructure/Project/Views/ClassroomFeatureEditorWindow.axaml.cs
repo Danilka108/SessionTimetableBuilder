@@ -24,8 +24,8 @@ public partial class ClassroomFeatureEditorWindow : ReactiveWindow<ClassroomFeat
         this.WhenActivated(d =>
         {
             ViewModel!
-                .CloseSelf
-                .RegisterHandler(DoCloseSelf)
+                .Finish
+                .RegisterHandler(DoFinish)
                 .DisposeWith(d);
 
             ViewModel!
@@ -35,17 +35,17 @@ public partial class ClassroomFeatureEditorWindow : ReactiveWindow<ClassroomFeat
         });
     }
 
-    private async Task DoCloseSelf(InteractionContext<Unit, Unit> context)
+    private async Task DoFinish(InteractionContext<Unit, Unit> context)
     {
         context.SetOutput(Unit.Default);
         Close();
     }
 
-    private async Task DoOpenMessageDialog(InteractionContext<MessageViewModel, Unit> context)
+    private async Task DoOpenMessageDialog(InteractionContext<MessageDialogViewModel, Unit> context)
     {
         var viewModel = context.Input;
 
-        var dialog = new MessageWindow
+        var dialog = new MessageDialogWindow
         {
             DataContext = viewModel
         };

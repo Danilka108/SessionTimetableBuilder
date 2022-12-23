@@ -88,6 +88,9 @@
         <entry key="Desktop/MainWindow.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Project/Views/ProjectWindow.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Infrastructure/App.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Common/ConfirmWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Common/Views/ConfirmDialogWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Common/Views/MessageDialogWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Common/Views/MessageWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/MainWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Preview/PreviewWindow.axaml" value="Infrastructure/Infrastructure.csproj" />

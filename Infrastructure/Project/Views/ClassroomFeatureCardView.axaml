@@ -18,13 +18,13 @@
     <materialControls:Card>
         <StackPanel>
             <WrapPanel>
-                <TextBlock Classes="TitleSmall" Text="{Binding Description}" />
+                <TextBlock Classes="BodyLarge" Text="{Binding Description}" />
             </WrapPanel>
             <WrapPanel>
                 <Button Command="{Binding Edit}" Classes="Flat">
                     <TextBlock Classes="LabelSmall" Text="EDIT" />
                 </Button>
-                <Button Classes="Flat">
+                <Button Command="{Binding Delete}" Classes="Flat">
                     <TextBlock Classes="LabelSmall" Text="DELETE" />
                 </Button>
             </WrapPanel>

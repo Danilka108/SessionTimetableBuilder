@@ -2,6 +2,7 @@ using System.Reactive;
 using System.Threading.Tasks;
 using Adapters.Common.ViewModels;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Mixins;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
@@ -9,9 +10,9 @@ using ReactiveUI;
 
 namespace Infrastructure.Common.Views;
 
-public partial class MessageWindow : ReactiveWindow<MessageViewModel>
+public partial class ConfirmDialogWindow : ReactiveWindow<ConfirmDialogViewModel>
 {
-    public MessageWindow()
+    public ConfirmDialogWindow()
     {
         InitializeComponent();
 #if DEBUG
@@ -20,17 +21,17 @@ public partial class MessageWindow : ReactiveWindow<MessageViewModel>
 
         this.WhenActivated(d =>
         {
-            ViewModel!
-                .CloseSelf
-                .RegisterHandler(DoCloseSelf)
+            ViewModel
+                .Finish
+                .RegisterHandler(DoFinish)
                 .DisposeWith(d);
         });
     }
-
-    private async Task DoCloseSelf(InteractionContext<Unit, Unit> context)
+    
+    private async Task DoFinish(InteractionContext<bool, Unit> context)
     {
         context.SetOutput(Unit.Default);
-        Close();
+        Close(context.Input);
     }
 
     private void InitializeComponent()
