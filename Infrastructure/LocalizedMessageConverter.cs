@@ -45,8 +45,10 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
         LocalizedMessage.Error.UndefinedError => ("CreateClassroomFeatureError", new object?[] { }),
         LocalizedMessage.Error.StorageIsNotAvailable =>
             ("StorageIsNotAvailableError", new object?[] { }),
-        LocalizedMessage.Error.ClassroomFeatureAlreadyLinkedByClassroom v =>
-            ("ClassroomFeatureAlreadyLinkedByClassroom", new object?[] { v.ClassroomNumber }),
+        LocalizedMessage.Error.ClassroomFeatureReferencedByClassroom v =>
+            ("ClassroomFeatureReferencedByClassroom", new object?[] { v.ClassroomNumber }),
+        LocalizedMessage.Error.ClassroomFeatureReferencedByDiscipline v =>
+            ("ClassroomFeatureReferencedByDiscipline", new object?[] { v.DisciplineName }),
         LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal =>
             ("DescriptionOfClassroomFeatureMustMeOriginalError", new object?[] { }),
         LocalizedMessage.Error.NumberOfClassroomMustBeOriginal => (

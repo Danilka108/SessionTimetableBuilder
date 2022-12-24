@@ -11,6 +11,7 @@
     <x:String x:Key="ClassroomsFeaturesTitle">Характеристики кабинетов</x:String>
     <x:String x:Key="ClassroomFeaturesTitle">Характеристики кабинета</x:String>
     <x:String x:Key="ClassroomsTitle">Кабинеты</x:String>
+    <x:String x:Key="DisciplinesTitle">Дисциплины</x:String>
     <x:String x:Key="ClassroomCardTitle">Номер: {0}, вместимость: {1}</x:String>
 
     <x:String x:Key="DeleteButtonCaption">Удалить</x:String>
@@ -33,7 +34,8 @@
     <x:String x:Key="StorageIsNotAvailableError">Не удалось получить доступ к хранилищу данных.</x:String>
     <x:String x:Key="DescriptionOfClassroomFeatureMustMeOriginalError">Описание характеристики кабинета должно быть оригинальным.</x:String>
     <x:String x:Key="NumberOfClassroomMustBeOriginal">Номер кабинета должен быть оригинальным.</x:String>
-    <x:String x:Key="ClassroomFeatureAlreadyLinkedByClassroom">Неудалось удалить характеристику кабинета. Кабинет '{0}' ссылается на данную характеристику.</x:String>
+    <x:String x:Key="ClassroomFeatureReferencedByClassroom">Не удалось удалить характеристику кабинета. Кабинет '{0}' ссылается на данную характеристику.</x:String>
+    <x:String x:Key="ClassroomFeatureReferencedByDiscipline">Не удалось удалить характеристику кабинета. Дисциплина '{0}' ссылается на данную характеристику.</x:String>
 
     <x:String x:Key="DeleteClassroomFeatureQuestion">Удалить характеристику кабинета?</x:String>
     <x:String x:Key="DeleteClassroomQuestion">Удалить кабинет?</x:String>

@@ -89,5 +89,9 @@ public class ProjectInitializer
 
         var classroomGateway = diContext.Resolve<IClassroomGateway>();
         await classroomGateway.Create(108, 36, features.GetRange(0, 1), CancellationToken.None);
+
+        var disciplineGateway = diContext.Resolve<IDisciplineGateway>();
+        await disciplineGateway.Create("programing", features.GetRange(0, 1),
+            CancellationToken.None);
     }
 }

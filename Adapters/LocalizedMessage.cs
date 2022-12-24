@@ -20,8 +20,11 @@ public abstract record LocalizedMessage
 
         public record DescriptionOfClassroomFeatureMustBeOriginal : LocalizedMessage;
 
-        public record ClassroomFeatureAlreadyLinkedByClassroom
+        public record ClassroomFeatureReferencedByClassroom
             (int ClassroomNumber) : LocalizedMessage;
+        
+        public record ClassroomFeatureReferencedByDiscipline
+            (string DisciplineName) : LocalizedMessage;
         
         public record NumberOfClassroomMustBeOriginal : LocalizedMessage;
     }

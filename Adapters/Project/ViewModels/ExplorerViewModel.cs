@@ -9,7 +9,8 @@ namespace Adapters.Project.ViewModels;
 public enum ExploredSet : int
 {
     ClassroomFeatures = 0,
-    Classrooms
+    Classrooms,
+    Disciplines,
 }
 
 public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
@@ -22,9 +23,12 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
 
     private readonly ClassroomFeaturesViewModel.Factory _classroomFeaturesFactory;
 
+    private readonly DisciplinesViewModel.Factory _disciplinesFactory;
+
     public ExplorerViewModel(
         ClassroomsViewModel.Factory classroomsFactory,
-        ClassroomFeaturesViewModel.Factory classroomFeaturesFactory
+        ClassroomFeaturesViewModel.Factory classroomFeaturesFactory,
+        DisciplinesViewModel.Factory disciplinesFactory
     )
     {
         Activator = new ViewModelActivator();
@@ -34,6 +38,7 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
 
         _classroomsFactory = classroomsFactory;
         _classroomFeaturesFactory = classroomFeaturesFactory;
+        _disciplinesFactory = disciplinesFactory;
 
         this.WhenActivated(d =>
         {
@@ -51,8 +56,8 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
         {
             ExploredSet.Classrooms => _classroomsFactory.Invoke(this),
             ExploredSet.ClassroomFeatures => _classroomFeaturesFactory.Invoke(this),
+            ExploredSet.Disciplines => _disciplinesFactory.Invoke(this)
         };
-
 
         return Router.Navigate.Execute(viewModelToNavigate);
     }

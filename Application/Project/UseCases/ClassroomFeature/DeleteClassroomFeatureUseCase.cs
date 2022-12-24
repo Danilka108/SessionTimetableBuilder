@@ -6,30 +6,28 @@ public class DeleteClassroomFeatureUseCase
 {
     private readonly IClassroomFeatureGateway _featureGateway;
     private readonly IClassroomGateway _classroomGateway;
+    private readonly IDisciplineGateway _disciplineGatway;
 
     public DeleteClassroomFeatureUseCase
-        (IClassroomFeatureGateway featureGateway, IClassroomGateway classroomGateway)
+    (IClassroomFeatureGateway featureGateway, IClassroomGateway classroomGateway,
+        IDisciplineGateway disciplineGateway)
     {
         _featureGateway = featureGateway;
         _classroomGateway = classroomGateway;
+        _disciplineGatway = disciplineGateway;
     }
 
     public async Task Handle(Domain.Project.ClassroomFeature feature, CancellationToken token)
     {
-        var classroomWithSameFeature = await SearchClassroomWithSameFeature(feature, token);
-
-        if (classroomWithSameFeature is not null)
-        {
-            throw new ClassroomFeatureAlreadyLinkedByClassroomException(classroomWithSameFeature);
-        }
-
+        await CheckForLackOfReferences(feature, token);
         await _featureGateway.Delete(feature, token);
     }
 
-    private async Task<Domain.Project.Classroom?> SearchClassroomWithSameFeature(
+    private async Task CheckForLackOfReferences(
         Domain.Project.ClassroomFeature featureToDelete, CancellationToken token)
     {
         var classrooms = await _classroomGateway.ReadAll(token);
+        var disciplines = await _disciplineGatway.ReadAll(token);
 
         foreach (var classroom in classrooms)
         {
@@ -37,20 +35,39 @@ public class DeleteClassroomFeatureUseCase
 
             if (contains)
             {
-                return classroom;
+                throw new ClassroomFeatureReferencedByClassroomException(classroom);
             }
         }
+        
+        foreach (var discipline in disciplines)
+        {
+            var contains = discipline.ContainsRequirement(featureToDelete);
 
-        return null;
+            if (contains)
+            {
+                throw new ClassroomFeatureReferencedByDisciplineException(discipline);
+            }
+        }
     }
 }
 
-public class ClassroomFeatureAlreadyLinkedByClassroomException : Exception
+public class ClassroomFeatureReferencedByClassroomException : Exception
 {
-    public Domain.Project.Classroom LinkedClassroom { get; }
-    
-    public ClassroomFeatureAlreadyLinkedByClassroomException(Domain.Project.Classroom linkedClassroom)
+    public Domain.Project.Classroom Classroom { get; }
+
+    public ClassroomFeatureReferencedByClassroomException(Domain.Project.Classroom classroom)
     {
-        LinkedClassroom = linkedClassroom;
+        Classroom = classroom;
+    }
+}
+
+public class ClassroomFeatureReferencedByDisciplineException : Exception
+{
+    public Domain.Project.Discipline Discipline { get; }
+
+    public ClassroomFeatureReferencedByDisciplineException(
+        Domain.Project.Discipline discipline)
+    {
+        Discipline = discipline;
     }
 }

@@ -12,16 +12,6 @@ public class ViewLocator : IDataTemplate
 {
     public IControl Build(object data)
     {
-        // var name = data.GetType()
-        //     .FullName!.Replace("ViewModel", "View")
-        //     .Replace("Infrastructure", "Adapters");
-        //
-        // var type = Type.GetType(name);
-        //
-        // if (type != null) return (Control)Activator.CreateInstance(type)!;
-        //
-        // return new TextBlock { Text = "Not Found: " + name };
-
         return data switch
         {
             ClassroomFeatureCardViewModel context => new ClassroomFeatureCardView
@@ -29,6 +19,10 @@ public class ViewLocator : IDataTemplate
                 ViewModel = context
             },
             ClassroomCardViewModel context => new ClassroomCardView
+            {
+                ViewModel = context
+            },
+            DisciplineCardViewModel context => new DisciplineCardView
             {
                 ViewModel = context
             },

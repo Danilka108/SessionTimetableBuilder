@@ -19,15 +19,12 @@ public class ExploredSetExtension : MarkupExtension
 
         for (var i = 0; i < exploredSets.Length; i++)
         {
-            if (exploredSets[i] == ExploredSet.ClassroomFeatures)
+            convertedExploredSets[i] = exploredSets[i] switch
             {
-                convertedExploredSets[i] = "ClassroomFeaturesTitle";
-            }
-
-            if (exploredSets[i] == ExploredSet.Classrooms)
-            {
-                convertedExploredSets[i] = "ClassroomsTitle";
-            }
+                ExploredSet.Classrooms => "ClassroomsTitle",
+                ExploredSet.ClassroomFeatures => "ClassroomsFeaturesTitle",
+                ExploredSet.Disciplines => "DisciplinesTitle"
+            };
         }
 
         return convertedExploredSets;

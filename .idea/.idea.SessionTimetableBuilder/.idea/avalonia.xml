@@ -104,6 +104,8 @@
         <entry key="Infrastructure/Project/Views/ClassroomFeaturesView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ClassroomFeaturesViewModel.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ClassroomsView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/DisciplineCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/DisciplinesView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/Explorer.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ExplorerView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ProjectWindow.axaml" value="Infrastructure/Infrastructure.csproj" />

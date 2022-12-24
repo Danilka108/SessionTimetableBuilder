@@ -62,34 +62,42 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
         {
             await _deleteUseCase.Handle(_feature, token);
         }
-        catch (ClassroomFeatureAlreadyLinkedByClassroomException e)
+        catch (ClassroomFeatureReferencedByClassroomException e)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.ClassroomFeatureAlreadyLinkedByClassroom(
-                    e.LinkedClassroom.Number)
-            );
+            var message = new LocalizedMessage
+                .Error
+                .ClassroomFeatureReferencedByClassroom(e.Classroom.Number);
+
+            await ShowErrorMessage(message);
+        }
+        catch (ClassroomFeatureReferencedByDisciplineException e)
+        {
+            var message = new LocalizedMessage
+                .Error
+                .ClassroomFeatureReferencedByDiscipline(e.Discipline.Name);
             
-            await OpenMessageDialog.Handle(messageDialog);
+            await ShowErrorMessage(message);
         }
         catch (ClassroomFeatureGatewayException)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.StorageIsNotAvailable()
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            var message = new LocalizedMessage.Error.StorageIsNotAvailable();
+            await ShowErrorMessage(message);
         }
         catch (Exception)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.UndefinedError()
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            var message = new LocalizedMessage.Error.UndefinedError();
+            await ShowErrorMessage(message);
         }
+    }
+
+    private async Task ShowErrorMessage(LocalizedMessage message)
+    {
+        var messageDialog = _messageDialogFactory.Invoke(
+            LocalizedMessage.Header.Error,
+            message
+        );
+
+        await OpenMessageDialog.Handle(messageDialog);
     }
 
     public string Description { get; }
