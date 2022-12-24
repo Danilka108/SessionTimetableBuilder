@@ -27,6 +27,8 @@ public abstract record LocalizedMessage
             (string DisciplineName) : LocalizedMessage;
         
         public record NumberOfClassroomMustBeOriginal : LocalizedMessage;
+
+        public record NameOfDisciplineMustBeOriginal : LocalizedMessage;
     }
 
     public static class FieldError

@@ -1,4 +1,5 @@
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Adapters.Common.ViewModels;
@@ -35,6 +36,8 @@ public class DisciplinesViewModel : BaseViewModel, IRoutableViewModel, IActivata
                 CatchFeaturesObserving(ex).ToObservable())
             .Select(classrooms => classrooms.Select(cardFactory.Invoke))
             .ToProperty(this, vm => vm.Cards);
+        
+        this.WhenActivated(d => _cards.DisposeWith(d));
     }
 
     private async Task<IEnumerable<Discipline>> CatchFeaturesObserving(Exception _)

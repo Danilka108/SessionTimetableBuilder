@@ -18,6 +18,12 @@
           }
         }
       },
+      "Fody/6.6.4": {
+        "type": "package",
+        "build": {
+          "build/Fody.targets": {}
+        }
+      },
       "ReactiveUI/18.4.1": {
         "type": "package",
         "dependencies": {
@@ -33,6 +39,26 @@
           "lib/net6.0/ReactiveUI.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "ReactiveUI.Fody/18.4.1": {
+        "type": "package",
+        "dependencies": {
+          "Fody": "6.6.4",
+          "ReactiveUI": "18.4.1"
+        },
+        "compile": {
+          "lib/net6.0/ReactiveUI.Fody.Helpers.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/ReactiveUI.Fody.Helpers.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/ReactiveUI.Fody.props": {}
         }
       },
       "ReactiveUI.Validation/3.0.22": {
@@ -141,6 +167,39 @@
         "logo.png"
       ]
     },
+    "Fody/6.6.4": {
+      "sha512": "vLZS+oa+ndUHYPlx/8n9bBTT3dHkCF0riml4paKq4D663+cZd47x1uagQo32D/gKFZ/sfmV1oqKaLmH0elxq4A==",
+      "type": "package",
+      "path": "fody/6.6.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "License.txt",
+        "build/Fody.targets",
+        "fody.6.6.4.nupkg.sha512",
+        "fody.nuspec",
+        "netclassictask/Fody.dll",
+        "netclassictask/FodyCommon.dll",
+        "netclassictask/FodyHelpers.dll",
+        "netclassictask/FodyIsolated.dll",
+        "netclassictask/Mono.Cecil.Pdb.dll",
+        "netclassictask/Mono.Cecil.Pdb.pdb",
+        "netclassictask/Mono.Cecil.Rocks.dll",
+        "netclassictask/Mono.Cecil.Rocks.pdb",
+        "netclassictask/Mono.Cecil.dll",
+        "netclassictask/Mono.Cecil.pdb",
+        "netstandardtask/Fody.dll",
+        "netstandardtask/FodyCommon.dll",
+        "netstandardtask/FodyHelpers.dll",
+        "netstandardtask/FodyIsolated.dll",
+        "netstandardtask/Mono.Cecil.Pdb.dll",
+        "netstandardtask/Mono.Cecil.Pdb.pdb",
+        "netstandardtask/Mono.Cecil.Rocks.dll",
+        "netstandardtask/Mono.Cecil.Rocks.pdb",
+        "netstandardtask/Mono.Cecil.dll",
+        "netstandardtask/Mono.Cecil.pdb"
+      ]
+    },
     "ReactiveUI/18.4.1": {
       "sha512": "uMFeRHeLc7IQ9rzl0Z6GIh4Zq3NN6DP3o8oHklslE5ZdrQncCJBNgaTR7D2yiaefbiMwduggGHphqDqfuIzz2A==",
       "type": "package",
@@ -187,6 +246,41 @@
         "logo.png",
         "reactiveui.18.4.1.nupkg.sha512",
         "reactiveui.nuspec"
+      ]
+    },
+    "ReactiveUI.Fody/18.4.1": {
+      "sha512": "su/CVNAzHjpkBV4X5JRPiTWN3/s5vpvLs3fw1udn1hmGG8aEeb6gYhlGdRlnk2WRRlJttUWQxFWfHimJSnMDGg==",
+      "type": "package",
+      "path": "reactiveui.fody/18.4.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE/LICENSE",
+        "build/ReactiveUI.Fody.props",
+        "lib/monoandroid11.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/monoandroid11.0/ReactiveUI.Fody.Helpers.pdb",
+        "lib/monoandroid11.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/net462/ReactiveUI.Fody.Helpers.dll",
+        "lib/net462/ReactiveUI.Fody.Helpers.xml",
+        "lib/net472/ReactiveUI.Fody.Helpers.dll",
+        "lib/net472/ReactiveUI.Fody.Helpers.xml",
+        "lib/net6.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/net6.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/netstandard2.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/netstandard2.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/uap10.0.16299/ReactiveUI.Fody.Helpers.dll",
+        "lib/uap10.0.16299/ReactiveUI.Fody.Helpers.pri",
+        "lib/uap10.0.16299/ReactiveUI.Fody.Helpers.xml",
+        "lib/xamarinios10/ReactiveUI.Fody.Helpers.dll",
+        "lib/xamarinios10/ReactiveUI.Fody.Helpers.xml",
+        "lib/xamarinmac20/ReactiveUI.Fody.Helpers.dll",
+        "lib/xamarinmac20/ReactiveUI.Fody.Helpers.xml",
+        "lib/xamarintvos10/ReactiveUI.Fody.Helpers.dll",
+        "lib/xamarintvos10/ReactiveUI.Fody.Helpers.xml",
+        "logo.png",
+        "reactiveui.fody.18.4.1.nupkg.sha512",
+        "reactiveui.fody.nuspec",
+        "weaver/ReactiveUI.Fody.dll"
       ]
     },
     "ReactiveUI.Validation/3.0.22": {
@@ -302,6 +396,7 @@
       "Application >= 1.0.0",
       "Domain >= 1.0.0",
       "ReactiveUI >= 18.4.1",
+      "ReactiveUI.Fody >= 18.4.1",
       "ReactiveUI.Validation >= 3.0.22",
       "Storage >= 1.0.0"
     ]
@@ -354,6 +449,10 @@
         "targetAlias": "net6.0",
         "dependencies": {
           "ReactiveUI": {
+            "target": "Package",
+            "version": "[18.4.1, )"
+          },
+          "ReactiveUI.Fody": {
             "target": "Package",
             "version": "[18.4.1, )"
           },

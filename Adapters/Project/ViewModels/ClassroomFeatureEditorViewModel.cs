@@ -73,26 +73,31 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
             await _saveUseCase.Handle(_featureId, Description, token);
             await Finish.Handle(Unit.Default);
         }
-        catch (Exception e)
+        catch (ClassroomFeatureGatewayException)
         {
-            var errorMessage = MapExceptionToErrorMessage(e);
-
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                errorMessage
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            await ShowErrorMessage(new LocalizedMessage.Error.StorageIsNotAvailable());
+        }
+        catch (NotOriginalDescriptionException)
+        {
+            var message = new LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal();
+            await ShowErrorMessage(message);
+        }
+        catch (Exception)
+        {
+            var message = new LocalizedMessage.Error.UndefinedError();
+            await ShowErrorMessage(message);
         }
     }
 
-    private LocalizedMessage MapExceptionToErrorMessage(Exception e) => e switch
+    private async Task ShowErrorMessage(LocalizedMessage message)
     {
-        ClassroomFeatureGatewayException => new LocalizedMessage.Error.StorageIsNotAvailable(),
-        NotOriginalDescriptionException =>
-            new LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal(),
-        _ => new LocalizedMessage.Error.UndefinedError(),
-    };
+        var messageDialog = _messageDialogFactory.Invoke(
+            LocalizedMessage.Header.Error,
+            message
+        );
+
+        await OpenMessageDialog.Handle(messageDialog);
+    }
 
     public string Description
     {

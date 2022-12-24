@@ -81,7 +81,6 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
                 CatchFeaturesObserving(ex).ToObservable())
             .ToProperty(this, vm => vm.AllFeatures);
 
-
         this.WhenActivated(d => { _allFeatures.DisposeWith(d); });
     }
 
@@ -92,36 +91,34 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
             var number = int.Parse(Number);
             var capacity = int.Parse(Capacity);
 
-            await _saveUseCase.Handle(number, capacity, _classroomId, SelectedFeatures, token);
+            await _saveUseCase.Handle(number, capacity, _classroomId, SelectedFeatures.ToArray(), token);
             await Finish.Handle(Unit.Default);
         }
         catch (ClassroomNumberMustBeOriginalException)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.NumberOfClassroomMustBeOriginal()
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            var message = new LocalizedMessage.Error.NumberOfClassroomMustBeOriginal();
+            await ShowErrorMessage(message);
         }
         catch (ClassroomGatewayException)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.StorageIsNotAvailable()
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            var message = new LocalizedMessage.Error.StorageIsNotAvailable();
+            await ShowErrorMessage(message);
         }
         catch (Exception)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.UndefinedError()
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            var message = new LocalizedMessage.Error.UndefinedError();
+            await ShowErrorMessage(message);
         }
+    }
+    
+    private async Task ShowErrorMessage(LocalizedMessage message)
+    {
+        var messageDialog = _messageDialogFactory.Invoke(
+            LocalizedMessage.Header.Error,
+            message
+        );
+
+        await OpenMessageDialog.Handle(messageDialog);
     }
 
     private async Task<IEnumerable<ClassroomFeature>> CatchFeaturesObserving(Exception _)

@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "78iTT8mDvKJ0yxgjyPFNsBooWJIdU4ojyTwavISmMEq+y0FBfZvLIQnUCKrxaaOXebpRwF8fpxS9cmbg7WdQIw==",
+  "dgSpecHash": "lqZ86gi5F+P2NLjT/L/2MdgYzqFByuSJLoE8RVoAuoJn0kypHLaKukLWH3v1/0HNq4iIf4UcozVfXoeEmIbSdA==",
   "success": true,
   "projectFilePath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Adapters/Adapters.csproj",
   "expectedPackageFiles": [
     "/home/danilka108/.nuget/packages/dynamicdata/7.12.8/dynamicdata.7.12.8.nupkg.sha512",
+    "/home/danilka108/.nuget/packages/fody/6.6.4/fody.6.6.4.nupkg.sha512",
     "/home/danilka108/.nuget/packages/reactiveui/18.4.1/reactiveui.18.4.1.nupkg.sha512",
+    "/home/danilka108/.nuget/packages/reactiveui.fody/18.4.1/reactiveui.fody.18.4.1.nupkg.sha512",
     "/home/danilka108/.nuget/packages/reactiveui.validation/3.0.22/reactiveui.validation.3.0.22.nupkg.sha512",
     "/home/danilka108/.nuget/packages/splat/14.5.1/splat.14.5.1.nupkg.sha512",
     "/home/danilka108/.nuget/packages/system.reactive/5.0.0/system.reactive.5.0.0.nupkg.sha512"

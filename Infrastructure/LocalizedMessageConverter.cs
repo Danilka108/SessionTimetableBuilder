@@ -53,10 +53,12 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
             ("DescriptionOfClassroomFeatureMustMeOriginalError", new object?[] { }),
         LocalizedMessage.Error.NumberOfClassroomMustBeOriginal => (
             "NumberOfClassroomMustBeOriginal", new object?[] { }),
+        LocalizedMessage.Error.NameOfDisciplineMustBeOriginal => (
+            "NameOfDisciplineMustBeOriginalError", new object?[] { }),
         LocalizedMessage.FieldError.InvalidNumericString => (
             "InvalidNumericStringFieldError", new object?[] { }),
-        LocalizedMessage.FieldError.CantBeEmpty => ("CantBeEmptyFieldError", new object?[] {}),
-        LocalizedMessage.FieldError.Separator => ("FieldErrorSeparator", new object?[] {}),
+        LocalizedMessage.FieldError.CantBeEmpty => ("CantBeEmptyFieldError", new object?[] { }),
+        LocalizedMessage.FieldError.Separator => ("FieldErrorSeparator", new object?[] { }),
         LocalizedMessage.Question.DeleteClassroomFeature => ("DeleteClassroomFeatureQuestion",
             new object?[] { }),
         LocalizedMessage.Question.DeleteClassroom => ("DeleteClassroomQuestion", new object?[] { })

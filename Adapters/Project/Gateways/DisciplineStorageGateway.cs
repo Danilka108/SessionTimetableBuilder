@@ -54,6 +54,7 @@ public class DisciplineStorageGateway : IDisciplineGateway
         try
         {
             await using var t = await _storage.StartTransaction(token);
+
             t
                 .InSetOf<StorageDiscipline>()
                 .Update(new IdentifiedEntity<StorageDiscipline>(discipline.Id,
@@ -112,14 +113,14 @@ public class DisciplineStorageGateway : IDisciplineGateway
         }
 
         var classroomsTasks =
-            storageDisciplines.Select(storageClassroom =>
-                _featureGateway.Read(storageClassroom.Entity.ClassroomRequirements, token)
+            storageDisciplines.Select(storageDiscipline =>
+                _featureGateway.Read(storageDiscipline.Entity.ClassroomRequirements, token)
                     .ContinueWith(
                         async requirementsTask =>
                         {
                             var requirements = await requirementsTask;
                             return new Discipline(
-                                storageClassroom.Id, storageClassroom.Entity.Name, requirements);
+                                storageDiscipline.Id, storageDiscipline.Entity.Name, requirements);
                         }, token));
 
         return await Task.WhenAll(await Task.WhenAll(classroomsTasks));
@@ -128,16 +129,15 @@ public class DisciplineStorageGateway : IDisciplineGateway
     public IObservable<Discipline> Observe(int id)
     {
         return ObserveAll()
-            .Select(classrooms =>
+            .Select(disciplines =>
             {
-                foreach (var classroom in classrooms)
+                foreach (var discipline in disciplines)
                 {
-                    if (classroom.Id != id) continue;
-                    return classroom;
+                    if (discipline.Id != id) continue;
+                    return discipline;
                 }
 
-                throw new DisciplineGatewayException(
-                    "Could not be found discipline");
+                throw new DisciplineGatewayException("Could not be found discipline");
             });
     }
 
@@ -146,9 +146,10 @@ public class DisciplineStorageGateway : IDisciplineGateway
         return _storage.ObserveFromSetOf<StorageDiscipline>()
             .SelectMany(async (storageDisciplines, token) =>
             {
+                var storageDisciplinesArray = storageDisciplines.ToArray();
                 var disciplines = new List<Discipline>();
 
-                foreach (var storageDiscipline in storageDisciplines)
+                foreach (var storageDiscipline in storageDisciplinesArray)
                 {
                     var requirements =
                         await _featureGateway.Read(storageDiscipline.Entity.ClassroomRequirements,

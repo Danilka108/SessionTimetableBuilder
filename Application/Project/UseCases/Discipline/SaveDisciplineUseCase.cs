@@ -2,11 +2,11 @@ using Application.Project.Gateways;
 
 namespace Application.Project.UseCases.Discipline;
 
-public class SaveClassroomUseCase
+public class SaveDisciplineUseCase
 {
     private readonly IDisciplineGateway _gateway;
 
-    public SaveClassroomUseCase(IDisciplineGateway gateway)
+    public SaveDisciplineUseCase(IDisciplineGateway gateway)
     {
         _gateway = gateway;
     }
@@ -18,8 +18,8 @@ public class SaveClassroomUseCase
 
         if (id is { } notNullId)
         {
-            var classroom = new Domain.Project.Discipline(notNullId, name, requirements);
-            await _gateway.Update(classroom, token);
+            var discipline = new Domain.Project.Discipline(notNullId, name, requirements);
+            await _gateway.Update(discipline, token);
             return;
         }
 
@@ -35,10 +35,10 @@ public class SaveClassroomUseCase
         if (disciplineWithSameName?.Id == id) return;
 
         if (disciplineWithSameName is { })
-            throw new ClassroomNumberMustBeOriginalException();
+            throw new DisciplineNameMustBeOriginalException();
     }
 }
 
-public class ClassroomNumberMustBeOriginalException : Exception
+public class DisciplineNameMustBeOriginalException : Exception
 {
 }

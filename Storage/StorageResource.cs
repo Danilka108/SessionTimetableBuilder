@@ -100,7 +100,6 @@ public abstract class StorageResource : IDisposable
         await JsonSerializer.SerializeAsync(stream, storageSets, JsonOptions, token);
         await stream.FlushAsync(token);
 
-        // _cachedStorageSets = storageSets;
         _cachedStorageSets.OnNext(storageSets);
     }
 
@@ -131,8 +130,7 @@ public abstract class StorageResource : IDisposable
         CancellationToken token
     )
     {
-        if (_cachedStorageSets.Value is { } cachedStorageSets) return cachedStorageSets;
-        // if (_cachedStorageSets is { }) return _cachedStorageSets;
+        // if (_cachedStorageSets.Value is { } cachedStorageSets) return cachedStorageSets;
 
         return await JsonSerializer.DeserializeAsync<Dictionary<string, SerializableStorageSet>>
         (

@@ -64,22 +64,22 @@ public class ClassroomCardViewModel : BaseViewModel
         }
         catch (ClassroomGatewayException)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.StorageIsNotAvailable()
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            await ShowErrorMessage(new LocalizedMessage.Error.StorageIsNotAvailable());
         }
         catch (Exception)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.UndefinedError()
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            await ShowErrorMessage(new LocalizedMessage.Error.UndefinedError());
         }
+    }
+    
+    private async Task ShowErrorMessage(LocalizedMessage message)
+    {
+        var messageDialog = _messageDialogFactory.Invoke(
+            LocalizedMessage.Header.Error,
+            message
+        );
+
+        await OpenMessageDialog.Handle(messageDialog);
     }
     
     public int Number { get; }

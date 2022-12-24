@@ -61,22 +61,24 @@ public class DisciplineCardViewModel : BaseViewModel
         }
         catch (DisciplineGatewayException)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.StorageIsNotAvailable()
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            var message = new LocalizedMessage.Error.StorageIsNotAvailable();
+            await ShowErrorMessage(message);
         }
         catch (Exception)
         {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.UndefinedError()
-            );
-
-            await OpenMessageDialog.Handle(messageDialog);
+            var message = new LocalizedMessage.Error.UndefinedError();
+            await ShowErrorMessage(message);
         }
+    }
+    
+    private async Task ShowErrorMessage(LocalizedMessage message)
+    {
+        var messageDialog = _messageDialogFactory.Invoke(
+            LocalizedMessage.Header.Error,
+            message
+        );
+
+        await OpenMessageDialog.Handle(messageDialog);
     }
 
     public string Name { get; }
