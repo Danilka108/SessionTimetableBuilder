@@ -2,78 +2,45 @@ using Application.Project.Gateways;
 
 namespace Application.Project.UseCases.Classroom;
 
-// public class SaveClassroomUseCase
-// {
-//     private readonly IClassroomGateway _gateway;
-//
-//     public SaveClassroomUseCase(IClassroomGateway gateway)
-//     {
-//         _gateway = gateway;
-//     }
-//
-//     public async Task Handle(Domain.Project.Classroom classroom, int? id = null)
-//     {
-//         var token = CancellationToken.None;
-//
-//         await CheckNumberToOriginality(token, classroom.Number, id);
-//
-//         if (id is { } notNullId)
-//         {
-//             await Update(classroom, notNullId, token);
-//             return;
-//         }
-//
-//         await Create(classroom, token);
-//     }
-//
-//     private async Task CheckNumberToOriginality(CancellationToken token, int number, int? id = null)
-//     {
-//         var allClassroom = await _gateway.ReadAll(token);
-//         var classroomWithSameNumber =
-//             allClassroom.FirstOrDefault(classroom => classroom.Entity.Number == number);
-//
-//         if (classroomWithSameNumber?.Id == id) return;
-//
-//         if (classroomWithSameNumber is { })
-//             throw new SaveClassroomException("Number of classroom must be original");
-//     }
-//
-//     private async Task Create(Domain.Project.Classroom classroom, CancellationToken token)
-//     {
-//         try
-//         {
-//             await _gateway.Create(classroom, token);
-//         }
-//         catch (Exception e)
-//         {
-//             throw new SaveClassroomException
-//                 ($"Failed to create classroom with number '{classroom.Number}'", e);
-//         }
-//     }
-//
-//     private async Task Update(Domain.Project.Classroom classroom, int id, CancellationToken token)
-//     {
-//         try
-//         {
-//             await _gateway.Update(new Identified<Domain.Project.Classroom>(id, classroom),
-//                 token);
-//         }
-//         catch (Exception e)
-//         {
-//             throw new SaveClassroomException
-//                 ($"Failed to update classroom with number '{classroom.Number}'", e);
-//         }
-//     }
-// }
-//
-// public class SaveClassroomException : Exception
-// {
-//     internal SaveClassroomException(string msg) : base(msg)
-//     {
-//     }
-//
-//     internal SaveClassroomException(string msg, Exception innerException) : base(msg,
-//         innerException)
-//     {
-//     }
-// }
+public class SaveClassroomUseCase
+{
+    private readonly IClassroomGateway _gateway;
+
+    public SaveClassroomUseCase(IClassroomGateway gateway)
+    {
+        _gateway = gateway;
+    }
+
+    public async Task Handle(int number, int capacity,
+        IEnumerable<Domain.Project.ClassroomFeature> features, int? id = null)
+    {
+        var token = CancellationToken.None;
+
+        await CheckNumberToOriginality(token, number, id);
+
+        if (id is { } notNullId)
+        {
+            var classroom = new Domain.Project.Classroom(notNullId, number, capacity, features);
+            await _gateway.Update(classroom, token);
+            return;
+        }
+
+        await _gateway.Create(number, capacity, features, token);
+    }
+
+    private async Task CheckNumberToOriginality(CancellationToken token, int number, int? id = null)
+    {
+        var allClassrooms = await _gateway.ReadAll(token);
+        var classroomWithSameNumber =
+            allClassrooms.FirstOrDefault(classroom => classroom.Number == number);
+
+        if (classroomWithSameNumber?.Id == id) return;
+
+        if (classroomWithSameNumber is { })
+            throw new ClassroomNumberMustBeOriginalException();
+    }
+}
+
+public class ClassroomNumberMustBeOriginalException : Exception
+{
+}

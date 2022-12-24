@@ -3,11 +3,12 @@ using Adapters.Project.StorageEntities;
 using Application.Project;
 using Application.Project.Gateways;
 using Domain.Project;
+using Storage.Entity;
 using Storage.StorageSet;
 
 namespace Adapters.Project.Gateways;
 
-internal class ClassroomFeatureStorageGateway : IClassroomFeatureGateway
+public class ClassroomFeatureStorageGateway : IClassroomFeatureGateway
 {
     private readonly Storage.Storage _storage;
 
@@ -106,6 +107,24 @@ internal class ClassroomFeatureStorageGateway : IClassroomFeatureGateway
         });
     }
 
+    internal async Task<IEnumerable<ClassroomFeature>> Read(
+        IEnumerable<LinkedEntity<StorageClassroomFeature>> linkedFeatures, CancellationToken token)
+    {
+        var linkedFeaturesArray = linkedFeatures.ToArray();
+        var allFeatures = await ReadAll(token);
+        var selectedFeatures = new List<ClassroomFeature>();
+
+        foreach (var feature in allFeatures)
+        {
+            var sameFeature = linkedFeaturesArray
+                .FirstOrDefault(l => l.Id == feature.Id);
+
+            if (sameFeature is not null) selectedFeatures.Add(feature);
+        }
+
+        return selectedFeatures;
+    }
+
     public IObservable<ClassroomFeature> Observe(int id)
     {
         return ObserveAll()
@@ -119,6 +138,28 @@ internal class ClassroomFeatureStorageGateway : IClassroomFeatureGateway
 
                 throw new ClassroomFeatureGatewayException(
                     "Could not to be find classroom feature");
+            });
+    }
+
+    internal IObservable<IEnumerable<ClassroomFeature>> Observe(
+        IEnumerable<LinkedEntity<StorageClassroomFeature>> linkedFeatures)
+    {
+        var linkedFeaturesArray = linkedFeatures.ToArray(); 
+        
+        return ObserveAll()
+            .Select(features =>
+            {
+                var sortedFeatures = new List<ClassroomFeature>();
+
+                foreach (var feature in features)
+                {
+                    var sameLinkedFeature = linkedFeaturesArray
+                        .FirstOrDefault(l => l.Id == feature.Id);
+                    
+                    if (sameLinkedFeature is not null) sortedFeatures.Add(feature);
+                }
+
+                return sortedFeatures;
             });
     }
 

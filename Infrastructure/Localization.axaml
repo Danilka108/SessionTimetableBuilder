@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <x:String x:Key="ErrorDialogHeader">Ошибка</x:String>
     <x:String x:Key="DeleteDialogHeader">Удалить</x:String>
-    
 
     <x:String x:Key="ClassroomFeatureEditorTitle">Редактор характеристики кабинета</x:String>
     <x:String x:Key="ConfirmActionDialogTitle">Подтверждение действия</x:String>
@@ -10,6 +9,7 @@
     <x:String x:Key="ExplorerTitle">Просмотр</x:String>
     <x:String x:Key="ClassroomFeaturesTitle">Характеристики кабинетов</x:String>
     <x:String x:Key="ClassroomsTitle">Кабинеты</x:String>
+    <x:String x:Key="ClassroomCardTitle">Номер: {0}, вместимость: {1}</x:String>
 
     <x:String x:Key="DeleteButtonCaption">Удалить</x:String>
     <x:String x:Key="DeleteButtonCaptionUpperCase">УДАЛИТЬ</x:String>
@@ -21,10 +21,12 @@
     <x:String x:Key="DescriptionFieldCaption">Описание</x:String>
 
     <x:String x:Key="UndefinedError">Неизвестная ошибка.</x:String>
-    <x:String x:Key="CreateClassroomFeatureError">Не удалось создать характеристику кабинета.</x:String>
-    <x:String x:Key="DeleteClassroomFeatureError">Не удалось удалить характеристику кабинета.</x:String>
-    <x:String x:Key="UpdateClassroomFeatureError">Не удалось обновить характеристику кабинета.</x:String>
+    <x:String x:Key="StorageIsNotAvailableError">Не удалось получить доступ к хранилищу данных.</x:String>
     <x:String x:Key="DescriptionOfClassroomFeatureMustMeOriginalError">Описание характеристики кабинета должно быть оригинальным.</x:String>
+    <x:String x:Key="NumberOfClassroomMustBeOriginal">Номер кабинета должен быть оригинальным.</x:String>
+    <x:String x:Key="ClassroomFeatureAlreadyLinkedByClassroom">Неудалось удалить характеристику кабинета. Кабинет '{0}' ссылается на данную характеристику.</x:String>
 
     <x:String x:Key="DeleteClassroomFeatureQuestion">Удалить характеристику кабинета?</x:String>
+    <x:String x:Key="DeleteClassroomQuestion">Удалить кабинет?</x:String>
+
 </ResourceDictionary>

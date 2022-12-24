@@ -17,9 +17,14 @@ public class SaveClassroomFeatureUseCase
         await CheckDescriptionToOriginality(description, token, id);
 
         if (id is { } notNullId)
-            await Update(notNullId, description, token);
+        {
+            var feature = new Domain.Project.ClassroomFeature(notNullId, description);
+            await _featureGateway.Update(feature, token);
+        }
         else
-            await Create(description, token);
+        {
+            await _featureGateway.Create(description, token);
+        }
     }
 
     private async Task CheckDescriptionToOriginality
@@ -36,35 +41,8 @@ public class SaveClassroomFeatureUseCase
         if (featureWithSameDescription is { })
             throw new NotOriginalDescriptionException();
     }
-
-    private async Task Create(string description, CancellationToken token)
-    {
-        try
-        {
-            await _featureGateway.Create(description, token);
-        }
-        catch (Exception e)
-        {
-            throw new CreateClassroomFeatureException();
-        }
-    }
-
-    private async Task Update(int id, string description, CancellationToken token)
-    {
-        var feature = new Domain.Project.ClassroomFeature(id, description);
-        try
-        {
-            await _featureGateway.Update(feature, token);
-        }
-        catch (Exception)
-        {
-            throw new UpdateClassroomFeatureException();
-        }
-    }
 }
 
-public class NotOriginalDescriptionException : Exception {}
-
-public class CreateClassroomFeatureException : Exception {}
-
-public class UpdateClassroomFeatureException : Exception {}
+public class NotOriginalDescriptionException : Exception
+{
+}

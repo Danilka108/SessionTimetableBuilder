@@ -16,17 +16,20 @@ public abstract record LocalizedMessage
     {
         public record UndefinedError : LocalizedMessage;
 
-        public record FailedToCreateClassroomFeature : LocalizedMessage;
-
-        public record FailedToUpdateClassroomFeature : LocalizedMessage;
-
-        public record FailedToDeleteClassroomFeature : LocalizedMessage;
+        public record StorageIsNotAvailable : LocalizedMessage;
 
         public record DescriptionOfClassroomFeatureMustBeOriginal : LocalizedMessage;
+
+        public record ClassroomFeatureAlreadyLinkedByClassroom
+            (int classroomNumber) : LocalizedMessage;
+
+        public record NumberOfClassroomMustBeOriginal : LocalizedMessage;
     }
 
     public static class Question
     {
-        public record DeleteCalssroomFeature : LocalizedMessage;
+        public record DeleteClassroomFeature : LocalizedMessage;
+
+        public record DeleteClassroom : LocalizedMessage;
     }
 }

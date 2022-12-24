@@ -17,7 +17,7 @@
     </Window.Styles>
 
     <StackPanel Margin="24" Width="400" VerticalAlignment="Stretch" HorizontalAlignment="Center">
-        <TextBlock Margin="0 0 0 8" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left"
+        <TextBlock Margin="0 0 0 4" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left"
                    Classes="TitleLarge"
                    Text="{common:LocalizedBinding Header}" />
 

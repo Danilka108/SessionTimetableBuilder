@@ -25,7 +25,7 @@ public class PreviewInitializer
 
         var previewWindow = new PreviewWindow
         {
-            DataContext = previewViewModel,
+            ViewModel = previewViewModel,
             ParentDiScope = _parentDiScope
         };
 

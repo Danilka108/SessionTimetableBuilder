@@ -2,57 +2,57 @@ using System.Reactive;
 using System.Reactive.Linq;
 using Adapters.Common.ViewModels;
 using Application.Project.Gateways;
-using Application.Project.UseCases.ClassroomFeature;
+using Application.Project.UseCases.Classroom;
 using Domain.Project;
 using ReactiveUI;
 
 namespace Adapters.Project.ViewModels;
 
-public class ClassroomFeatureCardViewModel : BaseViewModel
+public class ClassroomCardViewModel : BaseViewModel
 {
-    public delegate ClassroomFeatureCardViewModel Factory(ClassroomFeature feature);
+    public delegate ClassroomCardViewModel Factory(Classroom classroom);
 
+    private readonly Classroom _classroom;
+    
     private readonly ConfirmDialogViewModel.Factory _confirmDialogFactory;
-
-    private readonly ClassroomFeature _feature;
 
     private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
-    private readonly DeleteClassroomFeatureUseCase _deleteUseCase;
-
-    public ClassroomFeatureCardViewModel(
-        ClassroomFeature feature,
-        ClassroomFeatureEditorViewModel.Factory editorFactory,
-        ConfirmDialogViewModel.Factory confirmDialogFactory,
+    private readonly DeleteClassroomUseCase _deleteUseCase;
+    
+    public ClassroomCardViewModel(
+        Classroom classroom,
+        DeleteClassroomUseCase deleteUseCase,
         MessageDialogViewModel.Factory messageDialogFactory,
-        DeleteClassroomFeatureUseCase deleteUseCase
-    )
+        ConfirmDialogViewModel.Factory confirmDialogFactory,
+        ClassroomEditorViewModel.Factory editorFactory)
     {
-        _feature = feature;
-        Description = feature.Description;
-
+        _classroom = classroom;
         _deleteUseCase = deleteUseCase;
+
+        Number = _classroom.Number;
+        Capacity = _classroom.Capacity;
 
         OpenMessageDialog = new Interaction<MessageDialogViewModel, Unit>();
         OpenConfirmDialog = new Interaction<ConfirmDialogViewModel, bool>();
-        OpenEditor = new Interaction<ClassroomFeatureEditorViewModel, Unit>();
+        OpenEditor = new Interaction<ClassroomEditorViewModel, Unit>();
 
         _messageDialogFactory = messageDialogFactory;
         _confirmDialogFactory = confirmDialogFactory;
 
         Edit = ReactiveCommand.CreateFromTask(async () =>
         {
-            await OpenEditor.Handle(editorFactory.Invoke(feature));
+            await OpenEditor.Handle(editorFactory.Invoke(_classroom));
         });
 
         Delete = ReactiveCommand.CreateFromTask(DoDelete);
     }
-
+    
     private async Task DoDelete(CancellationToken token)
     {
         var confirmDialog = _confirmDialogFactory.Invoke(
             LocalizedMessage.Header.Delete,
-            new LocalizedMessage.Question.DeleteClassroomFeature()
+            new LocalizedMessage.Question.DeleteClassroom()
         );
 
         var confirmed = await OpenConfirmDialog.Handle(confirmDialog);
@@ -60,19 +60,9 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
 
         try
         {
-            await _deleteUseCase.Handle(_feature, token);
+            await _deleteUseCase.Handle(_classroom, token);
         }
-        catch (ClassroomFeatureAlreadyLinkedByClassroomException e)
-        {
-            var messageDialog = _messageDialogFactory.Invoke(
-                LocalizedMessage.Header.Error,
-                new LocalizedMessage.Error.ClassroomFeatureAlreadyLinkedByClassroom(
-                    e.LinkedClassroom.Number)
-            );
-            
-            await OpenMessageDialog.Handle(messageDialog);
-        }
-        catch (ClassroomFeatureGatewayException)
+        catch (ClassroomGatewayException)
         {
             var messageDialog = _messageDialogFactory.Invoke(
                 LocalizedMessage.Header.Error,
@@ -91,14 +81,16 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
             await OpenMessageDialog.Handle(messageDialog);
         }
     }
-
-    public string Description { get; }
-
+    
+    public int Number { get; }
+    
+    public int Capacity { get; }
+    
     public ReactiveCommand<Unit, Unit> Edit { get; }
 
     public ReactiveCommand<Unit, Unit> Delete { get; }
 
-    public Interaction<ClassroomFeatureEditorViewModel, Unit> OpenEditor { get; }
+    public Interaction<ClassroomEditorViewModel, Unit> OpenEditor { get; }
 
     public Interaction<ConfirmDialogViewModel, bool> OpenConfirmDialog { get; }
 

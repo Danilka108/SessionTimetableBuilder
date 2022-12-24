@@ -39,7 +39,7 @@ public class ProjectInitializer
             {
                 StorageResourceFactory = () => new FileStorageResource(_storageFullPath)
             });
-            
+
             builder.RegisterModule(new ApplicationProjectModule());
         });
 
@@ -56,7 +56,7 @@ public class ProjectInitializer
         var projectViewModelFactory = projectDiScope.Resolve<ProjectViewModel.Factory>();
         var projectWindow = new ProjectWindow
         {
-            DataContext = projectViewModelFactory.Invoke(_name)
+            ViewModel = projectViewModelFactory.Invoke(_name)
         };
 
         projectWindow.WhenActivated(d => { projectDiScope.DisposeWith(d); });
@@ -76,12 +76,18 @@ public class ProjectInitializer
 
         var classroomFeatureGateway = diContext.Resolve<IClassroomFeatureGateway>();
 
+        var features = new List<ClassroomFeature>();
+
         for (var i = 0; i < 30; i++)
         {
-            await classroomFeatureGateway.Create(
+            var feature = await classroomFeatureGateway.Create(
                 $"Test classroom feature {i}",
                 CancellationToken.None
             );
+            features.Add(feature);
         }
+
+        var classroomGateway = diContext.Resolve<IClassroomGateway>();
+        await classroomGateway.Create(108, 36, features.GetRange(0, 1), CancellationToken.None);
     }
 }

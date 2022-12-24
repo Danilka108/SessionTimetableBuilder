@@ -11,11 +11,11 @@ public class LocalizedMessageConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        var resourceKey = value switch
+        var (resourceKey, formatArgs) = value switch
         {
             LocalizedMessage message => GetMessageResourceKey(message),
-            LocalizedMessage.Header header => GetHeaderResourceKey(header),
-            string key => key,
+            LocalizedMessage.Header header => (GetHeaderResourceKey(header), new object?[] { }),
+            string key => (key, new object?[] { }),
             _ => throw new ConvertLocalizedMessageException("Undefined input value type"),
         };
 
@@ -25,10 +25,17 @@ public class LocalizedMessageConverter : IValueConverter
 
         Avalonia.Application.Current.TryFindResource(resourceKey, out var resourceValue);
 
-        if (resourceValue is null)
-            throw new ConvertLocalizedMessageException("Could not find resource");
+        if (resourceValue is not string stringResourceValue)
+            throw new ConvertLocalizedMessageException("Could not find string resource");
 
-        return resourceValue;
+        try
+        {
+            return string.Format(stringResourceValue, formatArgs);
+        }
+        catch (Exception e)
+        {
+            throw new ConvertLocalizedMessageException("Could not apply string format", e);
+        }
     }
 
     private string GetHeaderResourceKey(LocalizedMessage.Header header) => header switch
@@ -37,18 +44,20 @@ public class LocalizedMessageConverter : IValueConverter
         LocalizedMessage.Header.Error => "ErrorDialogHeader",
     };
 
-    private string GetMessageResourceKey(LocalizedMessage message) => message switch
+    private (string, object?[]) GetMessageResourceKey(LocalizedMessage message) => message switch
     {
-        LocalizedMessage.Error.UndefinedError => "CreateClassroomFeatureError",
-        LocalizedMessage.Error.FailedToCreateClassroomFeature =>
-            "CreateClassroomFeatureError",
-        LocalizedMessage.Error.FailedToUpdateClassroomFeature =>
-            "UpdateClassroomFeatureError",
-        LocalizedMessage.Error.FailedToDeleteClassroomFeature =>
-            "DeleteClassroomFeatureError",
+        LocalizedMessage.Error.UndefinedError => ("CreateClassroomFeatureError", new object?[] { }),
+        LocalizedMessage.Error.StorageIsNotAvailable =>
+            ("StorageIsNotAvailableError", new object?[] { }),
+        LocalizedMessage.Error.ClassroomFeatureAlreadyLinkedByClassroom v =>
+            ("ClassroomFeatureAlreadyLinkedByClassroom", new object?[] { v.classroomNumber }),
         LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal =>
-            "DescriptionOfClassroomFeatureMustMeOriginalError",
-        LocalizedMessage.Question.DeleteCalssroomFeature => "DeleteClassroomFeatureQuestion"
+            ("DescriptionOfClassroomFeatureMustMeOriginalError", new object?[] { }),
+        LocalizedMessage.Error.NumberOfClassroomMustBeOriginal => (
+            "NumberOfClassroomMustBeOriginal", new object?[] { }),
+        LocalizedMessage.Question.DeleteClassroomFeature => ("DeleteClassroomFeatureQuestion",
+            new object?[] { }),
+        LocalizedMessage.Question.DeleteClassroom => ("DeleteClassroomQuestion", new object?[] { })
     };
 
     public object ConvertBack(object? value, Type targetType, object? parameter,

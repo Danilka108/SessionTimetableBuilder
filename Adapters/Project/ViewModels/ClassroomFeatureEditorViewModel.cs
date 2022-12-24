@@ -2,6 +2,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Adapters.Common.ViewModels;
+using Application.Project.Gateways;
 using Application.Project.UseCases.ClassroomFeature;
 using Domain.Project;
 using ReactiveUI;
@@ -80,8 +81,7 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
 
     private LocalizedMessage MapExceptionToErrorMessage(Exception e) => e switch
     {
-        CreateClassroomFeatureException => new LocalizedMessage.Error.FailedToCreateClassroomFeature(),
-        UpdateClassroomFeatureException => new LocalizedMessage.Error.FailedToUpdateClassroomFeature(),
+        ClassroomFeatureGatewayException => new LocalizedMessage.Error.StorageIsNotAvailable(),
         NotOriginalDescriptionException => new LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal(),
         _ => new LocalizedMessage.Error.UndefinedError(),
     };

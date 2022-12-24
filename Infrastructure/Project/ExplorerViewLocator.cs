@@ -11,11 +11,11 @@ public class ExplorerViewLocator : IViewLocator
     {
         ClassroomsViewModel context => new ClassroomsView
         {
-            DataContext = context
+            ViewModel = context
         },
         ClassroomFeaturesViewModel context => new ClassroomFeaturesView
         {
-            DataContext = context
+            ViewModel = context
         },
         _ => throw new ArgumentException(nameof(viewModel))
     };
