@@ -33,7 +33,7 @@ public partial class DisciplineEditorWindow : ReactiveWindow<DisciplineEditorVie
                 .DisposeWith(d);
         });
     }
-    
+
     private async Task DoFinish(InteractionContext<Unit, Unit> context)
     {
         context.SetOutput(Unit.Default);

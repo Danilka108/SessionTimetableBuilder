@@ -2,14 +2,14 @@ namespace Adapters;
 
 public abstract record LocalizedMessage
 {
-    private LocalizedMessage()
-    {
-    }
-
     public enum Header
     {
         Delete,
         Error
+    }
+
+    private LocalizedMessage()
+    {
     }
 
     public static class Error
@@ -22,10 +22,10 @@ public abstract record LocalizedMessage
 
         public record ClassroomFeatureReferencedByClassroom
             (int ClassroomNumber) : LocalizedMessage;
-        
+
         public record ClassroomFeatureReferencedByDiscipline
             (string DisciplineName) : LocalizedMessage;
-        
+
         public record NumberOfClassroomMustBeOriginal : LocalizedMessage;
 
         public record NameOfDisciplineMustBeOriginal : LocalizedMessage;
@@ -34,7 +34,7 @@ public abstract record LocalizedMessage
     public static class FieldError
     {
         public record InvalidNumericString : LocalizedMessage;
-        
+
         public record CantBeEmpty : LocalizedMessage;
 
         public record Separator : LocalizedMessage;

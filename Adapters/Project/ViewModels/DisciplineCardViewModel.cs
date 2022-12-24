@@ -13,12 +13,12 @@ public class DisciplineCardViewModel : BaseViewModel
     public delegate DisciplineCardViewModel Factory(Discipline discipline);
 
     private readonly ConfirmDialogViewModel.Factory _confirmDialogFactory;
-    
-    private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
     private readonly DeleteDisciplineUseCase _deleteUseCase;
 
     private readonly Discipline _discipline;
+
+    private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
     public DisciplineCardViewModel(
         Discipline discipline,
@@ -31,20 +31,32 @@ public class DisciplineCardViewModel : BaseViewModel
         Name = discipline.Name;
 
         _discipline = discipline;
-        _deleteUseCase =deleteUseCase;
+        _deleteUseCase = deleteUseCase;
         _confirmDialogFactory = confirmDialogFactory;
         _messageDialogFactory = messageDialogFactory;
-        
+
         OpenEditor = new Interaction<DisciplineEditorViewModel, Unit>();
         OpenConfirmDialog = new Interaction<ConfirmDialogViewModel, bool>();
         OpenMessageDialog = new Interaction<MessageDialogViewModel, Unit>();
 
         Edit = ReactiveCommand.CreateFromObservable(() =>
             OpenEditor.Handle(editorFactory.Invoke(_discipline)));
-        
+
         Delete = ReactiveCommand.CreateFromTask(DoDelete);
     }
-    
+
+    public string Name { get; }
+
+    public ReactiveCommand<Unit, Unit> Edit { get; }
+
+    public ReactiveCommand<Unit, Unit> Delete { get; }
+
+    public Interaction<ConfirmDialogViewModel, bool> OpenConfirmDialog { get; }
+
+    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
+
+    public Interaction<DisciplineEditorViewModel, Unit> OpenEditor { get; }
+
     private async Task DoDelete(CancellationToken token)
     {
         var confirmDialog = _confirmDialogFactory.Invoke(
@@ -70,7 +82,7 @@ public class DisciplineCardViewModel : BaseViewModel
             await ShowErrorMessage(message);
         }
     }
-    
+
     private async Task ShowErrorMessage(LocalizedMessage message)
     {
         var messageDialog = _messageDialogFactory.Invoke(
@@ -80,16 +92,4 @@ public class DisciplineCardViewModel : BaseViewModel
 
         await OpenMessageDialog.Handle(messageDialog);
     }
-
-    public string Name { get; }
-
-    public ReactiveCommand<Unit, Unit> Edit { get; }
-
-    public ReactiveCommand<Unit, Unit> Delete { get; }
-
-    public Interaction<ConfirmDialogViewModel, bool> OpenConfirmDialog { get; }
-
-    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
-
-    public Interaction<DisciplineEditorViewModel, Unit> OpenEditor { get; }
 }

@@ -9,5 +9,5 @@
         <viewModels:ClassroomsViewModel />
     </Design.DataContext>
 
-    <ItemsControl Items="{Binding Cards}"/>
+    <ItemsControl Items="{Binding Cards}" />
 </UserControl>

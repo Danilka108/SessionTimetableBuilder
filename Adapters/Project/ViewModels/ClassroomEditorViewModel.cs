@@ -3,35 +3,26 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
-using Adapters.Common;
 using Adapters.Common.Validators;
 using Adapters.Common.ViewModels;
 using Application.Project.Gateways;
 using Application.Project.UseCases.Classroom;
 using Domain.Project;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 
 namespace Adapters.Project.ViewModels;
-
 
 public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
 {
     public delegate ClassroomEditorViewModel Factory(Classroom? classroom);
 
-    private string _capacity;
-
-    private string _number;
-
-    private readonly ObservableAsPropertyHelper<IEnumerable<ClassroomFeature>> _allFeatures;
+    private readonly int? _classroomId;
 
     private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
     private readonly SaveClassroomUseCase _saveUseCase;
-
-    private readonly int? _classroomId;
-
-    private readonly ObservableAsPropertyHelper<bool> _isLoading;
 
     public ClassroomEditorViewModel(
         Classroom? classroom,
@@ -42,8 +33,8 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
     )
     {
         _classroomId = classroom?.Id;
-        _capacity = classroom?.Capacity.ToString() ?? "";
-        _number = classroom?.Number.ToString() ?? "";
+        Capacity = classroom?.Capacity.ToString() ?? "";
+        Number = classroom?.Number.ToString() ?? "";
 
         SelectedFeatures =
             new ObservableCollection<ClassroomFeature>(classroom?.Features ??
@@ -63,7 +54,7 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
         var numberIsValid =
             this.WhenAnyValue(vm => vm.Number,
                 numericFieldValidator.Invoke);
-        
+
         this.ValidationRule(vm => vm.Capacity, capacityIsValid);
         this.ValidationRule(vm => vm.Number, numberIsValid);
 
@@ -72,17 +63,38 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
         var canBeClosed = Save.IsExecuting.Select(v => !v);
         Close = ReactiveCommand.CreateFromObservable<Unit, Unit>(Finish.Handle, canBeClosed);
 
-        _isLoading = Save.IsExecuting.ToProperty(this, vm => vm.IsLoading);
+        Save
+            .IsExecuting
+            .ToPropertyEx(this, vm => vm.IsLoading);
 
-        _allFeatures = featureGateway
+        var allFeatures = featureGateway
             .ObserveAll()
             .FirstAsync()
             .Catch<IEnumerable<ClassroomFeature>, Exception>(ex =>
                 CatchFeaturesObserving(ex).ToObservable())
-            .ToProperty(this, vm => vm.AllFeatures);
+            .ToPropertyEx(this, vm => vm.AllFeatures);
 
-        this.WhenActivated(d => { _allFeatures.DisposeWith(d); });
+        this.WhenActivated(d =>
+        {
+            Save.DisposeWith(d);
+            allFeatures.DisposeWith(d);
+        });
     }
+
+    [ObservableAsProperty] public bool IsLoading { get; }
+
+    [Reactive] public string Capacity { get; set; }
+
+    [Reactive] public string Number { get; set; }
+
+    public ObservableCollection<ClassroomFeature> SelectedFeatures { get; }
+
+    [ObservableAsProperty] public IEnumerable<ClassroomFeature> AllFeatures { get; }
+    public ReactiveCommand<Unit, Unit> Save { get; }
+    public ReactiveCommand<Unit, Unit> Close { get; }
+    public Interaction<Unit, Unit> Finish { get; }
+    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
+    public ViewModelActivator Activator { get; }
 
     private async Task DoSave(CancellationToken token)
     {
@@ -91,7 +103,8 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
             var number = int.Parse(Number);
             var capacity = int.Parse(Capacity);
 
-            await _saveUseCase.Handle(number, capacity, _classroomId, SelectedFeatures.ToArray(), token);
+            await _saveUseCase.Handle(number, capacity, _classroomId, SelectedFeatures.ToArray(),
+                token);
             await Finish.Handle(Unit.Default);
         }
         catch (ClassroomNumberMustBeOriginalException)
@@ -110,7 +123,7 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
             await ShowErrorMessage(message);
         }
     }
-    
+
     private async Task ShowErrorMessage(LocalizedMessage message)
     {
         var messageDialog = _messageDialogFactory.Invoke(
@@ -132,29 +145,4 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
 
         return new ClassroomFeature[] { };
     }
-
-    public bool IsLoading => _isLoading.Value;
-
-    public string Capacity
-    {
-        get => _capacity;
-        set => this.RaiseAndSetIfChanged(ref _capacity, value);
-    }
-
-    public string Number
-    {
-        get => _number;
-        set
-        {
-            this.RaiseAndSetIfChanged(ref _number, value);
-        }
-    }
-
-    public ObservableCollection<ClassroomFeature> SelectedFeatures { get; }
-    public IEnumerable<ClassroomFeature> AllFeatures => _allFeatures.Value;
-    public ReactiveCommand<Unit, Unit> Save { get; }
-    public ReactiveCommand<Unit, Unit> Close { get; }
-    public Interaction<Unit, Unit> Finish { get; }
-    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
-    public ViewModelActivator Activator { get; }
 }

@@ -6,6 +6,7 @@ using Adapters.Common.ViewModels;
 using Application.Project.Gateways;
 using Domain.Project;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Adapters.Project.ViewModels;
 
@@ -15,30 +16,38 @@ public class DisciplinesViewModel : BaseViewModel, IRoutableViewModel, IActivata
 
     private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
-    private readonly ObservableAsPropertyHelper<IEnumerable<DisciplineCardViewModel>> _cards;
-
     public DisciplinesViewModel(
         IScreen hostScreen,
         IDisciplineGateway gateway,
         MessageDialogViewModel.Factory messageDialogFactory,
         DisciplineCardViewModel.Factory cardFactory
-        )
+    )
     {
         _messageDialogFactory = messageDialogFactory;
         HostScreen = hostScreen;
-        
+
         Activator = new ViewModelActivator();
         OpenMessageDialog = new Interaction<MessageDialogViewModel, Unit>();
-        
-        _cards = gateway
+
+        var cards = gateway
             .ObserveAll()
             .Catch<IEnumerable<Discipline>, Exception>(ex =>
                 CatchFeaturesObserving(ex).ToObservable())
             .Select(classrooms => classrooms.Select(cardFactory.Invoke))
-            .ToProperty(this, vm => vm.Cards);
-        
-        this.WhenActivated(d => _cards.DisposeWith(d));
+            .ToPropertyEx(this, vm => vm.Cards);
+
+        this.WhenActivated(d => cards.DisposeWith(d));
     }
+
+    [ObservableAsProperty] public IEnumerable<DisciplineCardViewModel> Cards { get; }
+
+    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
+
+    public ViewModelActivator Activator { get; }
+
+    public string UrlPathSegment => "/Disciplines";
+
+    public IScreen HostScreen { get; }
 
     private async Task<IEnumerable<Discipline>> CatchFeaturesObserving(Exception _)
     {
@@ -51,14 +60,4 @@ public class DisciplinesViewModel : BaseViewModel, IRoutableViewModel, IActivata
 
         return new Discipline[] { };
     }
-
-    public IEnumerable<DisciplineCardViewModel> Cards => _cards.Value;
-
-    public string UrlPathSegment => "/Disciplines";
-    
-    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
-
-    public IScreen HostScreen { get; }
-
-    public ViewModelActivator Activator { get; }
 }

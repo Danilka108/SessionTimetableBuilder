@@ -22,7 +22,7 @@ public partial class DisciplineCardView : ReactiveUserControl<DisciplineCardView
                 .OpenEditor
                 .RegisterHandler(DoOpenEditor)
                 .DisposeWith(d);
-            
+
             ViewModel!
                 .OpenMessageDialog
                 .RegisterHandler(DoOpenMessageDialog)
@@ -42,13 +42,13 @@ public partial class DisciplineCardView : ReactiveUserControl<DisciplineCardView
         {
             ViewModel = context.Input
         };
-    
+
         var projectWindow = ProjectWindow.GetCurrent();
         await editor.ShowDialog(projectWindow);
-    
+
         context.SetOutput(Unit.Default);
     }
-    
+
     private async Task DoOpenConfirmDialog(InteractionContext<ConfirmDialogViewModel, bool> context)
     {
         var viewModel = context.Input;
@@ -60,7 +60,7 @@ public partial class DisciplineCardView : ReactiveUserControl<DisciplineCardView
         var confirmResult = await dialog.ShowDialog<bool>(ProjectWindow.GetCurrent());
         context.SetOutput(confirmResult);
     }
-    
+
     private async Task DoOpenMessageDialog(InteractionContext<MessageDialogViewModel, Unit> context)
     {
         var viewModel = context.Input;

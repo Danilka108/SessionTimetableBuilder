@@ -2,8 +2,6 @@ using System.Reactive;
 using System.Threading.Tasks;
 using Adapters.Common.ViewModels;
 using Adapters.Project.ViewModels;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Mixins;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;

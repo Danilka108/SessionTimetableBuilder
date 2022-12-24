@@ -13,15 +13,13 @@ namespace Infrastructure.Preview.Views;
 
 public partial class PreviewWindow : ReactiveWindow<PreviewViewModel>
 {
-    public ILifetimeScope ParentDiScope { get; init; }
-    
     public PreviewWindow()
     {
         InitializeComponent();
 #if DEBUG
         this.AttachDevTools();
 #endif
-    
+
         this.WhenActivated(d =>
         {
             ViewModel!
@@ -30,15 +28,17 @@ public partial class PreviewWindow : ReactiveWindow<PreviewViewModel>
                 .DisposeWith(d);
         });
     }
-    
+
+    public ILifetimeScope ParentDiScope { get; init; }
+
     private async Task DoShowProject(InteractionContext<Unit, Unit> context)
     {
         var initializer = new ProjectInitializer("тестовый проект", "", ParentDiScope);
         var projectWindow = await initializer.Initialize();
-        
+
         projectWindow.Show();
         Close();
-        
+
         context.SetOutput(Unit.Default);
     }
 

@@ -14,15 +14,14 @@ using Domain.Project;
 using Infrastructure.Project.Views;
 using Infrastructure.Storage;
 using ReactiveUI;
-using Storage;
 
 namespace Infrastructure.Project;
 
 public class ProjectInitializer
 {
-    private readonly string _storageFullPath;
     private readonly string _name;
     private readonly ILifetimeScope _parentDiScope;
+    private readonly string _storageFullPath;
 
     public ProjectInitializer(string name, string directoryPath, ILifetimeScope parentDiScope)
     {
@@ -91,8 +90,7 @@ public class ProjectInitializer
         await classroomGateway.Create(108, 36, features.GetRange(0, 1), CancellationToken.None);
 
         var disciplineGateway = diContext.Resolve<IDisciplineGateway>();
-        var a =await disciplineGateway.Create("programing", features.GetRange(0, 1),
+        var a = await disciplineGateway.Create("programing", features.GetRange(0, 1),
             CancellationToken.None);
-
     }
 }

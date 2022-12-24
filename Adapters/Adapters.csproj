@@ -7,21 +7,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ReactiveUI" Version="18.4.1" />
-      <PackageReference Include="ReactiveUI.Fody" Version="18.4.1" />
-      <PackageReference Include="ReactiveUI.Validation" Version="3.0.22" />
+        <PackageReference Include="ReactiveUI" Version="18.4.1"/>
+        <PackageReference Include="ReactiveUI.Fody" Version="18.4.1"/>
+        <PackageReference Include="ReactiveUI.Validation" Version="3.0.22"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\Domain\Domain.csproj" />
-      <ProjectReference Include="..\Storage\Storage.csproj" />
+        <ProjectReference Include="..\Application\Application.csproj"/>
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\Storage\Storage.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Autofac">
-        <HintPath>..\..\..\.nuget\packages\autofac\6.4.0\lib\net6.0\Autofac.dll</HintPath>
-      </Reference>
+        <Reference Include="Autofac">
+            <HintPath>..\..\..\.nuget\packages\autofac\6.4.0\lib\net6.0\Autofac.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
 </Project>

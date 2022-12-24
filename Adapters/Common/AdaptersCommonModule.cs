@@ -11,11 +11,11 @@ public class AdaptersCommonModule : Module
         builder
             .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
             .Where(t => t.FullName.EndsWith("ViewModel") && t.FullName.Contains("Common"));
-        
+
         builder
             .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
             .Where(t => t.FullName.EndsWith("Validator") && t.FullName.Contains("Common"));
-        
+
         base.Load(builder);
     }
 }

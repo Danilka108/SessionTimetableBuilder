@@ -14,11 +14,11 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
 
     private readonly ConfirmDialogViewModel.Factory _confirmDialogFactory;
 
+    private readonly DeleteClassroomFeatureUseCase _deleteUseCase;
+
     private readonly ClassroomFeature _feature;
 
     private readonly MessageDialogViewModel.Factory _messageDialogFactory;
-
-    private readonly DeleteClassroomFeatureUseCase _deleteUseCase;
 
     public ClassroomFeatureCardViewModel(
         ClassroomFeature feature,
@@ -48,6 +48,18 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
         Delete = ReactiveCommand.CreateFromTask(DoDelete);
     }
 
+    public string Description { get; }
+
+    public ReactiveCommand<Unit, Unit> Edit { get; }
+
+    public ReactiveCommand<Unit, Unit> Delete { get; }
+
+    public Interaction<ClassroomFeatureEditorViewModel, Unit> OpenEditor { get; }
+
+    public Interaction<ConfirmDialogViewModel, bool> OpenConfirmDialog { get; }
+
+    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
+
     private async Task DoDelete(CancellationToken token)
     {
         var confirmDialog = _confirmDialogFactory.Invoke(
@@ -64,18 +76,18 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
         }
         catch (ClassroomFeatureReferencedByClassroomException e)
         {
-            var message = new LocalizedMessage
-                .Error
-                .ClassroomFeatureReferencedByClassroom(e.Classroom.Number);
+            var message =
+                new LocalizedMessage.Error.ClassroomFeatureReferencedByClassroom(e.Classroom
+                    .Number);
 
             await ShowErrorMessage(message);
         }
         catch (ClassroomFeatureReferencedByDisciplineException e)
         {
-            var message = new LocalizedMessage
-                .Error
-                .ClassroomFeatureReferencedByDiscipline(e.Discipline.Name);
-            
+            var message =
+                new LocalizedMessage.Error.ClassroomFeatureReferencedByDiscipline(e.Discipline
+                    .Name);
+
             await ShowErrorMessage(message);
         }
         catch (ClassroomFeatureGatewayException)
@@ -99,16 +111,4 @@ public class ClassroomFeatureCardViewModel : BaseViewModel
 
         await OpenMessageDialog.Handle(messageDialog);
     }
-
-    public string Description { get; }
-
-    public ReactiveCommand<Unit, Unit> Edit { get; }
-
-    public ReactiveCommand<Unit, Unit> Delete { get; }
-
-    public Interaction<ClassroomFeatureEditorViewModel, Unit> OpenEditor { get; }
-
-    public Interaction<ConfirmDialogViewModel, bool> OpenConfirmDialog { get; }
-
-    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
 }

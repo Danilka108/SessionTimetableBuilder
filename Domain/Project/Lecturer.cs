@@ -9,6 +9,8 @@ public record Lecturer
     IEnumerable<Discipline> Disciplines
 )
 {
+    public string FullName => ProduceFullname(Name, Surname, Patronymic);
+
     public static string ProduceFullname(string? name, string? surname, string? patronymic)
     {
         var capitalizedSurname = surname is not null && surname.Length != 0
@@ -25,6 +27,4 @@ public record Lecturer
 
         return string.Join(" ", capitalizedSurname, nameInitial, patronymicInitial);
     }
-
-    public string FullName => ProduceFullname(Name, Surname, Patronymic);
 }

@@ -1,6 +1,5 @@
 using System.Reactive.Linq;
 using Adapters.Project.StorageEntities;
-using Application.Project;
 using Application.Project.Gateways;
 using Domain.Project;
 using Storage.Entity;
@@ -107,6 +106,37 @@ public class ClassroomFeatureStorageGateway : IClassroomFeatureGateway
         });
     }
 
+    public IObservable<ClassroomFeature> Observe(int id)
+    {
+        return ObserveAll()
+            .Select(features =>
+            {
+                foreach (var feature in features)
+                {
+                    if (feature.Id != id) continue;
+                    return feature;
+                }
+
+                throw new ClassroomFeatureGatewayException(
+                    "Could not to be find classroom feature");
+            });
+    }
+
+    public IObservable<IEnumerable<ClassroomFeature>> ObserveAll()
+    {
+        return _storage.ObserveFromSetOf<StorageClassroomFeature>()
+            .Select(features =>
+            {
+                var mappedFeatures = features.Select(feature =>
+                    new ClassroomFeature(feature.Id, feature.Entity.Description));
+
+                return mappedFeatures;
+            })
+            .Catch<IEnumerable<ClassroomFeature>, Exception>(e =>
+                throw new ClassroomFeatureGatewayException("Failed to observe features", e)
+            );
+    }
+
     internal async Task<IEnumerable<ClassroomFeature>> Read(
         IEnumerable<LinkedEntity<StorageClassroomFeature>> linkedFeatures, CancellationToken token)
     {
@@ -125,27 +155,11 @@ public class ClassroomFeatureStorageGateway : IClassroomFeatureGateway
         return selectedFeatures;
     }
 
-    public IObservable<ClassroomFeature> Observe(int id)
-    {
-        return ObserveAll()
-            .Select(features =>
-            {
-                foreach (var feature in features)
-                {
-                    if (feature.Id != id) continue;
-                    return feature;
-                }
-
-                throw new ClassroomFeatureGatewayException(
-                    "Could not to be find classroom feature");
-            });
-    }
-
     internal IObservable<IEnumerable<ClassroomFeature>> Observe(
         IEnumerable<LinkedEntity<StorageClassroomFeature>> linkedFeatures)
     {
-        var linkedFeaturesArray = linkedFeatures.ToArray(); 
-        
+        var linkedFeaturesArray = linkedFeatures.ToArray();
+
         return ObserveAll()
             .Select(features =>
             {
@@ -155,26 +169,11 @@ public class ClassroomFeatureStorageGateway : IClassroomFeatureGateway
                 {
                     var sameLinkedFeature = linkedFeaturesArray
                         .FirstOrDefault(l => l.Id == feature.Id);
-                    
+
                     if (sameLinkedFeature is not null) sortedFeatures.Add(feature);
                 }
 
                 return sortedFeatures;
             });
-    }
-
-    public IObservable<IEnumerable<ClassroomFeature>> ObserveAll()
-    {
-        return _storage.ObserveFromSetOf<StorageClassroomFeature>()
-            .Select(features =>
-            {
-                var mappedFeatures = features.Select(feature =>
-                    new ClassroomFeature(feature.Id, feature.Entity.Description));
-
-                return mappedFeatures;
-            })
-            .Catch<IEnumerable<ClassroomFeature>, Exception>(e =>
-                throw new ClassroomFeatureGatewayException("Failed to observe features", e)
-            );
     }
 }

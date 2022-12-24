@@ -1,13 +1,13 @@
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Adapters.Common;
 using Adapters.Common.Validators;
 using Adapters.Common.ViewModels;
 using Application.Project.Gateways;
 using Application.Project.UseCases.ClassroomFeature;
 using Domain.Project;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 
 namespace Adapters.Project.ViewModels;
@@ -18,13 +18,9 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
 
     private readonly int? _featureId;
 
-    private readonly SaveClassroomFeatureUseCase _saveUseCase;
-
-    private readonly ObservableAsPropertyHelper<bool> _isLoading;
-
     private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
-    private string _description;
+    private readonly SaveClassroomFeatureUseCase _saveUseCase;
 
     public ClassroomFeatureEditorViewModel(
         ClassroomFeature? feature,
@@ -59,12 +55,26 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
         Close = ReactiveCommand.CreateFromTask(async () => { await Finish.Handle(Unit.Default); },
             canBeClosed);
 
-        _isLoading = Save
+        Save
             .IsExecuting
-            .ToProperty(this, vm => vm.IsLoading);
+            .ToPropertyEx(this, vm => vm.IsLoading);
 
         this.WhenActivated(d => { Save.DisposeWith(d); });
     }
+
+    [Reactive] public string Description { get; set; }
+
+    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
+
+    public ReactiveCommand<Unit, Unit> Save { get; }
+
+    public ReactiveCommand<Unit, Unit> Close { get; }
+
+    public Interaction<Unit, Unit> Finish { get; }
+
+    [ObservableAsProperty] public bool IsLoading { get; }
+
+    public ViewModelActivator Activator { get; }
 
     private async Task DoSave(CancellationToken token)
     {
@@ -98,22 +108,4 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
 
         await OpenMessageDialog.Handle(messageDialog);
     }
-
-    public string Description
-    {
-        get => _description;
-        set => this.RaiseAndSetIfChanged(ref _description, value);
-    }
-
-    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
-
-    public ReactiveCommand<Unit, Unit> Save { get; }
-
-    public ReactiveCommand<Unit, Unit> Close { get; }
-
-    public Interaction<Unit, Unit> Finish { get; }
-
-    public bool IsLoading => _isLoading.Value;
-
-    public ViewModelActivator Activator { get; }
 }

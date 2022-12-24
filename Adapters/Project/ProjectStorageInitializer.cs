@@ -6,9 +6,15 @@ namespace Adapters.Project;
 public class ProjectStorageInitializer : IDisposable
 {
     private readonly StorageInitializer _initializer;
+
     public ProjectStorageInitializer(StorageInitializer initializer)
     {
         _initializer = initializer;
+    }
+
+    public void Dispose()
+    {
+        _initializer.Dispose();
     }
 
     public async Task Initialize(CancellationToken token)
@@ -21,10 +27,5 @@ public class ProjectStorageInitializer : IDisposable
             .AddEntity<StorageClassroom>()
             .AddEntity<StorageClassroomFeature>()
             .Initialize(token);
-    }
-
-    public void Dispose()
-    {
-        _initializer.Dispose();
     }
 }

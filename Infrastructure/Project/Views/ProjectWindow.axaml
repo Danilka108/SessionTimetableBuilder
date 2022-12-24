@@ -13,10 +13,9 @@
     </Design.DataContext>
 
     <Grid ColumnDefinitions="*, Auto, 4*">
-        <views:ExplorerView DataContext="{Binding ExplorerViewModel}"/>
+        <views:ExplorerView DataContext="{Binding ExplorerViewModel}" />
 
         <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False" HorizontalAlignment="Center"
-                      VerticalAlignment="Stretch">
-        </GridSplitter>
+                      VerticalAlignment="Stretch" />
     </Grid>
 </Window>

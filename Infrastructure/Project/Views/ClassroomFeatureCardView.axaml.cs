@@ -1,4 +1,3 @@
-using System;
 using System.Reactive;
 using System.Threading.Tasks;
 using Adapters.Common.ViewModels;
@@ -23,12 +22,12 @@ public partial class ClassroomFeatureCardView : ReactiveUserControl<ClassroomFea
                 .OpenEditor
                 .RegisterHandler(DoOpenEditor)
                 .DisposeWith(d);
-            
+
             ViewModel!
                 .OpenConfirmDialog
                 .RegisterHandler(DoOpenConfirmDialog)
                 .DisposeWith(d);
-            
+
             ViewModel!
                 .OpenMessageDialog
                 .RegisterHandler(DoOpenMessageDialog)
@@ -49,7 +48,7 @@ public partial class ClassroomFeatureCardView : ReactiveUserControl<ClassroomFea
 
         context.SetOutput(Unit.Default);
     }
-    
+
     private async Task DoOpenConfirmDialog(InteractionContext<ConfirmDialogViewModel, bool> context)
     {
         var viewModel = context.Input;
@@ -61,7 +60,7 @@ public partial class ClassroomFeatureCardView : ReactiveUserControl<ClassroomFea
         var confirmResult = await dialog.ShowDialog<bool>(ProjectWindow.GetCurrent());
         context.SetOutput(confirmResult);
     }
-    
+
     private async Task DoOpenMessageDialog(InteractionContext<MessageDialogViewModel, Unit> context)
     {
         var viewModel = context.Input;

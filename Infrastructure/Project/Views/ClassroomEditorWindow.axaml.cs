@@ -3,11 +3,9 @@ using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using Adapters.Project.ViewModels;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
-using ReactiveUI.Validation.Extensions;
 
 namespace Infrastructure.Project.Views;
 

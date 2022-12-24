@@ -2,7 +2,6 @@ using System.Reactive;
 using System.Threading.Tasks;
 using Adapters.Common.ViewModels;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Mixins;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
@@ -27,7 +26,7 @@ public partial class ConfirmDialogWindow : ReactiveWindow<ConfirmDialogViewModel
                 .DisposeWith(d);
         });
     }
-    
+
     private async Task DoFinish(InteractionContext<bool, Unit> context)
     {
         context.SetOutput(Unit.Default);

@@ -17,11 +17,11 @@ public class DisciplineEditorViewModel : BaseViewModel, IActivatableViewModel
 {
     public delegate DisciplineEditorViewModel Factory(Discipline? discipline);
 
-    private readonly SaveDisciplineUseCase _saveUseCase;
+    private readonly int? _disciplineId;
 
     private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
-    private readonly int? _disciplineId;
+    private readonly SaveDisciplineUseCase _saveUseCase;
 
     public DisciplineEditorViewModel(
         Discipline? discipline,
@@ -37,7 +37,7 @@ public class DisciplineEditorViewModel : BaseViewModel, IActivatableViewModel
         SelectedRequirements =
             new ObservableCollection<ClassroomFeature>(discipline?.ClassroomRequirements ??
                                                        new ClassroomFeature[] { });
-        
+
         var allRequirements = featureGateway
             .ObserveAll()
             .ToPropertyEx(this, vm => vm.AllRequirements);
@@ -69,6 +69,24 @@ public class DisciplineEditorViewModel : BaseViewModel, IActivatableViewModel
                 .DisposeWith(d);
         });
     }
+
+    [Reactive] public string Name { get; set; }
+
+    [ObservableAsProperty] public IEnumerable<ClassroomFeature> AllRequirements { get; }
+
+    [ObservableAsProperty] public bool IsLoading { get; }
+
+    public ReactiveCommand<Unit, Unit> Save { get; }
+
+    public ReactiveCommand<Unit, Unit> Close { get; }
+
+    public Interaction<Unit, Unit> Finish { get; }
+
+    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
+
+    public ObservableCollection<ClassroomFeature> SelectedRequirements { get; }
+
+    public ViewModelActivator Activator { get; }
 
     private async Task DoSave(CancellationToken token)
     {
@@ -103,22 +121,4 @@ public class DisciplineEditorViewModel : BaseViewModel, IActivatableViewModel
 
         await OpenMessageDialog.Handle(messageDialog);
     }
-
-    [Reactive] public string Name { get; set; }
-
-    [ObservableAsProperty] public IEnumerable<ClassroomFeature> AllRequirements { get; }
-
-    [ObservableAsProperty] public bool IsLoading { get; }
-
-    public ReactiveCommand<Unit, Unit> Save { get; }
-
-    public ReactiveCommand<Unit, Unit> Close { get; }
-
-    public Interaction<Unit, Unit> Finish { get; }
-
-    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
-
-    public ObservableCollection<ClassroomFeature> SelectedRequirements { get; }
-
-    public ViewModelActivator Activator { get; }
 }

@@ -32,7 +32,7 @@ public class AdaptersProjectModule : Module
         // builder
         //     .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
         //     .Where(t => t.FullName.EndsWith("Gateway") && t.FullName.Contains("Project"))
-            // .AsSelf();
+        // .AsSelf();
 
         builder
             .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())

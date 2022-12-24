@@ -7,9 +7,9 @@
         x:Class="Infrastructure.Preview.Views.PreviewWindow"
         Title="PreviewWindow">
     <Design.DataContext>
-        <viewModels:PreviewViewModel/>
+        <viewModels:PreviewViewModel />
     </Design.DataContext>
-    
+
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
         <Button Command="{Binding OpenProject}">OPEN PROJECT</Button>
     </StackPanel>

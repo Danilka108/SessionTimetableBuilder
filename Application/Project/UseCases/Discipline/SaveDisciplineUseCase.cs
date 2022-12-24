@@ -11,7 +11,7 @@ public class SaveDisciplineUseCase
         _gateway = gateway;
     }
 
-    public async Task Handle(int? id, string name, 
+    public async Task Handle(int? id, string name,
         IEnumerable<Domain.Project.ClassroomFeature> requirements, CancellationToken token)
     {
         await CheckNameToOriginality(id, name, token);

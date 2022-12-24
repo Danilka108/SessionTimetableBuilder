@@ -21,13 +21,13 @@
             </StackPanel>
         </Border>
     </Design.PreviewWith>
-    
+
     <Style Selector="TextBlock">
-        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontFamily" Value="Roboto" />
     </Style>
-    
+
     <Style Selector="TextBox">
-        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontFamily" Value="Roboto" />
     </Style>
 
     <Style Selector="TextBlock.DisplayLarge">

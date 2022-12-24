@@ -11,14 +11,14 @@ public class NumericFieldValidator : IValidationState
     {
         var separator = messageConverter.Convert(new LocalizedMessage.FieldError.Separator());
         var emptyFieldMessage =
-            messageConverter.Convert(new LocalizedMessage.FieldError.CantBeEmpty()); 
+            messageConverter.Convert(new LocalizedMessage.FieldError.CantBeEmpty());
         var invalidNumericStringMessage =
             messageConverter.Convert(new LocalizedMessage.FieldError.InvalidNumericString());
 
         var errors = new List<string>();
 
         if (value.Length == 0) errors.Add(emptyFieldMessage);
-        
+
         try
         {
             int.Parse(value);
@@ -27,7 +27,7 @@ public class NumericFieldValidator : IValidationState
         {
             errors.Add(invalidNumericStringMessage);
         }
-        
+
         IsValid = errors.Count == 0;
 
         var fullMessage = string.Join(separator + " ", errors);

@@ -27,10 +27,10 @@
     <x:String x:Key="NameFieldCaption">Название</x:String>
     <x:String x:Key="NumberFieldCaption">Номер</x:String>
     <x:String x:Key="CapacityFieldCaption">Вместимость</x:String>
-    
+
     <x:String x:Key="CantBeEmptyFieldError">поле не может быть пустым</x:String>
     <x:String x:Key="InvalidNumericStringFieldError">значение поля должно представлять число</x:String>
-    
+
     <x:String x:Key="FieldErrorSeparator">,</x:String>
 
     <x:String x:Key="UndefinedError">Неизвестная ошибка.</x:String>

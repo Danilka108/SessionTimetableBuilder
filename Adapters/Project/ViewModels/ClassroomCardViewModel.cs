@@ -13,13 +13,13 @@ public class ClassroomCardViewModel : BaseViewModel
     public delegate ClassroomCardViewModel Factory(Classroom classroom);
 
     private readonly Classroom _classroom;
-    
+
     private readonly ConfirmDialogViewModel.Factory _confirmDialogFactory;
+
+    private readonly DeleteClassroomUseCase _deleteUseCase;
 
     private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
-    private readonly DeleteClassroomUseCase _deleteUseCase;
-    
     public ClassroomCardViewModel(
         Classroom classroom,
         DeleteClassroomUseCase deleteUseCase,
@@ -47,7 +47,21 @@ public class ClassroomCardViewModel : BaseViewModel
 
         Delete = ReactiveCommand.CreateFromTask(DoDelete);
     }
-    
+
+    public int Number { get; }
+
+    public int Capacity { get; }
+
+    public ReactiveCommand<Unit, Unit> Edit { get; }
+
+    public ReactiveCommand<Unit, Unit> Delete { get; }
+
+    public Interaction<ClassroomEditorViewModel, Unit> OpenEditor { get; }
+
+    public Interaction<ConfirmDialogViewModel, bool> OpenConfirmDialog { get; }
+
+    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
+
     private async Task DoDelete(CancellationToken token)
     {
         var confirmDialog = _confirmDialogFactory.Invoke(
@@ -71,7 +85,7 @@ public class ClassroomCardViewModel : BaseViewModel
             await ShowErrorMessage(new LocalizedMessage.Error.UndefinedError());
         }
     }
-    
+
     private async Task ShowErrorMessage(LocalizedMessage message)
     {
         var messageDialog = _messageDialogFactory.Invoke(
@@ -81,18 +95,4 @@ public class ClassroomCardViewModel : BaseViewModel
 
         await OpenMessageDialog.Handle(messageDialog);
     }
-    
-    public int Number { get; }
-    
-    public int Capacity { get; }
-    
-    public ReactiveCommand<Unit, Unit> Edit { get; }
-
-    public ReactiveCommand<Unit, Unit> Delete { get; }
-
-    public Interaction<ClassroomEditorViewModel, Unit> OpenEditor { get; }
-
-    public Interaction<ConfirmDialogViewModel, bool> OpenConfirmDialog { get; }
-
-    public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
 }

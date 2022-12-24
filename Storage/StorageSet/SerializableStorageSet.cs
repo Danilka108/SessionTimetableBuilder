@@ -9,7 +9,8 @@ internal class SerializableStorageSet
     private readonly IEnumerable<IdentifiedEntity<SerializableEntity>> _entities;
     private readonly int _lastId;
 
-    private SerializableStorageSet(int lastId, IEnumerable<IdentifiedEntity<SerializableEntity>> entities)
+    private SerializableStorageSet(int lastId,
+        IEnumerable<IdentifiedEntity<SerializableEntity>> entities)
     {
         _entities = entities;
         _lastId = lastId;
@@ -83,8 +84,9 @@ internal class SerializableStorageSet
 
             _entitiesType = typeof(IEnumerable<IdentifiedEntity<SerializableEntity>>);
             _entitiesConverter =
-                (JsonConverter<IEnumerable<IdentifiedEntity<SerializableEntity>>>)options.GetConverter
-                    (_entitiesType);
+                (JsonConverter<IEnumerable<IdentifiedEntity<SerializableEntity>>>)options
+                    .GetConverter
+                        (_entitiesType);
         }
 
         public override SerializableStorageSet Read

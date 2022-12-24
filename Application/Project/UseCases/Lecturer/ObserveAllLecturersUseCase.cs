@@ -1,6 +1,3 @@
-using System.Reactive.Linq;
-using Application.Project.Gateways;
-
 namespace Application.Project.useCases.Lecturer;
 
 // public class ObserveAllLecturersUseCase

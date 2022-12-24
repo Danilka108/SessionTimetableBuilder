@@ -11,7 +11,7 @@ public class NotEmptyFieldValidator : IValidationState
     {
         var message = messageConverter.Convert(new LocalizedMessage.FieldError.CantBeEmpty());
         message = message[0].ToString().ToUpper() + message[1..];
-        
+
         Text = ValidationText.Create(message);
 
         IsValid = value.Length > 0;

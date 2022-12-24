@@ -9,8 +9,8 @@ namespace Adapters.Project.Gateways;
 
 public class DisciplineStorageGateway : IDisciplineGateway
 {
-    private readonly Storage.Storage _storage;
     private readonly ClassroomFeatureStorageGateway _featureGateway;
+    private readonly Storage.Storage _storage;
 
     public DisciplineStorageGateway(Storage.Storage storage,
         ClassroomFeatureStorageGateway featureGateway)

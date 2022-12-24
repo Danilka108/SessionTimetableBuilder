@@ -1,7 +1,6 @@
 using System;
 using Adapters;
 using Adapters.Project.ViewModels;
-using Adapters.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Infrastructure.Project.Views;
@@ -26,7 +25,7 @@ public class ViewLocator : IDataTemplate
             {
                 ViewModel = context
             },
-            _ => throw new ArgumentNullException(nameof(data)),
+            _ => throw new ArgumentNullException(nameof(data))
         };
     }
 

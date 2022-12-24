@@ -1,11 +1,14 @@
 using System.IO;
-using System.Linq;
 using Storage;
 
 namespace Infrastructure.Storage;
 
 internal class FileStorageResource : StorageResource
 {
+    public FileStorageResource(string path) : base(path)
+    {
+    }
+
     protected override Stream CreateStream()
     {
         return new FileStream
@@ -17,9 +20,5 @@ internal class FileStorageResource : StorageResource
             4096,
             FileOptions.Asynchronous
         );
-    }
-
-    public FileStorageResource(string path) : base(path)
-    {
     }
 }

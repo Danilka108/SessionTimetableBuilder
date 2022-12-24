@@ -1,27 +1,24 @@
-using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Adapters.ViewModels;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Adapters.Project.ViewModels;
 
-public enum ExploredSet : int
+public enum ExploredSet
 {
     ClassroomFeatures = 0,
     Classrooms,
-    Disciplines,
+    Disciplines
 }
 
 public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
 {
     public delegate ExplorerViewModel Factory();
 
-    private ExploredSet _exploredSet;
+    private readonly ClassroomFeaturesViewModel.Factory _classroomFeaturesFactory;
 
     private readonly ClassroomsViewModel.Factory _classroomsFactory;
-
-    private readonly ClassroomFeaturesViewModel.Factory _classroomFeaturesFactory;
 
     private readonly DisciplinesViewModel.Factory _disciplinesFactory;
 
@@ -33,7 +30,7 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
     {
         Activator = new ViewModelActivator();
         Router = new RoutingState();
-        
+
         ExploredSet = ExploredSet.ClassroomFeatures;
 
         _classroomsFactory = classroomsFactory;
@@ -50,6 +47,12 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
         });
     }
 
+    [Reactive] public ExploredSet ExploredSet { get; set; }
+
+    public ViewModelActivator Activator { get; }
+
+    public RoutingState Router { get; }
+
     private IObservable<IRoutableViewModel> NavigateToExploredSet(ExploredSet exploredSet, int _)
     {
         IRoutableViewModel viewModelToNavigate = exploredSet switch
@@ -61,14 +64,4 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
 
         return Router.Navigate.Execute(viewModelToNavigate);
     }
-
-    public ExploredSet ExploredSet
-    {
-        get => _exploredSet;
-        set => this.RaiseAndSetIfChanged(ref _exploredSet, value);
-    }
-
-    public ViewModelActivator Activator { get; }
-
-    public RoutingState Router { get; }
 }

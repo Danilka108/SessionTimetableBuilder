@@ -32,7 +32,8 @@ public class Storage : IDisposable, IStorageReader
     /// <typeparam name="TEntity">Type of loaded entities.</typeparam>
     /// <returns>Enumerable of Identified Entities.</returns>
     /// <exception cref="LoadStorageEntitiesException">Throw if failed to load storage set.</exception>
-    public async Task<IEnumerable<IdentifiedEntity<TEntity>>> FromSetOf<TEntity>(CancellationToken token)
+    public async Task<IEnumerable<IdentifiedEntity<TEntity>>> FromSetOf<TEntity>(
+        CancellationToken token)
     {
         try
         {

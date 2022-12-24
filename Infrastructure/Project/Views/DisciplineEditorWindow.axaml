@@ -8,11 +8,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Infrastructure.Project.Views.DisciplineEditorWindow"
         Title="{StaticResource DisciplineEditorTitle}">
-    
+
     <Design.DataContext>
-        <viewModel:DisciplineEditorViewModel/>
-    </Design.DataContext> 
-    
+        <viewModel:DisciplineEditorViewModel />
+    </Design.DataContext>
+
     <Window.Styles>
         <StyleInclude Source="/Styles/Editor.axaml" />
     </Window.Styles>
@@ -26,7 +26,7 @@
                      UseFloatingWatermark="True"
                      assists:TextFieldAssist.Label="{StaticResource NameFieldCaption}"
                      Classes="BodyLarge outline" />
-                     
+
             <controls:Card Margin="12">
                 <StackPanel>
                     <TextBlock Margin="0 0 0 12" Classes="TitleMedium"

@@ -1,5 +1,3 @@
-using Application.Project.Gateways;
-
 namespace Application.Project.useCases.Lecturer;
 
 // public class DeleteLecturerUseCase

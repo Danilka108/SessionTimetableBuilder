@@ -7,20 +7,23 @@ namespace Infrastructure.Project;
 
 public class ExplorerViewLocator : IViewLocator
 {
-    public IViewFor ResolveView<T>(T viewModel, string? contract = null) => viewModel switch
+    public IViewFor ResolveView<T>(T viewModel, string? contract = null)
     {
-        ClassroomsViewModel context => new ClassroomsView
+        return viewModel switch
         {
-            ViewModel = context
-        },
-        ClassroomFeaturesViewModel context => new ClassroomFeaturesView
-        {
-            ViewModel = context
-        },
-        DisciplinesViewModel context => new DisciplinesView
-        {
-            ViewModel = context
-        },
-        _ => throw new ArgumentException(nameof(viewModel))
-    };
+            ClassroomsViewModel context => new ClassroomsView
+            {
+                ViewModel = context
+            },
+            ClassroomFeaturesViewModel context => new ClassroomFeaturesView
+            {
+                ViewModel = context
+            },
+            DisciplinesViewModel context => new DisciplinesView
+            {
+                ViewModel = context
+            },
+            _ => throw new ArgumentException(nameof(viewModel))
+        };
+    }
 }

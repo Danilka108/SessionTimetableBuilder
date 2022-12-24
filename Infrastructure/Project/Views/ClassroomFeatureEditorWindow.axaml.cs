@@ -1,4 +1,3 @@
-using System;
 using System.Reactive;
 using System.Threading.Tasks;
 using Adapters.Common.ViewModels;

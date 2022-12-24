@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Infrastructure.Project.Views.ClassroomCardView">
-    
+
     <Design.DataContext>
         <viewModels:ClassroomCardViewModel />
     </Design.DataContext>
@@ -21,18 +21,20 @@
                 <TextBlock Classes="BodyLarge">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{StaticResource ClassroomCardTitle}">
-                            <Binding Path="Number"/>
-                            <Binding Path="Capacity"/>
+                            <Binding Path="Number" />
+                            <Binding Path="Capacity" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
             </WrapPanel>
             <WrapPanel>
                 <Button Command="{Binding Edit}" Classes="Flat">
-                    <TextBlock Classes="LabelSmall" Text="{StaticResource EditButtonCaptionUpperCase}" />
+                    <TextBlock Classes="LabelSmall"
+                               Text="{StaticResource EditButtonCaptionUpperCase}" />
                 </Button>
                 <Button Command="{Binding Delete}" Classes="Flat">
-                    <TextBlock Classes="LabelSmall" Text="{StaticResource DeleteButtonCaptionUpperCase}" />
+                    <TextBlock Classes="LabelSmall"
+                               Text="{StaticResource DeleteButtonCaptionUpperCase}" />
                 </Button>
             </WrapPanel>
         </StackPanel>

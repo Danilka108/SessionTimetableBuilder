@@ -10,8 +10,8 @@ namespace Infrastructure.Preview;
 
 public class PreviewInitializer
 {
-    private readonly ILifetimeScope _parentDiScope; 
-    
+    private readonly ILifetimeScope _parentDiScope;
+
     public PreviewInitializer(ILifetimeScope parentDiScope)
     {
         _parentDiScope = parentDiScope;
@@ -33,7 +33,7 @@ public class PreviewInitializer
 
         return previewWindow;
     }
-    
+
     private ILifetimeScope InitDiScope()
     {
         var currentDiScope = _parentDiScope.BeginLifetimeScope(builder =>
