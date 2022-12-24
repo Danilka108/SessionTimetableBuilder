@@ -35,7 +35,7 @@ public class DeleteClassroomFeatureUseCase
         {
             var contains = classroom.ContainsFeature(featureToDelete);
 
-            if (!contains)
+            if (contains)
             {
                 return classroom;
             }
