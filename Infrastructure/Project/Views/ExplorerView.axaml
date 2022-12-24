@@ -5,7 +5,6 @@
              xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
              xmlns:project="clr-namespace:Infrastructure.Project"
              xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
-             xmlns:common="clr-namespace:Infrastructure.Common"
              x:Name="explorerView"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Infrastructure.Project.Views.ExplorerView">
@@ -23,7 +22,8 @@
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"
-                               Padding="0" Classes="TitleMedium" Text="{common:LocalizedBinding}" />
+                               Padding="0" Classes="TitleMedium"
+                               Text="{Binding Converter={StaticResource LocalizedMessageConverter}}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>

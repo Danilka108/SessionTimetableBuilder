@@ -8,7 +8,8 @@
     <x:String x:Key="ConfirmActionDialogTitle">Подтверждение действия</x:String>
     <x:String x:Key="MessageDialogTitle">Сообщение</x:String>
     <x:String x:Key="ExplorerTitle">Просмотр</x:String>
-    <x:String x:Key="ClassroomFeaturesTitle">Характеристики кабинетов</x:String>
+    <x:String x:Key="ClassroomsFeaturesTitle">Характеристики кабинетов</x:String>
+    <x:String x:Key="ClassroomFeaturesTitle">Характеристики кабинета</x:String>
     <x:String x:Key="ClassroomsTitle">Кабинеты</x:String>
     <x:String x:Key="ClassroomCardTitle">Номер: {0}, вместимость: {1}</x:String>
 
@@ -26,7 +27,7 @@
     <x:String x:Key="CantBeEmptyFieldError">поле не может быть пустым</x:String>
     <x:String x:Key="InvalidNumericStringFieldError">значение поля должно представлять число</x:String>
     
-    <x:String x:Key="FieldErrorSeparator">, </x:String>
+    <x:String x:Key="FieldErrorSeparator">,</x:String>
 
     <x:String x:Key="UndefinedError">Неизвестная ошибка.</x:String>
     <x:String x:Key="StorageIsNotAvailableError">Не удалось получить доступ к хранилищу данных.</x:String>

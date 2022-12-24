@@ -17,19 +17,19 @@
     </Window.Styles>
 
     <StackPanel Margin="24" Width="400" VerticalAlignment="Stretch" HorizontalAlignment="Center">
-        <TextBlock Margin="0 0 0 4" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left"
-                   Classes="TitleLarge"
-                   Text="{common:LocalizedBinding Header}" />
-
+        <!-- <TextBlock Margin="0 0 0 4" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" -->
+        <!--            Classes="TitleLarge" -->
+        <!--            Text="{common:LocalizedBinding Header}" /> -->
+        <!-- -->
         <TextBlock Margin="0 0 0 20" TextWrapping="WrapWithOverflow" HorizontalAlignment="Stretch"
                    Classes="BodyLarge"
-                   Text="{common:LocalizedBinding Message}" />
+                   Text="{Binding Message}" />
 
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Margin="0 0 12 0" HorizontalAlignment="Right" Classes="Outline"
                     Command="{Binding Confirm}">
                 <TextBlock HorizontalAlignment="Right" Classes="LabelSmall"
-                           Text="{common:LocalizedBinding Header}" />
+                           Text="{Binding Action}" />
             </Button>
 
             <Button HorizontalAlignment="Right" Classes="Outline" Command="{Binding Cancel}">

@@ -6,33 +6,29 @@ namespace Adapters.Common.ViewModels;
 
 public class ConfirmDialogViewModel : BaseViewModel
 {
-    public delegate ConfirmDialogViewModel Factory(LocalizedMessage.Header header, LocalizedMessage message);
+    public delegate ConfirmDialogViewModel Factory(LocalizedMessage.Header action,
+        LocalizedMessage message);
 
-    public ConfirmDialogViewModel(LocalizedMessage.Header header, LocalizedMessage message)
+    public ConfirmDialogViewModel(LocalizedMessage.Header action, LocalizedMessage message,
+        ILocalizedMessageConverter messageConverter)
     {
-        Finish = new Interaction<bool, Unit>(); 
-        
-        Header = header;
-        Message = message;
+        Finish = new Interaction<bool, Unit>();
 
-        Confirm = ReactiveCommand.CreateFromTask(async () =>
-        {
-            await Finish.Handle(true);
-        });
+        Action = messageConverter.Convert(action);
+        Message = messageConverter.Convert(message);
 
-        Cancel = ReactiveCommand.CreateFromTask(async () =>
-        {
-            await Finish.Handle(false);
-        });
+        Confirm = ReactiveCommand.CreateFromTask(async () => { await Finish.Handle(true); });
+
+        Cancel = ReactiveCommand.CreateFromTask(async () => { await Finish.Handle(false); });
     }
-    
-    public LocalizedMessage.Header Header { get; }
-    
-    public LocalizedMessage Message { get; }
-    
+
+    public string Action { get; }
+
+    public string Message { get; }
+
     public ReactiveCommand<Unit, Unit> Confirm { get; }
-    
+
     public ReactiveCommand<Unit, Unit> Cancel { get; }
-    
+
     public Interaction<bool, Unit> Finish { get; }
 }

@@ -30,7 +30,7 @@ public class NumericFieldValidator : IValidationState
         
         IsValid = errors.Count == 0;
 
-        var fullMessage = string.Join(separator, errors);
+        var fullMessage = string.Join(separator + " ", errors);
         fullMessage = IsValid ? "" : fullMessage[0].ToString().ToUpper() + fullMessage[1..];
 
         Text = ValidationText.Create(fullMessage);

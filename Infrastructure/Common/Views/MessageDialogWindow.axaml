@@ -19,11 +19,11 @@
     <StackPanel Orientation="Vertical" Margin="12" Width="400" VerticalAlignment="Stretch" HorizontalAlignment="Center">
         <TextBlock Margin="0 0 0 8" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left"
                    Classes="TitleLarge"
-                   Text="{common:LocalizedBinding Header}" />
+                   Text="{Binding Header}" />
 
         <TextBlock Margin="0 0 0 20" TextWrapping="WrapWithOverflow" HorizontalAlignment="Stretch"
                    Classes="BodyLarge"
-                   Text="{common:LocalizedBinding Message}" />
+                   Text="{Binding Message}" />
 
         <Button HorizontalAlignment="Right" Classes="Outline" Command="{Binding Close}">
             <TextBlock HorizontalAlignment="Right" Classes="LabelSmall"
