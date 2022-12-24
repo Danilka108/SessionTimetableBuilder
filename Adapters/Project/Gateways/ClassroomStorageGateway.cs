@@ -136,7 +136,7 @@ public class ClassroomStorageGateway : IClassroomGateway
                 }
 
                 throw new ClassroomGatewayException(
-                    "Could not to be find classroom");
+                    "Could not be found classroom");
             });
     }
 

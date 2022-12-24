@@ -1,3 +1,3 @@
 namespace Domain.Project;
 
-public record Discipline(int Id, string Name, IEnumerable<ClassroomFeature> Requirements);
+public record Discipline(int Id, string Name, IEnumerable<ClassroomFeature> ClassroomRequirements);

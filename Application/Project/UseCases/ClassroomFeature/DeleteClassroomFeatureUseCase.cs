@@ -33,10 +33,9 @@ public class DeleteClassroomFeatureUseCase
 
         foreach (var classroom in classrooms)
         {
-            var sameFeature =
-                classroom.Features.FirstOrDefault(feature => feature.Id == featureToDelete.Id);
+            var contains = classroom.ContainsFeature(featureToDelete);
 
-            if (sameFeature is not null)
+            if (!contains)
             {
                 return classroom;
             }

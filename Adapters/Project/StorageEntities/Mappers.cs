@@ -17,4 +17,12 @@ internal static class Mappers
 
         return new StorageClassroom(entity.Number, entity.Capacity, features);
     }
+
+    public static StorageDiscipline MapToStorageEntity(this Discipline entity)
+    {
+        var requirements = entity.ClassroomRequirements.Select(requirement =>
+            new LinkedEntity<StorageClassroomFeature>(requirement.Id));
+
+        return new StorageDiscipline(entity.Name, requirements);
+    }
 }

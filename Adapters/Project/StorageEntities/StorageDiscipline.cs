@@ -7,5 +7,5 @@ namespace Adapters.Project.StorageEntities;
 internal record StorageDiscipline
 (
     string Name,
-    IEnumerable<LinkedEntity<StorageClassroomFeature>> Requirements
+    IEnumerable<LinkedEntity<StorageClassroomFeature>> ClassroomRequirements
 );
