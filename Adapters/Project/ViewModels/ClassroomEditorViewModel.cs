@@ -124,8 +124,6 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
         }
     }
 
-    public bool IsLoading => _isLoading.Value;
-
     private async Task<IEnumerable<ClassroomFeature>> CatchFeaturesObserving(Exception _)
     {
         var messageDialog = _messageDialogFactory.Invoke(
@@ -137,6 +135,8 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
 
         return new ClassroomFeature[] { };
     }
+
+    public bool IsLoading => _isLoading.Value;
 
     public string Capacity
     {
