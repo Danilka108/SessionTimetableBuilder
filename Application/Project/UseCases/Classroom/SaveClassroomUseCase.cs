@@ -11,11 +11,9 @@ public class SaveClassroomUseCase
         _gateway = gateway;
     }
 
-    public async Task Handle(int number, int capacity,
-        IEnumerable<Domain.Project.ClassroomFeature> features, int? id = null)
+    public async Task Handle(int number, int capacity, int? id,
+        IEnumerable<Domain.Project.ClassroomFeature> features, CancellationToken token)
     {
-        var token = CancellationToken.None;
-
         await CheckNumberToOriginality(token, number, id);
 
         if (id is { } notNullId)

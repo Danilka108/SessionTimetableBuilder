@@ -41,7 +41,7 @@ public partial class ClassroomFeatureCardView : ReactiveUserControl<ClassroomFea
     {
         var editor = new ClassroomFeatureEditorWindow
         {
-            DataContext = context.Input
+            ViewModel = context.Input
         };
 
         var projectWindow = ProjectWindow.GetCurrent();

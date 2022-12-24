@@ -1,11 +1,14 @@
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Adapters.Common;
+using Adapters.Common.Validators;
 using Adapters.Common.ViewModels;
 using Application.Project.Gateways;
 using Application.Project.UseCases.ClassroomFeature;
 using Domain.Project;
 using ReactiveUI;
+using ReactiveUI.Validation.Extensions;
 
 namespace Adapters.Project.ViewModels;
 
@@ -26,7 +29,8 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
     public ClassroomFeatureEditorViewModel(
         ClassroomFeature? feature,
         SaveClassroomFeatureUseCase saveUseCase,
-        MessageDialogViewModel.Factory messageDialogFactory
+        MessageDialogViewModel.Factory messageDialogFactory,
+        NotEmptyFieldValidator.Factory notEmptyFieldValidator
     )
     {
         _featureId = feature?.Id;
@@ -39,11 +43,14 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
         _messageDialogFactory = messageDialogFactory;
         _saveUseCase = saveUseCase;
 
-        var canBeSaved = this
-            .WhenAnyValue(vm => vm.Description)
-            .Select(description => description.Length > 0);
+        var descriptionIsNotEmpty =
+            this.WhenAnyValue(vm => vm.Description,
+                notEmptyFieldValidator.Invoke);
 
-        Save = ReactiveCommand.CreateFromTask(DoSave, canBeSaved);
+        this.ValidationRule(vm => vm.Description,
+            descriptionIsNotEmpty);
+
+        Save = ReactiveCommand.CreateFromTask(DoSave, this.IsValid());
 
         var canBeClosed = Save
             .IsExecuting
@@ -74,7 +81,7 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
                 LocalizedMessage.Header.Error,
                 errorMessage
             );
-            
+
             await OpenMessageDialog.Handle(messageDialog);
         }
     }
@@ -82,7 +89,8 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
     private LocalizedMessage MapExceptionToErrorMessage(Exception e) => e switch
     {
         ClassroomFeatureGatewayException => new LocalizedMessage.Error.StorageIsNotAvailable(),
-        NotOriginalDescriptionException => new LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal(),
+        NotOriginalDescriptionException =>
+            new LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal(),
         _ => new LocalizedMessage.Error.UndefinedError(),
     };
 

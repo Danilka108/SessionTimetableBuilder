@@ -4,6 +4,7 @@
     <x:String x:Key="DeleteDialogHeader">Удалить</x:String>
 
     <x:String x:Key="ClassroomFeatureEditorTitle">Редактор характеристики кабинета</x:String>
+    <x:String x:Key="ClassroomEditorTitle">Редактор кабинета</x:String>
     <x:String x:Key="ConfirmActionDialogTitle">Подтверждение действия</x:String>
     <x:String x:Key="MessageDialogTitle">Сообщение</x:String>
     <x:String x:Key="ExplorerTitle">Просмотр</x:String>
@@ -19,6 +20,13 @@
     <x:String x:Key="CancelButtonCaption">Отмена</x:String>
     <x:String x:Key="CloseButtonCaption">Закрыть</x:String>
     <x:String x:Key="DescriptionFieldCaption">Описание</x:String>
+    <x:String x:Key="NumberFieldCaption">Номер</x:String>
+    <x:String x:Key="CapacityFieldCaption">Вместимость</x:String>
+    
+    <x:String x:Key="CantBeEmptyFieldError">поле не может быть пустым</x:String>
+    <x:String x:Key="InvalidNumericStringFieldError">значение поля должно представлять число</x:String>
+    
+    <x:String x:Key="FieldErrorSeparator">, </x:String>
 
     <x:String x:Key="UndefinedError">Неизвестная ошибка.</x:String>
     <x:String x:Key="StorageIsNotAvailableError">Не удалось получить доступ к хранилищу данных.</x:String>

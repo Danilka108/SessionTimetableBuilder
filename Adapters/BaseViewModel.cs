@@ -1,7 +1,8 @@
 using ReactiveUI;
+using ReactiveUI.Validation.Helpers;
 
 namespace Adapters;
 
-public class BaseViewModel : ReactiveObject
+public class BaseViewModel : ReactiveValidationObject
 {
 }

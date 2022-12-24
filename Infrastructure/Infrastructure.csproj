@@ -56,4 +56,15 @@
     <ItemGroup>
         <Folder Include="Assets\Fonts" />
     </ItemGroup>
+    
+   <ItemGroup>
+        <Compile Update="**\*.xaml.cs">
+            <DependentUpon>%(Filename)</DependentUpon>
+        </Compile>
+        <EmbeddedResource Include="**\*.xaml">
+            <SubType>Designer</SubType>
+        </EmbeddedResource>
+        <!-- This AdditionalFiles directive is required by XamlNameReferenceGenerator. -->
+        <AdditionalFiles Include="**\*.xaml" />
+    </ItemGroup> 
 </Project>

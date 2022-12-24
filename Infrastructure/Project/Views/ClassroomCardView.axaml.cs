@@ -19,6 +19,11 @@ public partial class ClassroomCardView : ReactiveUserControl<ClassroomCardViewMo
         this.WhenActivated(d =>
         {
             ViewModel!
+                .OpenEditor
+                .RegisterHandler(DoOpenEditor)
+                .DisposeWith(d);
+            
+            ViewModel!
                 .OpenConfirmDialog
                 .RegisterHandler(DoOpenConfirmDialog)
                 .DisposeWith(d);
@@ -30,6 +35,19 @@ public partial class ClassroomCardView : ReactiveUserControl<ClassroomCardViewMo
         });
     }
     
+    private async Task DoOpenEditor(
+        InteractionContext<ClassroomEditorViewModel, Unit> context)
+    {
+        var editor = new ClassroomEditorWindow
+        {
+            ViewModel = context.Input
+        };
+
+        var projectWindow = ProjectWindow.GetCurrent();
+        await editor.ShowDialog(projectWindow);
+
+        context.SetOutput(Unit.Default);
+    }
     
     private async Task DoOpenConfirmDialog(InteractionContext<ConfirmDialogViewModel, bool> context)
     {

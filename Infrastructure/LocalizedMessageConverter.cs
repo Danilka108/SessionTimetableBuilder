@@ -7,7 +7,7 @@ using Avalonia.Data.Converters;
 
 namespace Infrastructure;
 
-public class LocalizedMessageConverter : IValueConverter
+public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
@@ -19,23 +19,19 @@ public class LocalizedMessageConverter : IValueConverter
             _ => throw new ConvertLocalizedMessageException("Undefined input value type"),
         };
 
-        if (Avalonia.Application.Current is null)
-            throw new ConvertLocalizedMessageException(
-                "Could not get current application instance");
+        return ConvertByResourceKey(resourceKey, formatArgs);
+    }
 
-        Avalonia.Application.Current.TryFindResource(resourceKey, out var resourceValue);
+    public string Convert(LocalizedMessage message)
+    {
+        var (resourceKey, formatArgs) = GetMessageResourceKey(message);
+        return ConvertByResourceKey(resourceKey, formatArgs);
+    }
 
-        if (resourceValue is not string stringResourceValue)
-            throw new ConvertLocalizedMessageException("Could not find string resource");
-
-        try
-        {
-            return string.Format(stringResourceValue, formatArgs);
-        }
-        catch (Exception e)
-        {
-            throw new ConvertLocalizedMessageException("Could not apply string format", e);
-        }
+    public string Convert(LocalizedMessage.Header header)
+    {
+        var resourceKey = GetHeaderResourceKey(header);
+        return ConvertByResourceKey(resourceKey, new object?[] { });
     }
 
     private string GetHeaderResourceKey(LocalizedMessage.Header header) => header switch
@@ -50,15 +46,40 @@ public class LocalizedMessageConverter : IValueConverter
         LocalizedMessage.Error.StorageIsNotAvailable =>
             ("StorageIsNotAvailableError", new object?[] { }),
         LocalizedMessage.Error.ClassroomFeatureAlreadyLinkedByClassroom v =>
-            ("ClassroomFeatureAlreadyLinkedByClassroom", new object?[] { v.classroomNumber }),
+            ("ClassroomFeatureAlreadyLinkedByClassroom", new object?[] { v.ClassroomNumber }),
         LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal =>
             ("DescriptionOfClassroomFeatureMustMeOriginalError", new object?[] { }),
         LocalizedMessage.Error.NumberOfClassroomMustBeOriginal => (
             "NumberOfClassroomMustBeOriginal", new object?[] { }),
+        LocalizedMessage.FieldError.InvalidNumericString => (
+            "InvalidNumericStringFieldError", new object?[] { }),
+        LocalizedMessage.FieldError.CantBeEmpty => ("CantBeEmptyFieldError", new object?[] {}),
+        LocalizedMessage.FieldError.Separator => ("FieldErrorSeparator", new object?[] {}),
         LocalizedMessage.Question.DeleteClassroomFeature => ("DeleteClassroomFeatureQuestion",
             new object?[] { }),
         LocalizedMessage.Question.DeleteClassroom => ("DeleteClassroomQuestion", new object?[] { })
     };
+
+    private string ConvertByResourceKey(string resourceKey, object?[] args)
+    {
+        if (Avalonia.Application.Current is null)
+            throw new ConvertLocalizedMessageException(
+                "Could not get current application instance");
+
+        Avalonia.Application.Current.TryFindResource(resourceKey, out var resourceValue);
+
+        if (resourceValue is not string stringResourceValue)
+            throw new ConvertLocalizedMessageException("Could not find string resource");
+
+        try
+        {
+            return string.Format(stringResourceValue, args);
+        }
+        catch (Exception e)
+        {
+            throw new ConvertLocalizedMessageException("Could not apply string format", e);
+        }
+    }
 
     public object ConvertBack(object? value, Type targetType, object? parameter,
         CultureInfo culture)

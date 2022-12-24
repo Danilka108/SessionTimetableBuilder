@@ -21,9 +21,18 @@ public abstract record LocalizedMessage
         public record DescriptionOfClassroomFeatureMustBeOriginal : LocalizedMessage;
 
         public record ClassroomFeatureAlreadyLinkedByClassroom
-            (int classroomNumber) : LocalizedMessage;
-
+            (int ClassroomNumber) : LocalizedMessage;
+        
         public record NumberOfClassroomMustBeOriginal : LocalizedMessage;
+    }
+
+    public static class FieldError
+    {
+        public record InvalidNumericString : LocalizedMessage;
+        
+        public record CantBeEmpty : LocalizedMessage;
+
+        public record Separator : LocalizedMessage;
     }
 
     public static class Question
