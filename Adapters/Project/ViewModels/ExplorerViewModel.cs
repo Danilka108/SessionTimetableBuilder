@@ -1,3 +1,4 @@
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
@@ -22,20 +23,38 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
 
     private readonly DisciplinesViewModel.Factory _disciplinesFactory;
 
+    private readonly ClassroomEditorViewModel.Factory _classroomEditorFactory;
+    
+    private readonly ClassroomFeatureEditorViewModel.Factory _classroomFeatureEditorFactory;
+    
+    private readonly DisciplineEditorViewModel.Factory _disciplineEditorFactory;
+
     public ExplorerViewModel(
         ClassroomsViewModel.Factory classroomsFactory,
         ClassroomFeaturesViewModel.Factory classroomFeaturesFactory,
-        DisciplinesViewModel.Factory disciplinesFactory
+        DisciplinesViewModel.Factory disciplinesFactory,
+        ClassroomEditorViewModel.Factory classroomEditorFactory,
+        ClassroomFeatureEditorViewModel.Factory classroomFeatureEditorFactory,
+        DisciplineEditorViewModel.Factory disciplineEditorFactory
     )
     {
         Activator = new ViewModelActivator();
         Router = new RoutingState();
+        OpenEditor = new Interaction<(BaseViewModel, ExploredSet), Unit>();
 
         ExploredSet = ExploredSet.ClassroomFeatures;
 
+        _classroomEditorFactory = classroomEditorFactory;
+        _classroomFeatureEditorFactory = classroomFeatureEditorFactory;
+        _disciplineEditorFactory = disciplineEditorFactory;
         _classroomsFactory = classroomsFactory;
         _classroomFeaturesFactory = classroomFeaturesFactory;
         _disciplinesFactory = disciplinesFactory;
+        
+        Create = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await OpenEditor.Handle(ProduceEditor(ExploredSet));
+        });
 
         this.WhenActivated(d =>
         {
@@ -48,12 +67,16 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
     }
 
     [Reactive] public ExploredSet ExploredSet { get; set; }
+    
+    public ReactiveCommand<Unit, Unit> Create { get; }
+    
+    public Interaction<(BaseViewModel, ExploredSet), Unit> OpenEditor { get; }
 
     public ViewModelActivator Activator { get; }
 
     public RoutingState Router { get; }
 
-    private IObservable<IRoutableViewModel> NavigateToExploredSet(ExploredSet exploredSet, int _)
+    private IObservable<IRoutableViewModel> NavigateToExploredSet(ExploredSet exploredSet)
     {
         IRoutableViewModel viewModelToNavigate = exploredSet switch
         {
@@ -63,5 +86,17 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
         };
 
         return Router.Navigate.Execute(viewModelToNavigate);
+    }
+    
+    private (BaseViewModel, ExploredSet) ProduceEditor(ExploredSet exploredSet)
+    {
+        BaseViewModel editorToOpen = exploredSet switch
+        {
+            ExploredSet.Classrooms => _classroomEditorFactory.Invoke(null),
+            ExploredSet.ClassroomFeatures => _classroomFeatureEditorFactory.Invoke(null),
+            ExploredSet.Disciplines => _disciplineEditorFactory.Invoke(null)
+        };
+
+        return (editorToOpen, exploredSet);
     }
 }

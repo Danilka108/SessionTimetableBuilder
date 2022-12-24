@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
              xmlns:project="clr-namespace:Infrastructure.Project"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:materialControls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
              xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
              x:Name="explorerView"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -17,7 +19,9 @@
           Height="{Binding Bounds.Height, ElementName=explorerView}">
         <TextBlock Margin="16 8 16 0" Grid.Row="0" Classes="HeadlineMedium"
                    HorizontalAlignment="Left" Text="{StaticResource ExplorerTitle}" />
-        <ComboBox Margin="16 0 16 12" Grid.Row="1" SelectedIndex="{Binding ExploredSet}"
+
+        <ComboBox Margin="16 0 16 12" Grid.Row="1"
+                  SelectedIndex="{Binding ExploredSet}"
                   Items="{project:ExploredSet}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -27,6 +31,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+
         <ScrollViewer Grid.Row="2">
             <rxui:RoutedViewHost PageTransition="{x:Null}" Router="{Binding Router}">
                 <rxui:RoutedViewHost.ViewLocator>
@@ -34,5 +39,10 @@
                 </rxui:RoutedViewHost.ViewLocator>
             </rxui:RoutedViewHost>
         </ScrollViewer>
+
+        <materialControls:FloatingButton Command="{Binding Create}" Margin="0 0 30 38" Classes="Accent Dark" Grid.Row="2"
+                                         VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <materialIcons:MaterialIcon Width="32" Height="32" Kind="Add" />
+        </materialControls:FloatingButton>
     </Grid>
 </UserControl>

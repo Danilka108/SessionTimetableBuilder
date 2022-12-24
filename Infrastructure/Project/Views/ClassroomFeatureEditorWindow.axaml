@@ -28,7 +28,7 @@
 
             <WrapPanel>
                 <Button Classes="Outline" Command="{Binding Save}">
-                    <TextBlock Text="{StaticResource EditButtonCaption}" Classes="LabelSmall" />
+                    <TextBlock Text="{StaticResource SaveButtonCaption}" Classes="LabelSmall" />
                 </Button>
                 <Button Classes="Outline" Command="{Binding Close}">
                     <TextBlock Text="{StaticResource CloseButtonCaption}" Classes="LabelSmall" />

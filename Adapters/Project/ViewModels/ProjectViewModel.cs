@@ -1,6 +1,8 @@
+using Adapters.Project.Browser;
+
 namespace Adapters.Project.ViewModels;
 
-public class ProjectViewModel : BaseViewModel
+public class ProjectViewModel : BaseViewModel, IBrowser
 {
     public delegate ProjectViewModel Factory(string name);
 
@@ -8,9 +10,12 @@ public class ProjectViewModel : BaseViewModel
     {
         Name = name;
         ExplorerViewModel = explorerFactory.Invoke();
+        Manager = new BrowserManager();
     }
 
     public ExplorerViewModel ExplorerViewModel { get; }
 
     public string Name { get; }
+    
+    public BrowserManager Manager { get; }
 }

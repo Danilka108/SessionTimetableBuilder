@@ -17,5 +17,11 @@
 
         <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False" HorizontalAlignment="Center"
                       VerticalAlignment="Stretch" />
+        
+        <views:BrowserViewHost Grid.Column="2" Manager="{Binding Manager}">
+            <views:BrowserViewHost.DefaultPage>
+                <TextBlock Text="Default Page"/>
+            </views:BrowserViewHost.DefaultPage>
+        </views:BrowserViewHost>
     </Grid>
 </Window>
