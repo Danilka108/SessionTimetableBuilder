@@ -32,7 +32,7 @@ public class ClassroomFeaturesViewModel : BaseViewModel, IRoutableViewModel, IAc
         var cards = gateway
             .ObserveAll()
             .Catch<IEnumerable<ClassroomFeature>, Exception>(ex =>
-                CatchFeaturesObserving(ex).ToObservable())
+                CatchObservableExceptions(ex).ToObservable())
             .Select(features => features.Select(cardFactory.Invoke))
             .ToPropertyEx(this, vm => vm.Cards);
 
@@ -48,7 +48,7 @@ public class ClassroomFeaturesViewModel : BaseViewModel, IRoutableViewModel, IAc
     public string UrlPathSegment => "/ClassroomFeatures";
     public IScreen HostScreen { get; }
 
-    private async Task<IEnumerable<ClassroomFeature>> CatchFeaturesObserving(Exception _)
+    private async Task<IEnumerable<ClassroomFeature>> CatchObservableExceptions(Exception _)
     {
         var messageDialog = _messageDialogFactory.Invoke(
             LocalizedMessage.Header.Error,

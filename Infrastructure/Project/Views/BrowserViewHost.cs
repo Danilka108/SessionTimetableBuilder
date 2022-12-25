@@ -1,50 +1,38 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
 using Adapters.Project.Browser;
 using Avalonia;
-using Avalonia.Collections;
 using Avalonia.Controls;
-using Avalonia.Controls.Mixins;
+using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Layout;
+using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Media;
 using Avalonia.Styling;
-using DynamicData;
+using DynamicData.Binding;
 using Material.Icons;
 using Material.Icons.Avalonia;
 using ReactiveUI;
 
 namespace Infrastructure.Project.Views;
 
-public struct BrowsingItem
+public record BrowsingItem(IBrowserPage Page, IControl Control);
+
+public class BrowserViewHost : ContentControl, IStyleable
 {
-    public IBrowserPage Page { get; }
-
-    public IControl Control { get; }
-
-    public BrowsingItem(IBrowserPage page, IControl control)
-    {
-        Page = page;
-        Control = control;
-    }
-}
-
-public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
-{
-    public static readonly StyledProperty<BrowserManager?> ManagerProperty =
-        AvaloniaProperty.Register<BrowserViewHost, BrowserManager?>(nameof(Manager));
+    public static readonly StyledProperty<IBrowser?> BrowserProperty =
+        AvaloniaProperty.Register<BrowserViewHost, IBrowser?>(nameof(Browser));
 
     public static readonly StyledProperty<IControl> DefaultPageProperty =
         AvaloniaProperty.Register<BrowserViewHost, IControl>(nameof(DefaultPage));
 
-    public BrowserManager? Manager
+    public IBrowser? Browser
     {
-        get => GetValue(ManagerProperty);
-        set => SetValue(ManagerProperty, value);
+        get => GetValue(BrowserProperty);
+        set => SetValue(BrowserProperty, value);
     }
 
     public IControl DefaultPage
@@ -53,113 +41,131 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
         set => SetValue(DefaultPageProperty, value);
     }
 
-    public IViewLocator? ViewLocator { get; set; }
-
-    private readonly AvaloniaList<BrowsingItem> _browsingItems;
-
-    private readonly TabControl _tabControl;
-
     Type IStyleable.StyleKey => typeof(ContentControl);
+
+    public IViewLocator ViewLocator { get; set; }
+
+    private ObservableCollection<BrowsingItem> Items { get; }
+
+    private readonly TabStrip _strip;
+
+    private readonly ContentControl _presentedContent = new();
 
     private readonly ReactiveCommand<IBrowserPage, Unit> _close;
 
-    private MaterialIcon CloseButtonIcon => new()
-    {
-        Width = 18,
-        Height = 18,
-        Kind = MaterialIconKind.Remove
-    };
-
-    private FuncDataTemplate<BrowsingItem> TabItemTemplate => new(
-        (item, _) => new StackPanel
-        {
-            Orientation = Orientation.Horizontal,
-            VerticalAlignment = VerticalAlignment.Center,
-            Children =
-            {
-                new TextBlock
-                {
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(0, 0, 6, 2),
-                    Classes = new Classes("TitleMedium"),
-                    [!TextBlock.TextProperty] = new Binding("Page.PageName"),
-                },
-                new Button
-                {
-                    Background = new SolidColorBrush
-                    {
-                        Color = Color.FromArgb(0, 0, 0, 0)
-                    },
-                    CommandParameter = item.Page,
-                    Command = _close,
-                    Content = CloseButtonIcon
-                }
-            }
-        }
-    );
-
-    private FuncDataTemplate<BrowsingItem> TabContentTemplate => new(
-        (item, _) => item.Control
-    );
-
     public BrowserViewHost()
     {
-        _close = ReactiveCommand.Create<IBrowserPage>(ClosePage);
+        Items = new ObservableCollection<BrowsingItem>();
 
-        _browsingItems = new AvaloniaList<BrowsingItem>();
+        _close = ReactiveCommand.CreateFromObservable<IBrowserPage, Unit>(page =>
+            Browser!.Manager.Close.Execute(page));
 
-        _tabControl = new TabControl
+        _strip = new TabStrip
         {
-            Items = _browsingItems,
-            ItemTemplate = TabItemTemplate,
-            ContentTemplate = TabContentTemplate
+            Items = Items,
+            ItemTemplate = new FuncDataTemplate<BrowsingItem>((item, _) => new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                VerticalAlignment = VerticalAlignment.Center,
+                Children =
+                {
+                    new TextBlock
+                    {
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Margin = new Thickness(0, 0, 6, 2),
+                        Classes = new Classes("TitleMedium"),
+                        [!TextBlock.TextProperty] = new Binding("Page.PageName"),
+                    },
+                    new Button
+                    {
+                        Classes = new Classes("Flat"),
+                        Padding = new Thickness(10, 8),
+                        Background = new SolidColorBrush
+                        {
+                            Color = Color.FromArgb(0, 0, 0, 0)
+                        },
+                        CommandParameter = item.Page,
+                        Command = _close,
+                        Content = new MaterialIcon
+                        {
+                            Width = 20,
+                            Height = 20,
+                            Kind = MaterialIconKind.Remove
+                        }
+                    }
+                }
+            })
         };
 
-        this.WhenActivated(d =>
+        Content = new StackPanel
         {
-            this
-                .GetObservable(ManagerProperty)
-                .SelectMany(manager =>
-                    manager?.BrowsingChanged ??
-                    Observable
-                        .Empty<BrowsingChange>()
-                )
-                .Subscribe(OnBrowserChanging)
-                .DisposeWith(d);
+            Children =
+            {
+                _strip,
+                _presentedContent,
+            }
+        };
 
-            this
-                .GetObservable(DefaultPageProperty)
-                .Subscribe(_ => DisplayLastPage())
-                .DisposeWith(d);
-        });
+        _strip.WhenAnyValue(strip => strip.SelectedIndex)
+            .Subscribe(index => ShowPage(index));
+
+        this.GetObservable(DefaultPageProperty)
+            .Subscribe(_ => ShowPage());
+
+        this.GetObservable(BrowserProperty)
+            .SelectMany(browser =>
+                browser?.Manager.BrowsingChanged ?? Observable.Empty<BrowsingChange>())
+            .Subscribe(HandleChange);
     }
 
-    private void OnBrowserChanging(BrowsingChange change)
+    private void ShowPage(int? index = null)
     {
-        switch (change)
+        if (Items.Count == 0 || _strip.SelectedIndex < 0)
         {
-            case BrowsingChange.Browse browseChange:
-                BrowsePage(browseChange.Page);
-                break;
-            case BrowsingChange.Close closeChange:
-                ClosePage(closeChange.Page);
-                break;
-        }
-    }
-
-    private void DisplayLastPage()
-    {
-        if (_browsingItems.Count == 0)
-        {
-            Content = DefaultPage;
+            _presentedContent.Content = DefaultPage;
             return;
         }
 
-        Content = _tabControl;
-        _tabControl.SelectedIndex = _browsingItems.Count - 1;
+        var itemToPresent = Items[index ?? _strip.SelectedIndex];
+        _presentedContent.Content = itemToPresent.Control;
     }
 
-    private IControl ResolvePage(IBrowserPage page)
+    private void HandleChange(BrowsingChange change)
+    {
+        if (change is BrowsingChange.Add addChange)
+        {
+            var view = ResolveView(addChange.Page);
+            var item = new BrowsingItem(addChange.Page, view);
+            Items.Add(item);
+        }
+
+        if (change is BrowsingChange.Browse browseChange)
+        {
+            for (var i = 0; i < Items.Count; i++)
+            {
+                if (Items[i].Page.PageName != browseChange.Page.PageName) continue;
+                _strip.SelectedIndex = i;
+            }
+        }
+
+        if (change is BrowsingChange.Remove removeChange)
+        {
+            for (var i = 0; i < Items.Count; i++)
+            {
+                if (Items[i].Page.PageName != removeChange.Page.PageName) continue;
+                Items.RemoveAt(i);
+            }
+        }
+
+        if (change is BrowsingChange.BrowseDefault)
+        {
+            _strip.SelectedIndex = -1;
+        }
+
+        ShowPage();
+    }
+
+    private IControl ResolveView(IBrowserPage page)
     {
         if (ViewLocator is null)
         {
@@ -180,61 +186,5 @@ public class BrowserViewHost : ContentControl, IActivatableView, IStyleable
         }
 
         return resolvedControl;
-    }
-
-    private void BrowsePage(IBrowserPage page)
-    {
-        Content = _tabControl;
-
-        var maybeSamePair = _browsingItems
-            .GetPages()
-            .FirstOrNull(page, new IBrowserPage.Comparer());
-
-        if (maybeSamePair is null)
-        {
-            _browsingItems.Add(new BrowsingItem(page, ResolvePage(page)));
-        }
-        else
-        {
-            var itemToBrowseIndex =
-                _browsingItems
-                    .GetPages()
-                    .IndexOf(page, new IBrowserPage.Comparer());
-
-            var itemToBrowse = _browsingItems[itemToBrowseIndex];
-
-            _browsingItems.RemoveAt(itemToBrowseIndex);
-            _browsingItems.Add(itemToBrowse);
-        }
-
-        DisplayLastPage();
-    }
-
-    private void ClosePage(IBrowserPage page)
-    {
-        Content = _tabControl;
-
-        var pageToRemoveIndex = _browsingItems.GetPages()
-            .IndexOf(page, new IBrowserPage.Comparer());
-
-        if (pageToRemoveIndex < 0) return;
-
-        _browsingItems.RemoveAt(pageToRemoveIndex);
-
-        DisplayLastPage();
-    }
-}
-
-public static class EnumerableExtensions
-{
-    public static IEnumerable<IBrowserPage> GetPages(this IEnumerable<BrowsingItem> items)
-    {
-        return items.Select(item => item.Page);
-    }
-
-    public static T? FirstOrNull<T>(this IEnumerable<T> enumerable, T itemToFind,
-        EqualityComparer<T> comparer) where T : class
-    {
-        return enumerable.FirstOrDefault(item => comparer.Equals(item, itemToFind));
     }
 }

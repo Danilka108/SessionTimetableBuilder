@@ -18,7 +18,8 @@ public class ExploredSetExtension : MarkupExtension
             {
                 ExploredSet.Classrooms => "ClassroomsTitle",
                 ExploredSet.ClassroomFeatures => "ClassroomsFeaturesTitle",
-                ExploredSet.Disciplines => "DisciplinesTitle"
+                ExploredSet.Disciplines => "DisciplinesTitle",
+                ExploredSet.Lecturers => "LecturersTitle"
             };
 
         return convertedExploredSets;

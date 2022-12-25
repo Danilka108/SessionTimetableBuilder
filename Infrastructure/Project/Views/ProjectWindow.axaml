@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
         xmlns:views="clr-namespace:Infrastructure.Project.Views"
+        xmlns:project="clr-namespace:Infrastructure.Project"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Infrastructure.Project.Views.ProjectWindow"
         Title="{Binding Name}">
@@ -18,10 +19,13 @@
         <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False" HorizontalAlignment="Center"
                       VerticalAlignment="Stretch" />
         
-        <views:BrowserViewHost Grid.Column="2" Manager="{Binding Manager}">
+        <views:BrowserViewHost Grid.Column="2" Browser="{Binding}">
             <views:BrowserViewHost.DefaultPage>
                 <TextBlock Text="Default Page"/>
             </views:BrowserViewHost.DefaultPage>
+            <views:BrowserViewHost.ViewLocator>
+                <project:BrowserViewLocator/>
+            </views:BrowserViewHost.ViewLocator>
         </views:BrowserViewHost>
     </Grid>
 </Window>

@@ -11,6 +11,15 @@ public record Lecturer
 {
     public string FullName => ProduceFullname(Name, Surname, Patronymic);
 
+    public bool ContainsDiscipline(Discipline disciplineToSearch)
+    {
+        var sameDiscipline =
+            Disciplines.FirstOrDefault(discipline =>
+                discipline.Id == disciplineToSearch.Id);
+
+        return sameDiscipline is not null;
+    }
+
     public static string ProduceFullname(string? name, string? surname, string? patronymic)
     {
         var capitalizedSurname = surname is not null && surname.Length != 0

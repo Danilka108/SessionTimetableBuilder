@@ -60,6 +60,8 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
                 ("ClassroomFeatureReferencedByClassroom", new object?[] { v.ClassroomNumber }),
             LocalizedMessage.Error.ClassroomFeatureReferencedByDiscipline v =>
                 ("ClassroomFeatureReferencedByDiscipline", new object?[] { v.DisciplineName }),
+            LocalizedMessage.Error.DisciplineReferencedByLecturer v =>
+                ("DisciplineReferencedByLecturer", new object?[] { v.LecturerName }),
             LocalizedMessage.Error.DescriptionOfClassroomFeatureMustBeOriginal =>
                 ("DescriptionOfClassroomFeatureMustMeOriginalError", new object?[] { }),
             LocalizedMessage.Error.NumberOfClassroomMustBeOriginal => (
@@ -73,6 +75,10 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
             LocalizedMessage.Question.DeleteClassroomFeature => ("DeleteClassroomFeatureQuestion",
                 new object?[] { }),
             LocalizedMessage.Question.DeleteClassroom => ("DeleteClassroomQuestion",
+                new object?[] { }),
+            LocalizedMessage.Question.DeleteDiscipline => ("DeleteDisciplineQuestion",
+                new object?[] { }),
+            LocalizedMessage.Question.DeleteLecturer => ("DeleteLecturerQuestion",
                 new object?[] { })
         };
     }

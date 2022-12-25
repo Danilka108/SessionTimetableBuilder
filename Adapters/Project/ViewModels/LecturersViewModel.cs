@@ -3,6 +3,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Adapters.Common.ViewModels;
+using Adapters.Project.Browser;
 using Application.Project.Gateways;
 using Domain.Project;
 using ReactiveUI;
@@ -10,15 +11,20 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Adapters.Project.ViewModels;
 
-public class ClassroomsViewModel : BaseViewModel, IRoutableViewModel, IActivatableViewModel
+public class LecturersViewModel : BaseViewModel, IRoutableViewModel, IActivatableViewModel
 {
-    public delegate ClassroomsViewModel Factory(IScreen hostScreen);
+    public delegate LecturersViewModel Factory(IScreen hostScreen, IBrowser browser);
 
     private readonly MessageDialogViewModel.Factory _messageDialogFactory;
 
-    public ClassroomsViewModel(IScreen hostScreen, IClassroomGateway gateway,
-        ClassroomCardViewModel.Factory cardFactory,
-        MessageDialogViewModel.Factory messageDialogFactory)
+    public LecturersViewModel
+    (
+        IScreen hostScreen,
+        IBrowser browser,
+        ILecturerGateway gateway,
+        MessageDialogViewModel.Factory messageDialogFactory,
+        LecturerCardViewModel.Factory cardFactory
+    )
     {
         _messageDialogFactory = messageDialogFactory;
         HostScreen = hostScreen;
@@ -27,25 +33,25 @@ public class ClassroomsViewModel : BaseViewModel, IRoutableViewModel, IActivatab
 
         var cards = gateway
             .ObserveAll()
-            .Catch<IEnumerable<Classroom>, Exception>(ex =>
+            .Catch<IEnumerable<Lecturer>, Exception>(ex =>
                 CatchObservableExceptions(ex).ToObservable())
-            .Select(classrooms => classrooms.Select(cardFactory.Invoke))
+            .Select(lecturers => lecturers.Select(l => cardFactory.Invoke(l, browser)))
             .ToPropertyEx(this, vm => vm.Cards);
 
-        this.WhenActivated(d => { cards.DisposeWith(d); });
+        this.WhenActivated(d => cards.DisposeWith(d));
     }
+
+    [ObservableAsProperty] public IEnumerable<LecturerCardViewModel> Cards { get; }
 
     public Interaction<MessageDialogViewModel, Unit> OpenMessageDialog { get; }
 
-    [ObservableAsProperty] public IEnumerable<ClassroomCardViewModel> Cards { get; }
-
-    public ViewModelActivator Activator { get; }
-
-    public string UrlPathSegment => "/Classrooms";
+    public string UrlPathSegment => "/Lecturers";
 
     public IScreen HostScreen { get; }
 
-    private async Task<IEnumerable<Classroom>> CatchObservableExceptions(Exception _)
+    public ViewModelActivator Activator { get; }
+
+    private async Task<IEnumerable<Lecturer>> CatchObservableExceptions(Exception _)
     {
         var messageDialog = _messageDialogFactory.Invoke(
             LocalizedMessage.Header.Error,
@@ -54,6 +60,6 @@ public class ClassroomsViewModel : BaseViewModel, IRoutableViewModel, IActivatab
 
         await OpenMessageDialog.Handle(messageDialog);
 
-        return new Classroom[] { };
+        return new Lecturer[] { };
     }
 }

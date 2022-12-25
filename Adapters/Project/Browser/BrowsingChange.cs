@@ -6,6 +6,16 @@ public abstract class BrowsingChange
     {
     }
 
+    public sealed class Add : BrowsingChange
+    {
+        public Add(IBrowserPage page)
+        {
+            Page = page;
+        }
+
+        public IBrowserPage Page { get; }
+    }
+
     public sealed class Browse : BrowsingChange
     {
         public Browse(IBrowserPage page)
@@ -16,13 +26,17 @@ public abstract class BrowsingChange
         public IBrowserPage Page { get; }
     }
 
-    public sealed class Close : BrowsingChange
+    public sealed class Remove : BrowsingChange
     {
-        public Close(IBrowserPage page)
+        public Remove(IBrowserPage page)
         {
             Page = page;
         }
 
         public IBrowserPage Page { get; }
+    }
+    
+    public sealed class BrowseDefault : BrowsingChange
+    {
     }
 }

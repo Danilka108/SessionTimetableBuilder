@@ -1,3 +1,4 @@
+using System;
 using System.Reactive;
 using System.Threading.Tasks;
 using Adapters;
@@ -34,25 +35,28 @@ public partial class ExplorerView : ReactiveUserControl<ExplorerViewModel>
 
         var dialogOpeningTask = exploredSet switch
         {
-            ExploredSet.Classrooms => new ClassroomEditorWindow
-            {
-                DataContext = viewModel
-            }.ShowDialog(projectWindow),
-            ExploredSet.ClassroomFeatures => new ClassroomFeatureEditorWindow
-            {
-                DataContext = viewModel
-            }.ShowDialog(projectWindow),
-            ExploredSet.Disciplines => new DisciplineEditorWindow
-            {
-                DataContext = viewModel
-            }.ShowDialog(projectWindow)
+            ExploredSet.Classrooms when viewModel is ClassroomEditorViewModel v => new
+                ClassroomEditorWindow
+                {
+                    ViewModel = v
+                }.ShowDialog(projectWindow),
+            ExploredSet.ClassroomFeatures when viewModel is ClassroomFeatureEditorViewModel v => new
+                ClassroomFeatureEditorWindow
+                {
+                    ViewModel = v
+                }.ShowDialog(projectWindow),
+            ExploredSet.Disciplines when viewModel is DisciplineEditorViewModel v => new
+                DisciplineEditorWindow
+                {
+                    ViewModel = v
+                }.ShowDialog(projectWindow),
+            _ => throw new ArgumentException(nameof(interactionContext))
         };
 
         await dialogOpeningTask;
 
         interactionContext.SetOutput(Unit.Default);
     }
-
 
     private void InitializeComponent()
     {

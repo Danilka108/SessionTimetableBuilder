@@ -26,6 +26,8 @@ public abstract record LocalizedMessage
         public record ClassroomFeatureReferencedByDiscipline
             (string DisciplineName) : LocalizedMessage;
 
+        public record DisciplineReferencedByLecturer(string LecturerName) : LocalizedMessage;
+
         public record NumberOfClassroomMustBeOriginal : LocalizedMessage;
 
         public record NameOfDisciplineMustBeOriginal : LocalizedMessage;
@@ -45,5 +47,9 @@ public abstract record LocalizedMessage
         public record DeleteClassroomFeature : LocalizedMessage;
 
         public record DeleteClassroom : LocalizedMessage;
+        
+        public record DeleteDiscipline : LocalizedMessage;
+        
+        public record DeleteLecturer : LocalizedMessage;
     }
 }

@@ -25,6 +25,10 @@ public class ViewLocator : IDataTemplate
             {
                 ViewModel = context
             },
+            LecturerCardViewModel context => new LecturerCardView
+            {
+                ViewModel = context
+            },
             _ => throw new ArgumentNullException(nameof(data))
         };
     }

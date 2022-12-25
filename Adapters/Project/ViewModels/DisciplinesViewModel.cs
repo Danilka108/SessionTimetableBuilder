@@ -32,7 +32,7 @@ public class DisciplinesViewModel : BaseViewModel, IRoutableViewModel, IActivata
         var cards = gateway
             .ObserveAll()
             .Catch<IEnumerable<Discipline>, Exception>(ex =>
-                CatchFeaturesObserving(ex).ToObservable())
+                CatchObservableExceptions(ex).ToObservable())
             .Select(classrooms => classrooms.Select(cardFactory.Invoke))
             .ToPropertyEx(this, vm => vm.Cards);
 
@@ -49,7 +49,7 @@ public class DisciplinesViewModel : BaseViewModel, IRoutableViewModel, IActivata
 
     public IScreen HostScreen { get; }
 
-    private async Task<IEnumerable<Discipline>> CatchFeaturesObserving(Exception _)
+    private async Task<IEnumerable<Discipline>> CatchObservableExceptions(Exception _)
     {
         var messageDialog = _messageDialogFactory.Invoke(
             LocalizedMessage.Header.Error,

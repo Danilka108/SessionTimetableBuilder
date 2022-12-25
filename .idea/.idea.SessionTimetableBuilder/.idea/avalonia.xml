@@ -96,6 +96,7 @@
         <entry key="Infrastructure/MainWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Preview/PreviewWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Preview/Views/PreviewWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/BrowserViewHost.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ClassroomCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ClassroomEditorView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ClassroomEditorWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
@@ -109,6 +110,11 @@
         <entry key="Infrastructure/Project/Views/DisciplinesView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/Explorer.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ExplorerView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LectorsView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LecturerCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LecturerCardViewModel.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LecturerEditorView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LecturersView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ProjectWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Styles/Dialog.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Styles/Editor.axaml" value="Infrastructure/Infrastructure.csproj" />

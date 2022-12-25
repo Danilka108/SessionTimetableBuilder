@@ -98,6 +98,23 @@ public class DisciplineStorageGateway : IDisciplineGateway
 
         throw new DisciplineGatewayException("Could not be found discipline");
     }
+    
+    internal async Task<IEnumerable<Discipline>> Read(IEnumerable<LinkedEntity<StorageDiscipline>> linkedDisciplines, CancellationToken token)
+    {
+        var linkedDisciplinesArray = linkedDisciplines.ToArray();
+        var allDisciplines = await ReadAll(token);
+        var selectedDisciplines = new List<Discipline>();
+
+        foreach (var discipline in allDisciplines)
+        {
+            var sameDiscipline = linkedDisciplinesArray 
+                .FirstOrDefault(d => d.Id == discipline.Id);
+
+            if (sameDiscipline is not null) selectedDisciplines.Add(discipline);
+        }
+
+        return selectedDisciplines;
+    }
 
     public async Task<IEnumerable<Discipline>> ReadAll(CancellationToken token)
     {

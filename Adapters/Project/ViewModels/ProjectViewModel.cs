@@ -9,7 +9,7 @@ public class ProjectViewModel : BaseViewModel, IBrowser
     public ProjectViewModel(string name, ExplorerViewModel.Factory explorerFactory)
     {
         Name = name;
-        ExplorerViewModel = explorerFactory.Invoke();
+        ExplorerViewModel = explorerFactory.Invoke(this);
         Manager = new BrowserManager();
     }
 

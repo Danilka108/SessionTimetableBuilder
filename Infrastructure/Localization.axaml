@@ -14,6 +14,7 @@
     <x:String x:Key="DisciplineRequirementsTitle">Требования к кабинету</x:String>
     <x:String x:Key="ClassroomsTitle">Кабинеты</x:String>
     <x:String x:Key="DisciplinesTitle">Дисциплины</x:String>
+    <x:String x:Key="LecturersTitle">Лекторы</x:String>
     <x:String x:Key="ClassroomCardTitle">Номер: {0}, вместимость: {1}</x:String>
 
     <x:String x:Key="DeleteButtonCaption">Удалить</x:String>
@@ -40,8 +41,11 @@
     <x:String x:Key="NumberOfClassroomMustBeOriginal">Номер кабинета должен быть оригинальным.</x:String>
     <x:String x:Key="ClassroomFeatureReferencedByClassroom">Не удалось удалить характеристику кабинета. Кабинет '{0}' ссылается на данную характеристику.</x:String>
     <x:String x:Key="ClassroomFeatureReferencedByDiscipline">Не удалось удалить характеристику кабинета. Дисциплина '{0}' ссылается на данную характеристику.</x:String>
+    <x:String x:Key="DisciplineReferencedByLecturer">Не удалось удалить дисциплину. Лектор '{0}' ссылается на данную дисциплину.</x:String>
 
     <x:String x:Key="DeleteClassroomFeatureQuestion">Удалить характеристику кабинета?</x:String>
     <x:String x:Key="DeleteClassroomQuestion">Удалить кабинет?</x:String>
+    <x:String x:Key="DeleteDisciplineQuestion">Удалить дисциплину?</x:String>
+    <x:String x:Key="DeleteLecturerQuestion">Удалить лектора?</x:String>
 
 </ResourceDictionary>

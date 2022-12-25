@@ -92,5 +92,9 @@ public class ProjectInitializer
         var disciplineGateway = diContext.Resolve<IDisciplineGateway>();
         var a = await disciplineGateway.Create("programing", features.GetRange(0, 1),
             CancellationToken.None);
+
+        var lecturerGateway = diContext.Resolve<ILecturerGateway>();
+        await lecturerGateway.Create("Danil", "Churickov", "Igorevich", new Discipline[] { a },
+            CancellationToken.None);
     }
 }
