@@ -1,24 +1,26 @@
+using Storage.StorageSet;
+
 namespace Storage;
 
 /// <summary>
 ///     <c>StorageTransaction</c> represents atomic changes undone if they fail to apply.
 /// </summary>
-public class StorageTransaction : IAsyncDisposable
+public class StorageTransaction : IAsyncDisposable, IStorageEditor
 {
-    private readonly Resource _resource;
+    private readonly StorageResource _storageResource;
     private readonly Dictionary<string, SerializableStorageSet> _storageSets;
     private readonly Stream _stream;
     private readonly CancellationToken _token;
 
     private StorageTransaction
     (
-        Resource resource,
+        StorageResource storageResource,
         Dictionary<string, SerializableStorageSet> storageSets,
         Stream stream,
         CancellationToken token
     )
     {
-        _resource = resource;
+        _storageResource = storageResource;
         _storageSets = storageSets;
         _stream = stream;
         _token = token;
@@ -61,7 +63,7 @@ public class StorageTransaction : IAsyncDisposable
     {
         try
         {
-            await _resource.Serialize(_stream, _storageSets, _token);
+            await _storageResource.Serialize(_stream, _storageSets, _token);
         }
         catch (Exception e)
         {
@@ -71,16 +73,16 @@ public class StorageTransaction : IAsyncDisposable
 
     internal static async Task<StorageTransaction> CreateWithResource
     (
-        Resource resource,
+        StorageResource storageResource,
         CancellationToken token
     )
     {
-        var stream = resource.GetStream();
+        var stream = storageResource.GetStream();
 
         try
         {
-            var storageSets = await resource.Deserialize(stream, token);
-            return new StorageTransaction(resource, storageSets, stream, token);
+            var storageSets = await storageResource.Deserialize(stream, token);
+            return new StorageTransaction(storageResource, storageSets, stream, token);
         }
         catch
         {

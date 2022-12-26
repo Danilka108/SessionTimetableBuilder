@@ -1,0 +1,62 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
+        xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+        xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Infrastructure.Project.Views.ClassroomEditorWindow"
+        Title="{StaticResource ClassroomEditorTitle}">
+
+    <Design.DataContext>
+        <viewModels:ClassroomEditorViewModel />
+    </Design.DataContext>
+
+    <Window.Styles>
+        <StyleInclude Source="/Styles/Editor.axaml" />
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto, *">
+        <ProgressBar IsIndeterminate="{Binding IsLoading}" />
+
+        <StackPanel>
+            <TextBox x:Name="NumberTextBox" Margin="12" Text="{Binding Number}"
+                     VerticalAlignment="Stretch"
+                     UseFloatingWatermark="True"
+                     assists:TextFieldAssist.Label="{StaticResource NumberFieldCaption}"
+                     Classes="BodyLarge outline" />
+
+            <TextBox x:Name="CapacityTextBox" Margin="12" Text="{Binding Capacity}"
+                     VerticalAlignment="Stretch"
+                     UseFloatingWatermark="True"
+                     assists:TextFieldAssist.Label="{StaticResource CapacityFieldCaption}"
+                     Classes="BodyLarge outline" />
+
+            <controls:Card Margin="12">
+                <StackPanel>
+                    <TextBlock Margin="0 0 0 18" Classes="TitleMedium"
+                               Text="{StaticResource ClassroomFeaturesTitle}" />
+                    <ListBox MaxHeight="250" SelectionMode="Multiple,Toggle"
+                             SelectedItems="{Binding SelectedFeatures}"
+                             Items="{Binding AllFeatures}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Classes="BodyMedium" Text="{Binding Description}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </controls:Card>
+
+            <WrapPanel>
+                <Button Classes="Outline" Command="{Binding Save}">
+                    <TextBlock Text="{StaticResource SaveButtonCaption}" Classes="LabelSmall" />
+                </Button>
+                <Button Classes="Outline" Command="{Binding Close}">
+                    <TextBlock Text="{StaticResource CloseButtonCaption}" Classes="LabelSmall" />
+                </Button>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</Window>

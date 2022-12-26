@@ -1,0 +1,94 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
+             xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+             xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Infrastructure.Project.Views.LecturerEditorView">
+    <Design.DataContext>
+        <viewModels:LecturerEditorViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto, Auto, Auto, *">
+        <ProgressBar Grid.Row="0" Classes="Accent" IsIndeterminate="{Binding IsLoading}" />
+
+        <Grid Grid.Row="1" Margin="12" RowDefinitions="Auto, *" ColumnDefinitions="*,*,2*">
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="12 0" Classes="TitleMedium"
+                       Text="{StaticResource PersonalDataTitle}" />
+
+            <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto, *" Margin="12" x:Name="Info"
+                  Grid.Column="0">
+                <TextBox Grid.Row="0" Classes="BodyLarge outline"
+                         Margin="0, 0, 0, 12"
+                         UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="{StaticResource PersonNameFieldCaption}"
+                         Text="{Binding Name}" />
+                <TextBox Grid.Row="1" Classes="BodyLarge outline"
+                         Margin="0, 0, 0, 12"
+                         UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="{StaticResource PersonSurnameFieldCaption}"
+                         Text="{Binding Surname}" />
+                <TextBox Grid.Row="2" Classes="BodyLarge outline"
+                         Margin="0, 0, 0, 12"
+                         UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="{StaticResource PersonPatronymicFieldCaption}"
+                         Text="{Binding Patronymic}" />
+                <Button Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                        Classes="Outline"
+                        Command="{Binding Save}">
+                    <TextBlock Text="{StaticResource SaveButtonCaption}" Classes="LabelSmall" />
+                </Button>
+            </Grid>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Margin="12 0" Classes="TitleMedium"
+                       Text="{StaticResource DisciplinesTitle}" />
+
+            <controls:Card Grid.Row="1" Margin="12" Grid.Column="1" Height="300">
+                <ListBox
+                    SelectionMode="Multiple,Toggle"
+                    SelectedItems="{Binding SelectedDisciplines}"
+                    Items="{Binding AllDisciplines}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Classes="BodyMedium" Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:Card>
+        </Grid>
+
+        <Grid Margin="12 12 12 0" Grid.Row="2" HorizontalAlignment="Stretch" ColumnDefinitions="*, *, *, *">
+            <TextBlock Grid.Column="0" Classes="BodyMedium"
+                       Text="{StaticResource DisciplineLetter}" />
+            <TextBlock Grid.Column="1" Classes="BodyMedium"
+                       Text="{StaticResource GroupLetter}" />
+            <TextBlock Grid.Column="2" Classes="BodyMedium"
+                       Text="{StaticResource ClassroomLetter}" />
+            <TextBlock Grid.Column="3" Classes="BodyMedium"
+                       Text="{StaticResource ExamStartTimeTitle}" />
+        </Grid>
+        <ScrollViewer Grid.Row="3" Margin="12">
+            <ItemsControl HorizontalAlignment="Stretch" Items="{Binding LecturerExams}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <controls:ColorZone Mode="PrimaryMid" Padding="4" Margin="0 4"
+                                            HorizontalAlignment="Stretch">
+                            <Grid HorizontalAlignment="Stretch" ColumnDefinitions="*, *, *, *">
+                                <TextBlock Grid.Column="0" Classes="BodyMedium"
+                                           Text="{Binding Discipline.Name}" />
+                                <TextBlock Grid.Column="1" Classes="BodyMedium"
+                                           Text="{Binding Group.Name}" />
+                                <TextBlock Grid.Column="2" Classes="BodyMedium"
+                                           Text="{Binding Classroom.Number}" />
+                                <TextBlock Grid.Column="3" Classes="BodyMedium"
+                                           Text="{Binding StartTimeAsString}" />
+                            </Grid>
+                        </controls:ColorZone>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

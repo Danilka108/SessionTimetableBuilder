@@ -1,0 +1,483 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "DynamicData/7.12.8": {
+        "type": "package",
+        "dependencies": {
+          "System.Reactive": "5.0.0"
+        },
+        "compile": {
+          "lib/net6.0/DynamicData.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/DynamicData.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Fody/6.6.4": {
+        "type": "package",
+        "build": {
+          "build/Fody.targets": {}
+        }
+      },
+      "ReactiveUI/18.4.1": {
+        "type": "package",
+        "dependencies": {
+          "DynamicData": "7.12.8",
+          "Splat": "14.5.1"
+        },
+        "compile": {
+          "lib/net6.0/ReactiveUI.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/ReactiveUI.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "ReactiveUI.Fody/18.4.1": {
+        "type": "package",
+        "dependencies": {
+          "Fody": "6.6.4",
+          "ReactiveUI": "18.4.1"
+        },
+        "compile": {
+          "lib/net6.0/ReactiveUI.Fody.Helpers.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/ReactiveUI.Fody.Helpers.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/ReactiveUI.Fody.props": {}
+        }
+      },
+      "ReactiveUI.Validation/3.0.22": {
+        "type": "package",
+        "dependencies": {
+          "ReactiveUI": "18.4.1"
+        },
+        "compile": {
+          "lib/net6.0/ReactiveUI.Validation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/ReactiveUI.Validation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Splat/14.5.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Splat.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Splat.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "System.Reactive/5.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/System.Reactive.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/System.Reactive.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net5.0/_._": {}
+        }
+      },
+      "Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Application.dll": {}
+        }
+      },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
+        }
+      },
+      "Storage/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "System.Reactive": "5.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Storage.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Storage.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DynamicData/7.12.8": {
+      "sha512": "MIOpDgdFF7GgbuIfu2o70KJxV9dqtTyTMFrdwupdjQ7I0MIkpvbmvdcrsM66T8rCFL0FGye7BmURFYgaDTw7/w==",
+      "type": "package",
+      "path": "dynamicdata/7.12.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE/LICENSE",
+        "dynamicdata.7.12.8.nupkg.sha512",
+        "dynamicdata.nuspec",
+        "lib/net462/DynamicData.dll",
+        "lib/net462/DynamicData.xml",
+        "lib/net6.0/DynamicData.dll",
+        "lib/net6.0/DynamicData.xml",
+        "lib/netstandard2.0/DynamicData.dll",
+        "lib/netstandard2.0/DynamicData.xml",
+        "lib/uap10.0.16299/DynamicData.dll",
+        "lib/uap10.0.16299/DynamicData.pri",
+        "lib/uap10.0.16299/DynamicData.xml",
+        "logo.png"
+      ]
+    },
+    "Fody/6.6.4": {
+      "sha512": "vLZS+oa+ndUHYPlx/8n9bBTT3dHkCF0riml4paKq4D663+cZd47x1uagQo32D/gKFZ/sfmV1oqKaLmH0elxq4A==",
+      "type": "package",
+      "path": "fody/6.6.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "License.txt",
+        "build/Fody.targets",
+        "fody.6.6.4.nupkg.sha512",
+        "fody.nuspec",
+        "netclassictask/Fody.dll",
+        "netclassictask/FodyCommon.dll",
+        "netclassictask/FodyHelpers.dll",
+        "netclassictask/FodyIsolated.dll",
+        "netclassictask/Mono.Cecil.Pdb.dll",
+        "netclassictask/Mono.Cecil.Pdb.pdb",
+        "netclassictask/Mono.Cecil.Rocks.dll",
+        "netclassictask/Mono.Cecil.Rocks.pdb",
+        "netclassictask/Mono.Cecil.dll",
+        "netclassictask/Mono.Cecil.pdb",
+        "netstandardtask/Fody.dll",
+        "netstandardtask/FodyCommon.dll",
+        "netstandardtask/FodyHelpers.dll",
+        "netstandardtask/FodyIsolated.dll",
+        "netstandardtask/Mono.Cecil.Pdb.dll",
+        "netstandardtask/Mono.Cecil.Pdb.pdb",
+        "netstandardtask/Mono.Cecil.Rocks.dll",
+        "netstandardtask/Mono.Cecil.Rocks.pdb",
+        "netstandardtask/Mono.Cecil.dll",
+        "netstandardtask/Mono.Cecil.pdb"
+      ]
+    },
+    "ReactiveUI/18.4.1": {
+      "sha512": "uMFeRHeLc7IQ9rzl0Z6GIh4Zq3NN6DP3o8oHklslE5ZdrQncCJBNgaTR7D2yiaefbiMwduggGHphqDqfuIzz2A==",
+      "type": "package",
+      "path": "reactiveui/18.4.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE/LICENSE",
+        "lib/monoandroid11.0/ReactiveUI.dll",
+        "lib/monoandroid11.0/ReactiveUI.pdb",
+        "lib/monoandroid11.0/ReactiveUI.xml",
+        "lib/monoandroid12.1/ReactiveUI.dll",
+        "lib/monoandroid12.1/ReactiveUI.pdb",
+        "lib/monoandroid12.1/ReactiveUI.xml",
+        "lib/net462/ReactiveUI.dll",
+        "lib/net462/ReactiveUI.xml",
+        "lib/net472/ReactiveUI.dll",
+        "lib/net472/ReactiveUI.xml",
+        "lib/net6.0-android31.0/ReactiveUI.dll",
+        "lib/net6.0-android31.0/ReactiveUI.xml",
+        "lib/net6.0-ios16.0/ReactiveUI.dll",
+        "lib/net6.0-ios16.0/ReactiveUI.xml",
+        "lib/net6.0-maccatalyst15.4/ReactiveUI.dll",
+        "lib/net6.0-maccatalyst15.4/ReactiveUI.xml",
+        "lib/net6.0-macos12.3/ReactiveUI.dll",
+        "lib/net6.0-macos12.3/ReactiveUI.xml",
+        "lib/net6.0-tvos16.0/ReactiveUI.dll",
+        "lib/net6.0-tvos16.0/ReactiveUI.xml",
+        "lib/net6.0/ReactiveUI.dll",
+        "lib/net6.0/ReactiveUI.xml",
+        "lib/netstandard2.0/ReactiveUI.dll",
+        "lib/netstandard2.0/ReactiveUI.xml",
+        "lib/tizen40/ReactiveUI.dll",
+        "lib/tizen40/ReactiveUI.xml",
+        "lib/uap10.0.16299/ReactiveUI.dll",
+        "lib/uap10.0.16299/ReactiveUI.pri",
+        "lib/uap10.0.16299/ReactiveUI.xml",
+        "lib/xamarinios10/ReactiveUI.dll",
+        "lib/xamarinios10/ReactiveUI.xml",
+        "lib/xamarinmac20/ReactiveUI.dll",
+        "lib/xamarinmac20/ReactiveUI.xml",
+        "lib/xamarintvos10/ReactiveUI.dll",
+        "lib/xamarintvos10/ReactiveUI.xml",
+        "logo.png",
+        "reactiveui.18.4.1.nupkg.sha512",
+        "reactiveui.nuspec"
+      ]
+    },
+    "ReactiveUI.Fody/18.4.1": {
+      "sha512": "su/CVNAzHjpkBV4X5JRPiTWN3/s5vpvLs3fw1udn1hmGG8aEeb6gYhlGdRlnk2WRRlJttUWQxFWfHimJSnMDGg==",
+      "type": "package",
+      "path": "reactiveui.fody/18.4.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE/LICENSE",
+        "build/ReactiveUI.Fody.props",
+        "lib/monoandroid11.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/monoandroid11.0/ReactiveUI.Fody.Helpers.pdb",
+        "lib/monoandroid11.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/net462/ReactiveUI.Fody.Helpers.dll",
+        "lib/net462/ReactiveUI.Fody.Helpers.xml",
+        "lib/net472/ReactiveUI.Fody.Helpers.dll",
+        "lib/net472/ReactiveUI.Fody.Helpers.xml",
+        "lib/net6.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/net6.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/netstandard2.0/ReactiveUI.Fody.Helpers.dll",
+        "lib/netstandard2.0/ReactiveUI.Fody.Helpers.xml",
+        "lib/uap10.0.16299/ReactiveUI.Fody.Helpers.dll",
+        "lib/uap10.0.16299/ReactiveUI.Fody.Helpers.pri",
+        "lib/uap10.0.16299/ReactiveUI.Fody.Helpers.xml",
+        "lib/xamarinios10/ReactiveUI.Fody.Helpers.dll",
+        "lib/xamarinios10/ReactiveUI.Fody.Helpers.xml",
+        "lib/xamarinmac20/ReactiveUI.Fody.Helpers.dll",
+        "lib/xamarinmac20/ReactiveUI.Fody.Helpers.xml",
+        "lib/xamarintvos10/ReactiveUI.Fody.Helpers.dll",
+        "lib/xamarintvos10/ReactiveUI.Fody.Helpers.xml",
+        "logo.png",
+        "reactiveui.fody.18.4.1.nupkg.sha512",
+        "reactiveui.fody.nuspec",
+        "weaver/ReactiveUI.Fody.dll"
+      ]
+    },
+    "ReactiveUI.Validation/3.0.22": {
+      "sha512": "kgCs4+yXbvG1z7UkJW+mXL+GOQgRH2xI9EPrAWj/UxswT57KcqoRCxPWrZZW+fMxHctRNo7Dxuuc1tIKMJj1ZA==",
+      "type": "package",
+      "path": "reactiveui.validation/3.0.22",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE/LICENSE",
+        "lib/monoandroid12.1/ReactiveUI.Validation.dll",
+        "lib/monoandroid12.1/ReactiveUI.Validation.xml",
+        "lib/net462/ReactiveUI.Validation.dll",
+        "lib/net462/ReactiveUI.Validation.xml",
+        "lib/net472/ReactiveUI.Validation.dll",
+        "lib/net472/ReactiveUI.Validation.xml",
+        "lib/net6.0-android31.0/ReactiveUI.Validation.dll",
+        "lib/net6.0-android31.0/ReactiveUI.Validation.xml",
+        "lib/net6.0-ios16.0/ReactiveUI.Validation.dll",
+        "lib/net6.0-ios16.0/ReactiveUI.Validation.xml",
+        "lib/net6.0-maccatalyst15.4/ReactiveUI.Validation.dll",
+        "lib/net6.0-maccatalyst15.4/ReactiveUI.Validation.xml",
+        "lib/net6.0-macos12.3/ReactiveUI.Validation.dll",
+        "lib/net6.0-macos12.3/ReactiveUI.Validation.xml",
+        "lib/net6.0-tvos16.0/ReactiveUI.Validation.dll",
+        "lib/net6.0-tvos16.0/ReactiveUI.Validation.xml",
+        "lib/net6.0-windows10.0.19041/ReactiveUI.Validation.dll",
+        "lib/net6.0-windows10.0.19041/ReactiveUI.Validation.xml",
+        "lib/net6.0-windows7.0/ReactiveUI.Validation.dll",
+        "lib/net6.0-windows7.0/ReactiveUI.Validation.xml",
+        "lib/net6.0/ReactiveUI.Validation.dll",
+        "lib/net6.0/ReactiveUI.Validation.xml",
+        "lib/netstandard2.0/ReactiveUI.Validation.dll",
+        "lib/netstandard2.0/ReactiveUI.Validation.xml",
+        "lib/tizen40/ReactiveUI.Validation.dll",
+        "lib/tizen40/ReactiveUI.Validation.xml",
+        "lib/uap10.0.16299/ReactiveUI.Validation.dll",
+        "lib/uap10.0.16299/ReactiveUI.Validation.pri",
+        "lib/uap10.0.16299/ReactiveUI.Validation.xml",
+        "lib/xamarinios10/ReactiveUI.Validation.dll",
+        "lib/xamarinios10/ReactiveUI.Validation.xml",
+        "lib/xamarinmac20/ReactiveUI.Validation.dll",
+        "lib/xamarinmac20/ReactiveUI.Validation.xml",
+        "lib/xamarintvos10/ReactiveUI.Validation.dll",
+        "lib/xamarintvos10/ReactiveUI.Validation.xml",
+        "reactiveui.validation.3.0.22.nupkg.sha512",
+        "reactiveui.validation.nuspec"
+      ]
+    },
+    "Splat/14.5.1": {
+      "sha512": "2Xfgp26sWX6SHn2qpWK3W9EFgml6JZ32WPs/CzfYWBp1JTz2PUAso1HY2EdXV/GpkoQOvAkK6nGmlS/AsPz4Gw==",
+      "type": "package",
+      "path": "splat/14.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE/LICENSE",
+        "lib/net6.0/Splat.dll",
+        "lib/net6.0/Splat.xml",
+        "lib/netstandard2.0/Splat.dll",
+        "lib/netstandard2.0/Splat.xml",
+        "splat.14.5.1.nupkg.sha512",
+        "splat.nuspec"
+      ]
+    },
+    "System.Reactive/5.0.0": {
+      "sha512": "erBZjkQHWL9jpasCE/0qKAryzVBJFxGHVBAvgRN1bzM0q2s1S4oYREEEL0Vb+1kA/6BKb5FjUZMp5VXmy+gzkQ==",
+      "type": "package",
+      "path": "system.reactive/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/net5.0/_._",
+        "build/netcoreapp3.1/System.Reactive.dll",
+        "build/netcoreapp3.1/System.Reactive.targets",
+        "build/netcoreapp3.1/System.Reactive.xml",
+        "buildTransitive/net5.0/_._",
+        "buildTransitive/netcoreapp3.1/System.Reactive.targets",
+        "lib/net472/System.Reactive.dll",
+        "lib/net472/System.Reactive.xml",
+        "lib/net5.0-windows10.0.19041/System.Reactive.dll",
+        "lib/net5.0-windows10.0.19041/System.Reactive.xml",
+        "lib/net5.0/System.Reactive.dll",
+        "lib/net5.0/System.Reactive.xml",
+        "lib/netcoreapp3.1/_._",
+        "lib/netstandard2.0/System.Reactive.dll",
+        "lib/netstandard2.0/System.Reactive.xml",
+        "lib/uap10.0.16299/System.Reactive.dll",
+        "lib/uap10.0.16299/System.Reactive.pri",
+        "lib/uap10.0.16299/System.Reactive.xml",
+        "system.reactive.5.0.0.nupkg.sha512",
+        "system.reactive.nuspec"
+      ]
+    },
+    "Application/1.0.0": {
+      "type": "project",
+      "path": "../Application/Application.csproj",
+      "msbuildProject": "../Application/Application.csproj"
+    },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
+    },
+    "Storage/1.0.0": {
+      "type": "project",
+      "path": "../Storage/Storage.csproj",
+      "msbuildProject": "../Storage/Storage.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "Application >= 1.0.0",
+      "Domain >= 1.0.0",
+      "ReactiveUI >= 18.4.1",
+      "ReactiveUI.Fody >= 18.4.1",
+      "ReactiveUI.Validation >= 3.0.22",
+      "Storage >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/danilka108/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Adapters/Adapters.csproj",
+      "projectName": "Adapters",
+      "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Adapters/Adapters.csproj",
+      "packagesPath": "/home/danilka108/.nuget/packages/",
+      "outputPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Adapters/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/danilka108/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "/home/danilka108/RiderProjects/SessionTimetableBuilder/Application/Application.csproj": {
+              "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Application/Application.csproj"
+            },
+            "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj": {
+              "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj"
+            },
+            "/home/danilka108/RiderProjects/SessionTimetableBuilder/Storage/Storage.csproj": {
+              "projectPath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Storage/Storage.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "dependencies": {
+          "ReactiveUI": {
+            "target": "Package",
+            "version": "[18.4.1, )"
+          },
+          "ReactiveUI.Fody": {
+            "target": "Package",
+            "version": "[18.4.1, )"
+          },
+          "ReactiveUI.Validation": {
+            "target": "Package",
+            "version": "[3.0.22, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.111/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

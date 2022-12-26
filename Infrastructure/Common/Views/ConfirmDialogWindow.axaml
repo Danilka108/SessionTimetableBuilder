@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Adapters.Common.ViewModels;assembly=Adapters"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Infrastructure.Common.Views.ConfirmDialogWindow"
+        Title="{StaticResource ConfirmActionDialogTitle}">
+
+    <Design.DataContext>
+        <viewModels:ConfirmDialogViewModel />
+    </Design.DataContext>
+
+    <Window.Styles>
+        <StyleInclude Source="/Styles/Dialog.axaml" />
+    </Window.Styles>
+
+    <StackPanel Margin="24" Width="400" VerticalAlignment="Stretch" HorizontalAlignment="Center">
+        <!-- <TextBlock Margin="0 0 0 4" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" -->
+        <!--            Classes="TitleLarge" -->
+        <!--            Text="{common:LocalizedBinding Header}" /> -->
+        <!-- -->
+        <TextBlock Margin="0 0 0 20" TextWrapping="WrapWithOverflow" HorizontalAlignment="Stretch"
+                   Classes="BodyLarge"
+                   Text="{Binding Message}" />
+
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Margin="0 0 12 0" HorizontalAlignment="Right" Classes="Outline"
+                    Command="{Binding Confirm}">
+                <TextBlock HorizontalAlignment="Right" Classes="LabelSmall"
+                           Text="{Binding Action}" />
+            </Button>
+
+            <Button HorizontalAlignment="Right" Classes="Outline" Command="{Binding Cancel}">
+                <TextBlock HorizontalAlignment="Right" Classes="LabelSmall"
+                           Text="{StaticResource CancelButtonCaption}" />
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

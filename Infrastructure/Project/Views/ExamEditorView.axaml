@@ -1,0 +1,120 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
+             xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+             xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Infrastructure.Project.Views.ExamEditorView">
+    
+    <Design.DataContext>
+        <viewModels:ExamEditorViewModel/>
+    </Design.DataContext>
+    
+    <StackPanel Orientation="Vertical">
+        <ProgressBar IsIndeterminate="{Binding IsLoading}" />
+
+        <Grid Margin="12" RowDefinitions="Auto, *" ColumnDefinitions="*,*,*,*,*">
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="12 0" Classes="TitleMedium"
+                       Text="{StaticResource GroupDataTitle}" />
+            <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto, Auto, Auto, *" Margin="12" x:Name="Info"
+                  Grid.Column="0">
+                <TextBox Grid.Row="0" Classes="BodyLarge outline"
+                         Margin="0, 0, 0, 12"
+                         UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="{StaticResource Year}"
+                         Text="{Binding Year}" />
+                <TextBox Grid.Row="1" Classes="BodyLarge outline"
+                         Margin="0, 0, 0, 12"
+                         UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="{StaticResource Month}"
+                         Text="{Binding Month}" />
+                <TextBox Grid.Row="2" Classes="BodyLarge outline"
+                         Margin="0, 0, 0, 12"
+                         UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="{StaticResource Day}"
+                         Text="{Binding Day}" />
+                <TextBox Grid.Row="3" Classes="BodyLarge outline"
+                         Margin="0, 0, 0, 12"
+                         UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="{StaticResource Hour}"
+                         Text="{Binding Hour}" />
+                <TextBox Grid.Row="4" Classes="BodyLarge outline"
+                         Margin="0, 0, 0, 12"
+                         UseFloatingWatermark="True"
+                         assists:TextFieldAssist.Label="{StaticResource Minute}"
+                         Text="{Binding Minute}" />
+                <Button Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                        Classes="Outline"
+                        Command="{Binding Save}">
+                    <TextBlock Text="{StaticResource SaveButtonCaption}" Classes="LabelSmall" />
+                </Button>
+            </Grid>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Margin="12 0" Classes="TitleMedium"
+                       Text="{StaticResource DisciplineLetter}" />
+
+            <controls:Card VerticalAlignment="Top" Grid.Row="1" Margin="12" Grid.Column="1" Height="300">
+                <ListBox
+                    SelectionMode="Single, Toggle"
+                    SelectedItem="{Binding SelectedDiscipline}"
+                    Items="{Binding AllDisciplines}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Classes="BodyMedium" Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:Card>
+            
+            <TextBlock Grid.Row="0" Grid.Column="2" Margin="12 0" Classes="TitleMedium"
+                       Text="{StaticResource GroupLetter}" />
+
+            <controls:Card VerticalAlignment="Top" Grid.Row="1" Margin="12" Grid.Column="2" Height="300">
+                <ListBox
+                    SelectionMode="Single, Toggle"
+                    SelectedItem="{Binding SelectedGroup}"
+                    Items="{Binding AllGroups}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Classes="BodyMedium" Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:Card>
+            
+            <TextBlock Grid.Row="0" Grid.Column="3" Margin="12 0" Classes="TitleMedium"
+                       Text="{StaticResource LecturerLetter}" />
+
+            <controls:Card Grid.Row="1" VerticalAlignment="Top" Margin="12" Grid.Column="3" Height="300">
+                <ListBox
+                    SelectionMode="Single, Toggle"
+                    SelectedItem="{Binding SelectedLecturer}"
+                    Items="{Binding AllLecturers}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Classes="BodyMedium" Text="{Binding FullName}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:Card>
+            
+            <TextBlock Grid.Row="0" Grid.Column="4" Margin="12 0" Classes="TitleMedium"
+                       Text="{StaticResource ClassroomLetter}" />
+
+            <controls:Card VerticalAlignment="Top" Grid.Row="1" Margin="12" Grid.Column="4" Height="300">
+                <ListBox
+                    SelectionMode="Single, Toggle"
+                    SelectedItem="{Binding SelectedClassroom}"
+                    Items="{Binding AllClassrooms}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Classes="BodyMedium" Text="{Binding Number}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:Card>
+        </Grid>
+    </StackPanel>
+</UserControl>

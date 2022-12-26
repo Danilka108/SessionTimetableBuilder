@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
+        xmlns:views="clr-namespace:Infrastructure.Project.Views"
+        xmlns:project="clr-namespace:Infrastructure.Project"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Infrastructure.Project.Views.ProjectWindow"
+        Title="{Binding Name}">
+
+    <Design.DataContext>
+        <viewModels:ProjectViewModel />
+    </Design.DataContext>
+
+    <Window.DataTemplates>
+        <project:ViewLocator />
+    </Window.DataTemplates>
+
+    <Grid ColumnDefinitions="*, Auto, 4*">
+        <views:ExplorerView DataContext="{Binding ExplorerViewModel}" />
+
+        <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False" HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch" />
+
+        <views:BrowserViewHost Grid.Column="2" Browser="{Binding}">
+            <views:BrowserViewHost.DefaultPage>
+                <TextBlock Classes="TitleMedium" HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{StaticResource SelectLecturerOrGroupForEditing}" />
+            </views:BrowserViewHost.DefaultPage>
+            <views:BrowserViewHost.ViewLocator>
+                <project:BrowserViewLocator />
+            </views:BrowserViewHost.ViewLocator>
+        </views:BrowserViewHost>
+    </Grid>
+</Window>

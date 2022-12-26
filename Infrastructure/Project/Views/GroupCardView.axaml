@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:Adapters.Project.ViewModels;assembly=Adapters"
+             xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Infrastructure.Project.Views.GroupCardView">
+    
+    <Design.DataContext>
+        <viewModels:GroupCardViewModel />
+    </Design.DataContext>
+
+    <UserControl.Styles>
+        <StyleInclude Source="/Styles/ExplorerItem.axaml" />
+    </UserControl.Styles>
+
+    <controls:Card>
+        <StackPanel>
+            <WrapPanel>
+                <TextBlock Classes="BodyLarge" Text="{Binding Name}" />
+            </WrapPanel>
+            <WrapPanel>
+                <Button Command="{Binding Edit}" Classes="Flat">
+                    <TextBlock Classes="LabelSmall"
+                               Text="{StaticResource EditButtonCaptionUpperCase}" />
+                </Button>
+                <Button Command="{Binding Delete}" Classes="Flat">
+                    <TextBlock Classes="LabelSmall"
+                               Text="{StaticResource DeleteButtonCaptionUpperCase}" />
+                </Button>
+            </WrapPanel>
+        </StackPanel>
+    </controls:Card>
+</UserControl>

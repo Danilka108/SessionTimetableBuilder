@@ -8,8 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Material.Avalonia" Version="3.0.0-avalonia10-preview2.126-nightly" />
-        <PackageReference Include="System.Reactive" Version="5.0.0" />
+        <PackageReference Include="System.Reactive" Version="5.0.0"/>
     </ItemGroup>
 
 </Project>

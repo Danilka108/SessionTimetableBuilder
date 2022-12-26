@@ -85,6 +85,49 @@
         <entry key="App/Views/TeachersView.axaml" value="App/App.csproj" />
         <entry key="AvaloniaCrossPlatformApplication1/AvaloniaCrossPlatformApplication1/Views/MainWindow.axaml" value="AvaloniaCrossPlatformApplication1/AvaloniaCrossPlatformApplication1.Desktop/AvaloniaCrossPlatformApplication1.Desktop.csproj" />
         <entry key="Browser/BrowsedViewHost.axaml" value="App/App.csproj" />
+        <entry key="Desktop/MainWindow.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Desktop/Project/Views/ProjectWindow.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Infrastructure/App.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Common/ConfirmWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Common/Views/ConfirmDialogWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Common/Views/MessageDialogWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Common/Views/MessageWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Localization.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/MainWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Preview/PreviewWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Preview/Views/PreviewWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/BrowserViewHost.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomEditorView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomEditorWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomFeatureCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomFeatureEditorWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomFeaturesView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomFeaturesViewModel.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ClassroomsView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/DisciplineCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/DisciplineEditorWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/DisciplinesView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ExamCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ExamEditorView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ExamsView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/Explorer.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ExplorerView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/GroupCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/GroupEditorView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/GroupsView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LectorsView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LecturerCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LecturerCardViewModel.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LecturerEditorView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/LecturersView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ProjectWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Styles/Dialog.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Styles/Editor.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Styles/ExplorerItem.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Styles/Table.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Styles/Typography.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Views/MessageWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="ProjectPresentation/ProjectWindow.axaml" value="ProjectPresentation/ProjectPresentation.csproj" />
         <entry key="ProjectPresentation/Views/AudienceSpecificitiesView.axaml" value="App/App.csproj" />
         <entry key="ProjectPresentation/Views/AudienceSpecificityView.axaml" value="App/App.csproj" />

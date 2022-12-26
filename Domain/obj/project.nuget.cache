@@ -1,24 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vPORt7jKJ6DAeCG2zNK5DhwSYCgxbcJQTsAqewY9ZXp4pTzi/NF4HY2jzoj9+bvEtIoHk9qinM/2786Xq+KP0A==",
+  "dgSpecHash": "BHX7hx9J99WAB512aAXFw+sjpvF0wFsEbgqKuv4aqUT9zjUSZhOkugozcytVnQiR0aPc1g6R90SnuniFjMGllA==",
   "success": true,
   "projectFilePath": "/home/danilka108/RiderProjects/SessionTimetableBuilder/Domain/Domain.csproj",
-  "expectedPackageFiles": [
-    "/home/danilka108/.nuget/packages/autofac/6.4.0/autofac.6.4.0.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/avalonia/0.10.13/avalonia.0.10.13.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/avalonia.controls.datagrid/0.10.13/avalonia.controls.datagrid.0.10.13.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/avalonia.remote.protocol/0.10.13/avalonia.remote.protocol.0.10.13.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/jetbrains.annotations/10.3.0/jetbrains.annotations.10.3.0.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/material.avalonia/3.0.0-avalonia10-preview2.126-nightly/material.avalonia.3.0.0-avalonia10-preview2.126-nightly.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/microsoft.netcore.platforms/1.0.1/microsoft.netcore.platforms.1.0.1.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/microsoft.netcore.targets/1.0.1/microsoft.netcore.targets.1.0.1.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/system.componentmodel.annotations/4.5.0/system.componentmodel.annotations.4.5.0.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/system.diagnostics.diagnosticsource/4.7.1/system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/system.reactive/5.0.0/system.reactive.5.0.0.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/system.runtime/4.1.0/system.runtime.4.1.0.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/system.runtime.compilerservices.unsafe/4.6.0/system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512",
-    "/home/danilka108/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

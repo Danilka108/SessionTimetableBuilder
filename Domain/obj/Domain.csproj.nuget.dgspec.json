@@ -37,20 +37,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "dependencies": {
-            "Autofac": {
-              "target": "Package",
-              "version": "[6.4.0, )"
-            },
-            "Material.Avalonia": {
-              "target": "Package",
-              "version": "[3.0.0-avalonia10-preview2.126-nightly, )"
-            },
-            "System.Reactive": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
