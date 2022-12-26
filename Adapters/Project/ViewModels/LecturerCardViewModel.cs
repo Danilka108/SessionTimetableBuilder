@@ -62,7 +62,7 @@ public class LecturerCardViewModel : BaseViewModel
     private async Task DoDelete(CancellationToken token)
     {
         var confirmDialog = _confirmDialogFactory.Invoke(
-            LocalizedMessage.Header.Delete,
+            LocalizedMessage.Letter.Delete,
             new LocalizedMessage.Question.DeleteLecturer()
         );
 
@@ -89,7 +89,7 @@ public class LecturerCardViewModel : BaseViewModel
     private async Task ShowErrorMessage(LocalizedMessage message)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             message
         );
 

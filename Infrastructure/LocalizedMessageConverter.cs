@@ -14,9 +14,9 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
         return ConvertByResourceKey(resourceKey, formatArgs);
     }
 
-    public string Convert(LocalizedMessage.Header header)
+    public string Convert(LocalizedMessage.Letter letter)
     {
-        var resourceKey = GetHeaderResourceKey(header);
+        var resourceKey = GetLetterResourceKey(letter);
         return ConvertByResourceKey(resourceKey, new object?[] { });
     }
 
@@ -25,7 +25,7 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
         var (resourceKey, formatArgs) = value switch
         {
             LocalizedMessage message => GetMessageResourceKey(message),
-            LocalizedMessage.Header header => (GetHeaderResourceKey(header), new object?[] { }),
+            LocalizedMessage.Letter letter => (GetLetterResourceKey(letter), new object?[] { }),
             string key => (key, new object?[] { }),
             _ => throw new ConvertLocalizedMessageException("Undefined input value type")
         };
@@ -39,12 +39,16 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
         throw new NotSupportedException();
     }
 
-    private string GetHeaderResourceKey(LocalizedMessage.Header header)
+    private string GetLetterResourceKey(LocalizedMessage.Letter letter)
     {
-        return header switch
+        return letter switch
         {
-            LocalizedMessage.Header.Delete => "DeleteDialogHeader",
-            LocalizedMessage.Header.Error => "ErrorDialogHeader"
+            LocalizedMessage.Letter.Delete => "DeleteDialogLetter",
+            LocalizedMessage.Letter.Error => "ErrorDialogLetter",
+            LocalizedMessage.Letter.Group => "GroupLetter",
+            LocalizedMessage.Letter.Lecturer => "LecturerLetter",
+            LocalizedMessage.Letter.Close => "CloseLetter",
+            LocalizedMessage.Letter.Exam => "ExamLetter"
         };
     }
 
@@ -52,6 +56,34 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
     {
         return message switch
         {
+            LocalizedMessage.Error.GroupDoesNotStudyDiscipline v =>
+                ("GroupDoesNotStudyDisciplineError", new object?[] {v.GroupName, v.DisciplineName}),
+            LocalizedMessage.Error.LecturerDoesNotAcceptDiscipline v =>
+                ("LecturerDoesNotAcceptDisciplineError",
+                    new object?[] { v.LecturerName, v.DisciplineName }),
+            LocalizedMessage.Error.GroupIsNotSelected =>
+                ("GroupIsNotSelectedError", new object?[] { }),
+            LocalizedMessage.Error.LecturerIsNotSelected =>
+                ("LecturerIsNotSelectedError", new object?[] { }),
+            LocalizedMessage.Error.DisciplineIsNotSelected =>
+                ("DisciplineIsNotSelectedError", new object?[] { }),
+            LocalizedMessage.Error.ClassroomIsNotSelected =>
+                ("ClassroomIsNotSelectedError", new object?[] { }),
+            LocalizedMessage.Error.EnteredDateTimeIsNotValid =>
+                ("EnteredDateTimeIsNotValidError", new object?[] { }),
+            LocalizedMessage.Error.ClassroomDoesNotMeetsRequirements v =>
+                ("ClassroomDoesNotMeetsRequirementsError",
+                    new object?[] { v.ClassroomNumber, v.DisciplineName }),
+            LocalizedMessage.Error.DisciplineReferencedByExam v =>
+                ("DisciplineReferencedByExamError", new object?[] { v.GroupName }),
+            LocalizedMessage.Error.GroupReferencedByExam v =>
+                ("GroupReferencedByExamError", new object?[] { v.DisciplineName }),
+            LocalizedMessage.Error.ClassroomReferencedByExam v =>
+                ("ClassroomReferencedByExamError", new object?[] { v.GroupName, v.DisciplineName }),
+            LocalizedMessage.Error.LecturerReferencedByExam v =>
+                ("LecturerReferencedByExamError", new object?[] { v.GroupName, v.DisciplineName }),
+            LocalizedMessage.Error.SameExamAlreadyExists v =>
+                ("LecturerReferencedByExamError", new object?[] { v.GroupName, v.DisciplineName }),
             LocalizedMessage.Error.UndefinedError => ("CreateClassroomFeatureError",
                 new object?[] { }),
             LocalizedMessage.Error.StorageIsNotAvailable =>
@@ -68,6 +100,10 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
                 "NumberOfClassroomMustBeOriginal", new object?[] { }),
             LocalizedMessage.Error.NameOfDisciplineMustBeOriginal => (
                 "NameOfDisciplineMustBeOriginalError", new object?[] { }),
+            LocalizedMessage.Error.DisciplineReferencedByGroup v => (
+                "DisciplineReferencedByGroupError", new object?[] { v.GroupName }),
+            LocalizedMessage.Error.NameOfGroupMustBeOriginal => (
+                "NameOfGroupMustBeOriginalError", new object?[] { }),
             LocalizedMessage.FieldError.InvalidNumericString => (
                 "InvalidNumericStringFieldError", new object?[] { }),
             LocalizedMessage.FieldError.CantBeEmpty => ("CantBeEmptyFieldError", new object?[] { }),
@@ -79,7 +115,15 @@ public class LocalizedMessageConverter : IValueConverter, ILocalizedMessageConve
             LocalizedMessage.Question.DeleteDiscipline => ("DeleteDisciplineQuestion",
                 new object?[] { }),
             LocalizedMessage.Question.DeleteLecturer => ("DeleteLecturerQuestion",
-                new object?[] { })
+                new object?[] { }),
+            LocalizedMessage.Question.DeleteGroup => ("DeleteGroupQuestion", new object?[] { }),
+            LocalizedMessage.Question.CloseGroupEditor => ("CloseGroupEditorQuestion",
+                new object?[] { }),
+            LocalizedMessage.Question.CloseLecturerEditor => ("CloseLecturerEditorQuestion",
+                new object?[] { }),
+            LocalizedMessage.Question.CloseExamEditor => ("CloseExamEditorQuestion",
+                new object?[] { }),
+            LocalizedMessage.Question.DeleteExam => ("DeleteExamQuestion", new object?[] { })
         };
     }
 

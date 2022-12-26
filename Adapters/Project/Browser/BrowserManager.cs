@@ -13,6 +13,11 @@ class GeneratedBrowserPage : IBrowserPage
     }
 
     public string PageName { get; }
+    
+    public Task<bool> ConfirmPageClosingAsync()
+    {
+        return Task.FromResult(true);
+    }
 }
 
 public class BrowserManager : IDisposable
@@ -28,34 +33,37 @@ public class BrowserManager : IDisposable
 
         Browse = ReactiveCommand.Create<IBrowserPage>(BrowsePage);
 
-        Close = ReactiveCommand.Create<IBrowserPage>(ClosePage);
+        Close = ReactiveCommand.CreateFromTask<IBrowserPage>(ClosePage);
 
-        CloseByPageName = ReactiveCommand.Create<string>(pageName =>
+        CloseByPageName = ReactiveCommand.CreateFromTask<string>(async pageName =>
         {
-            ClosePage(new GeneratedBrowserPage(pageName)); 
+            await ClosePage(new GeneratedBrowserPage(pageName));
         });
     }
-    
+
     private void BrowsePage(IBrowserPage page)
     {
-
-        var samePage = _pages.FirstOrDefault(p => p.PageName == page.PageName);
+        var samePage = _pages.FirstOrDefault(p => p.PageName.Trim() == page.PageName.Trim());
 
         if (samePage is null)
         {
             _pages.Add(page);
             _changed.OnNext(new BrowsingChange.Add(page));
         }
-        
+
         _changed.OnNext(new BrowsingChange.Browse(page));
     }
 
-    private void ClosePage(IBrowserPage page)
+    private async Task ClosePage(IBrowserPage page)
     {
         var pageToRemoveIndex = _pages.FindIndex(p => p.PageName == page.PageName);
 
         if (pageToRemoveIndex < 0) return;
-        
+
+        var confirmed = await page.ConfirmPageClosingAsync();
+
+        if (!confirmed) return;
+
         _pages.RemoveAt(pageToRemoveIndex);
         _changed.OnNext(new BrowsingChange.Remove(page));
 
@@ -74,7 +82,7 @@ public class BrowserManager : IDisposable
     public ReactiveCommand<IBrowserPage, Unit> Browse { get; }
 
     public ReactiveCommand<IBrowserPage, Unit> Close { get; }
-    
+
     public ReactiveCommand<string, Unit> CloseByPageName { get; }
 
     public void Dispose()

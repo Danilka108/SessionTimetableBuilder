@@ -12,7 +12,7 @@ public class SaveLecturerUseCase
         _gateway = gateway;
     }
 
-    public async Task Handle(int? id, string name, string surname, string patronymic,
+    public async Task<Domain.Project.Lecturer> Handle(int? id, string name, string surname, string patronymic,
         IEnumerable<Discipline> disciplines, CancellationToken token)
     {
         if (id is { } notNullId)
@@ -20,9 +20,9 @@ public class SaveLecturerUseCase
             var lecturer =
                 new Domain.Project.Lecturer(notNullId, name, surname, patronymic, disciplines);
             await _gateway.Update(lecturer, token);
-            return;
+            return lecturer;
         }
 
-        await _gateway.Create(name, surname, patronymic, disciplines, token);
+        return await _gateway.Create(name, surname, patronymic, disciplines, token);
     }
 }

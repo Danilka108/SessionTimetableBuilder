@@ -29,7 +29,7 @@
 
             <controls:Card Margin="12">
                 <StackPanel>
-                    <TextBlock Margin="0 0 0 12" Classes="TitleMedium"
+                    <TextBlock Margin="0 0 0 18" Classes="TitleMedium"
                                Text="{StaticResource DisciplineRequirementsTitle}" />
                     <ListBox MaxHeight="250" SelectionMode="Multiple,Toggle"
                              SelectedItems="{Binding SelectedRequirements}"

@@ -102,7 +102,7 @@ public class ClassroomFeatureEditorViewModel : BaseViewModel, IActivatableViewMo
     private async Task ShowErrorMessage(LocalizedMessage message)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             message
         );
 

@@ -65,7 +65,7 @@ public class ClassroomCardViewModel : BaseViewModel
     private async Task DoDelete(CancellationToken token)
     {
         var confirmDialog = _confirmDialogFactory.Invoke(
-            LocalizedMessage.Header.Delete,
+            LocalizedMessage.Letter.Delete,
             new LocalizedMessage.Question.DeleteClassroom()
         );
 
@@ -75,6 +75,12 @@ public class ClassroomCardViewModel : BaseViewModel
         try
         {
             await _deleteUseCase.Handle(_classroom, token);
+        }
+        catch (ClassroomReferencedByExamException e)
+        {
+            await ShowErrorMessage(
+                new LocalizedMessage.Error.ClassroomReferencedByExam(e.Exam.Group.Name,
+                    e.Exam.Discipline.Name));
         }
         catch (ClassroomGatewayException)
         {
@@ -89,7 +95,7 @@ public class ClassroomCardViewModel : BaseViewModel
     private async Task ShowErrorMessage(LocalizedMessage message)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             message
         );
 

@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using Adapters.Project.Browser;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Mixins;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
@@ -21,7 +22,7 @@ namespace Infrastructure.Project.Views;
 
 public record BrowsingItem(IBrowserPage Page, IControl Control);
 
-public class BrowserViewHost : ContentControl, IStyleable
+public class BrowserViewHost : ContentControl, IStyleable, IActivatableView
 {
     public static readonly StyledProperty<IBrowser?> BrowserProperty =
         AvaloniaProperty.Register<BrowserViewHost, IBrowser?>(nameof(Browser));
@@ -97,8 +98,12 @@ public class BrowserViewHost : ContentControl, IStyleable
             })
         };
 
-        Content = new StackPanel
+        Grid.SetRow(_strip, 0);
+        Grid.SetRow(_presentedContent, 1);
+        
+        Content = new Grid
         {
+            RowDefinitions = new RowDefinitions("Auto, *"),
             Children =
             {
                 _strip,
@@ -106,16 +111,22 @@ public class BrowserViewHost : ContentControl, IStyleable
             }
         };
 
-        _strip.WhenAnyValue(strip => strip.SelectedIndex)
-            .Subscribe(index => ShowPage(index));
+        this.WhenActivated(d =>
+        {
+            _strip.WhenAnyValue(strip => strip.SelectedIndex)
+                .Subscribe(index => ShowPage(index))
+                .DisposeWith(d);
 
-        this.GetObservable(DefaultPageProperty)
-            .Subscribe(_ => ShowPage());
+            this.GetObservable(DefaultPageProperty)
+                .Subscribe(_ => ShowPage())
+                .DisposeWith(d);
 
-        this.GetObservable(BrowserProperty)
-            .SelectMany(browser =>
-                browser?.Manager.BrowsingChanged ?? Observable.Empty<BrowsingChange>())
-            .Subscribe(HandleChange);
+            this.GetObservable(BrowserProperty)
+                .SelectMany(browser =>
+                    browser?.Manager.BrowsingChanged ?? Observable.Empty<BrowsingChange>())
+                .Subscribe(HandleChange)
+                .DisposeWith(d);
+        });
     }
 
     private void ShowPage(int? index = null)
@@ -143,7 +154,7 @@ public class BrowserViewHost : ContentControl, IStyleable
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Page.PageName != browseChange.Page.PageName) continue;
+                if (Items[i].Page.PageName.Trim() != browseChange.Page.PageName.Trim()) continue;
                 _strip.SelectedIndex = i;
             }
         }

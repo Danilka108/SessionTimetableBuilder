@@ -27,6 +27,14 @@ public class ExplorerViewLocator : IViewLocator
             {
                 ViewModel = context
             },
+            GroupsViewModel context => new GroupsView
+            {
+                ViewModel = context
+            },
+            ExamsViewModel context => new ExamsView
+            {
+                ViewModel = context
+            },
             _ => throw new ArgumentException(nameof(viewModel))
         };
     }

@@ -52,7 +52,7 @@ public class DisciplinesViewModel : BaseViewModel, IRoutableViewModel, IActivata
     private async Task<IEnumerable<Discipline>> CatchObservableExceptions(Exception _)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             new LocalizedMessage.Error.StorageIsNotAvailable()
         );
 

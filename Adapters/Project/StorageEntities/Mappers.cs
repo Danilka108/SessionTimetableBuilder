@@ -25,12 +25,31 @@ internal static class Mappers
 
         return new StorageDiscipline(entity.Name, requirements);
     }
-    
+
     public static StorageLecturer MapToStorageEntity(this Lecturer entity)
     {
         var disciplines = entity.Disciplines.Select(discipline =>
             new LinkedEntity<StorageDiscipline>(discipline.Id));
 
         return new StorageLecturer(entity.Name, entity.Surname, entity.Patronymic, disciplines);
+    }
+
+    public static StorageGroup MapToStorageEntity(this Group entity)
+    {
+        var disciplines = entity.Disciplines.Select(discipline =>
+            new LinkedEntity<StorageDiscipline>(discipline.Id));
+
+        return new StorageGroup(entity.Name, entity.StudentsNumber, disciplines);
+    }
+
+    public static StorageExam MapToStorageEntity(this Exam entity)
+    {
+        return new StorageExam(
+            new LinkedEntity<StorageLecturer>(entity.Lecturer.Id),
+            new LinkedEntity<StorageGroup>(entity.Group.Id),
+            new LinkedEntity<StorageDiscipline>(entity.Discipline.Id),
+            new LinkedEntity<StorageClassroom>(entity.Classroom.Id),
+            entity.StartTime
+        );
     }
 }

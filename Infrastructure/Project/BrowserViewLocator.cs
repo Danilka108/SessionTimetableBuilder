@@ -15,6 +15,14 @@ public class BrowserViewLocator : IViewLocator
             {
                 ViewModel = context
             },
+            GroupEditorViewModel context => new GroupEditorView
+            {
+                ViewModel = context
+            },
+            ExamEditorViewModel context => new ExamEditorView
+            {
+                ViewModel = context
+            },
             _ => throw new ArgumentNullException(nameof(viewModel))
         };
     }

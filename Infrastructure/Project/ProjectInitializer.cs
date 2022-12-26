@@ -71,30 +71,39 @@ public class ProjectInitializer
 
     private async Task CreateTestData(IComponentContext diContext)
     {
-        await InitializeStorage(diContext);
+        // await InitializeStorage(diContext);
 
-        var classroomFeatureGateway = diContext.Resolve<IClassroomFeatureGateway>();
+        // var classroomFeatureGateway = diContext.Resolve<IClassroomFeatureGateway>();
+        //
+        // var features = new List<ClassroomFeature>();
+        //
+        // for (var i = 0; i < 30; i++)
+        // {
+        //     var feature = await classroomFeatureGateway.Create(
+        //         $"Test classroom feature {i}",
+        //         CancellationToken.None
+        //     );
+        //     features.Add(feature);
+        // }
 
-        var features = new List<ClassroomFeature>();
-
-        for (var i = 0; i < 30; i++)
-        {
-            var feature = await classroomFeatureGateway.Create(
-                $"Test classroom feature {i}",
-                CancellationToken.None
-            );
-            features.Add(feature);
-        }
-
-        var classroomGateway = diContext.Resolve<IClassroomGateway>();
-        await classroomGateway.Create(108, 36, features.GetRange(0, 1), CancellationToken.None);
-
-        var disciplineGateway = diContext.Resolve<IDisciplineGateway>();
-        var a = await disciplineGateway.Create("programing", features.GetRange(0, 1),
-            CancellationToken.None);
-
-        var lecturerGateway = diContext.Resolve<ILecturerGateway>();
-        await lecturerGateway.Create("Danil", "Churickov", "Igorevich", new Discipline[] { a },
-            CancellationToken.None);
+        // var classroomGateway = diContext.Resolve<IClassroomGateway>();
+        // var classroom = await classroomGateway.Create(108, 36, features.GetRange(0, 1), CancellationToken.None);
+        //
+        // var disciplineGateway = diContext.Resolve<IDisciplineGateway>();
+        // var discipline = await disciplineGateway.Create("programing", features.GetRange(0, 1),
+        //     CancellationToken.None);
+        //
+        // var lecturerGateway = diContext.Resolve<ILecturerGateway>();
+        // var lecturer = await lecturerGateway.Create("Danil", "Churickov", "Igorevich",
+        //     new Discipline[] { discipline },
+        //     CancellationToken.None);
+        //
+        // var groupGateway = diContext.Resolve<IGroupGateway>();
+        // var group = await groupGateway.Create("AVT-113", 31, new Discipline[] { discipline },
+        //     CancellationToken.None);
+        //
+        // var examGateway = diContext.Resolve<IExamGateway>();
+        // await examGateway.Create(lecturer, group, discipline, classroom, DateTime.Now,
+        //     CancellationToken.None);
     }
 }

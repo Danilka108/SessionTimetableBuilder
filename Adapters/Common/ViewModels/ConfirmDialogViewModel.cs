@@ -6,10 +6,10 @@ namespace Adapters.Common.ViewModels;
 
 public class ConfirmDialogViewModel : BaseViewModel
 {
-    public delegate ConfirmDialogViewModel Factory(LocalizedMessage.Header action,
+    public delegate ConfirmDialogViewModel Factory(LocalizedMessage.Letter action,
         LocalizedMessage message);
 
-    public ConfirmDialogViewModel(LocalizedMessage.Header action, LocalizedMessage message,
+    public ConfirmDialogViewModel(LocalizedMessage.Letter action, LocalizedMessage message,
         ILocalizedMessageConverter messageConverter)
     {
         Finish = new Interaction<bool, Unit>();

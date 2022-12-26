@@ -13,18 +13,24 @@
         <viewModels:ProjectViewModel />
     </Design.DataContext>
 
+    <Window.DataTemplates>
+        <project:ViewLocator />
+    </Window.DataTemplates>
+
     <Grid ColumnDefinitions="*, Auto, 4*">
         <views:ExplorerView DataContext="{Binding ExplorerViewModel}" />
 
         <GridSplitter Grid.Column="1" Width="2" ShowsPreview="False" HorizontalAlignment="Center"
                       VerticalAlignment="Stretch" />
-        
+
         <views:BrowserViewHost Grid.Column="2" Browser="{Binding}">
             <views:BrowserViewHost.DefaultPage>
-                <TextBlock Text="Default Page"/>
+                <TextBlock Classes="TitleMedium" HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{StaticResource SelectLecturerOrGroupForEditing}" />
             </views:BrowserViewHost.DefaultPage>
             <views:BrowserViewHost.ViewLocator>
-                <project:BrowserViewLocator/>
+                <project:BrowserViewLocator />
             </views:BrowserViewHost.ViewLocator>
         </views:BrowserViewHost>
     </Grid>

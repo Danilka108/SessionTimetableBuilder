@@ -2,11 +2,13 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using Adapters.Common.Validators;
 using Adapters.Common.ViewModels;
 using Application.Project.Gateways;
 using Application.Project.UseCases.Discipline;
 using Domain.Project;
+using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
@@ -37,10 +39,7 @@ public class DisciplineEditorViewModel : BaseViewModel, IActivatableViewModel
         SelectedRequirements =
             new ObservableCollection<ClassroomFeature>(discipline?.ClassroomRequirements ??
                                                        new ClassroomFeature[] { });
-
-        var allRequirements = featureGateway
-            .ObserveAll()
-            .ToPropertyEx(this, vm => vm.AllRequirements);
+        AllRequirements = new ObservableCollection<ClassroomFeature>(SelectedRequirements);
 
         _saveUseCase = saveUseCase;
         _messageDialogFactory = messageDialogFactory;
@@ -65,14 +64,50 @@ public class DisciplineEditorViewModel : BaseViewModel, IActivatableViewModel
 
         this.WhenActivated(d =>
         {
-            allRequirements
+            featureGateway
+                .ObserveAll()
+                .Catch<IEnumerable<ClassroomFeature>, Exception>(ex =>
+                    CatchObservableExceptions(ex).ToObservable())
+                .Subscribe(requirements =>
+                    IntersectAllEntitiesWith(requirements, AllRequirements, new ClassroomFeature.Comparer()))
                 .DisposeWith(d);
         });
     }
 
+    private void IntersectAllEntitiesWith<T>(
+        IEnumerable<T> updatedEntities, IList<T> allEntities, IEqualityComparer<T> comparer)
+    {
+        var itemsToRemove = from oldEntity in allEntities
+            let doesNotContains = !updatedEntities.Contains(oldEntity, comparer)
+            where doesNotContains
+            select oldEntity;
+
+        allEntities.RemoveMany(itemsToRemove);
+
+        var entitiesToAdd =
+            from newEntity in updatedEntities
+            let doesNotContains = !allEntities.Contains(newEntity, comparer)
+            where doesNotContains
+            select newEntity;
+
+        allEntities.AddRange(entitiesToAdd);
+    }
+
+    private async Task<IEnumerable<ClassroomFeature>> CatchObservableExceptions(Exception _)
+    {
+        var messageDialog = _messageDialogFactory.Invoke(
+            LocalizedMessage.Letter.Error,
+            new LocalizedMessage.Error.StorageIsNotAvailable()
+        );
+
+        await OpenMessageDialog.Handle(messageDialog);
+
+        return new ClassroomFeature[] { };
+    }
+
     [Reactive] public string Name { get; set; }
 
-    [ObservableAsProperty] public IEnumerable<ClassroomFeature> AllRequirements { get; }
+    public ObservableCollection<ClassroomFeature> AllRequirements { get; }
 
     [ObservableAsProperty] public bool IsLoading { get; }
 
@@ -95,6 +130,12 @@ public class DisciplineEditorViewModel : BaseViewModel, IActivatableViewModel
             await _saveUseCase.Handle(_disciplineId, Name, SelectedRequirements.ToArray(), token);
             await Finish.Handle(Unit.Default);
         }
+        catch (DisciplineReferencedByExamException e)
+        {
+            var message =
+                new LocalizedMessage.Error.DisciplineReferencedByExam(e.Exam.Group.Name);
+            await ShowErrorMessage(message);
+        }
         catch (DisciplineNameMustBeOriginalException)
         {
             var message = new LocalizedMessage.Error.NameOfDisciplineMustBeOriginal();
@@ -115,7 +156,7 @@ public class DisciplineEditorViewModel : BaseViewModel, IActivatableViewModel
     private async Task ShowErrorMessage(LocalizedMessage message)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             message
         );
 

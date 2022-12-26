@@ -5,7 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Infrastructure.Project.Views;
 
-namespace Infrastructure;
+namespace Infrastructure.Project;
 
 public class ViewLocator : IDataTemplate
 {
@@ -26,6 +26,14 @@ public class ViewLocator : IDataTemplate
                 ViewModel = context
             },
             LecturerCardViewModel context => new LecturerCardView
+            {
+                ViewModel = context
+            },
+            GroupCardViewModel context => new GroupCardView
+            {
+                ViewModel = context
+            },
+            ExamCardViewModel context => new ExamCardView
             {
                 ViewModel = context
             },

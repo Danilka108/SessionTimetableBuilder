@@ -6,15 +6,15 @@ namespace Adapters.Common.ViewModels;
 
 public class MessageDialogViewModel : BaseViewModel
 {
-    public delegate MessageDialogViewModel Factory(LocalizedMessage.Header header,
+    public delegate MessageDialogViewModel Factory(LocalizedMessage.Letter letter,
         LocalizedMessage message);
 
-    public MessageDialogViewModel(LocalizedMessage.Header header, LocalizedMessage message,
+    public MessageDialogViewModel(LocalizedMessage.Letter letter, LocalizedMessage message,
         ILocalizedMessageConverter messageConverter)
     {
         Finish = new Interaction<Unit, Unit>();
 
-        Header = messageConverter.Convert(header);
+        Header = messageConverter.Convert(letter);
         Message = messageConverter.Convert(message);
 
         Close = ReactiveCommand.CreateFromTask(async () => { await Finish.Handle(Unit.Default); });

@@ -108,8 +108,14 @@
         <entry key="Infrastructure/Project/Views/DisciplineCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/DisciplineEditorWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/DisciplinesView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ExamCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ExamEditorView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/ExamsView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/Explorer.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/ExplorerView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/GroupCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/GroupEditorView.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Project/Views/GroupsView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/LectorsView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/LecturerCardView.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Project/Views/LecturerCardViewModel.axaml" value="Infrastructure/Infrastructure.csproj" />
@@ -119,6 +125,7 @@
         <entry key="Infrastructure/Styles/Dialog.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Styles/Editor.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Styles/ExplorerItem.axaml" value="Infrastructure/Infrastructure.csproj" />
+        <entry key="Infrastructure/Styles/Table.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Styles/Typography.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="Infrastructure/Views/MessageWindow.axaml" value="Infrastructure/Infrastructure.csproj" />
         <entry key="ProjectPresentation/ProjectWindow.axaml" value="ProjectPresentation/ProjectPresentation.csproj" />

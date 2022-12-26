@@ -51,7 +51,7 @@ public class ClassroomFeaturesViewModel : BaseViewModel, IRoutableViewModel, IAc
     private async Task<IEnumerable<ClassroomFeature>> CatchObservableExceptions(Exception _)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             new LocalizedMessage.Error.StorageIsNotAvailable()
         );
 

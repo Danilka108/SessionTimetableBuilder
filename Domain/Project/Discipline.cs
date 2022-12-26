@@ -10,4 +10,20 @@ public record Discipline(int Id, string Name, IEnumerable<ClassroomFeature> Clas
 
         return sameRequirement is not null;
     }
+
+    public class Comparer : EqualityComparer<Discipline>
+    {
+        public override bool Equals(Discipline? x, Discipline? y)
+        {
+            if (x is null && y is null) return true;
+            if (x is null && y is not null) return false;
+            if (x is not null && y is null) return false;
+            return x.Id == y.Id;
+        }
+
+        public override int GetHashCode(Discipline obj)
+        {
+            return obj.Id;
+        }
+    }
 }

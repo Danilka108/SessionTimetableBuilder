@@ -36,4 +36,18 @@ public record Lecturer
 
         return string.Join(" ", capitalizedSurname, nameInitial, patronymicInitial);
     }
+    
+    public class Comparer : EqualityComparer<Lecturer>
+    {
+        public override bool Equals(Lecturer? x, Lecturer? y)
+        {
+            if (x is null && y is null) return false;
+            return x is not null && y is not null && x.Id == y.Id;
+        }
+
+        public override int GetHashCode(Lecturer obj)
+        {
+            return obj.Id;
+        }
+    }
 }

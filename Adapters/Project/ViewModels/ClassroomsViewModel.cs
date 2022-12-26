@@ -48,7 +48,7 @@ public class ClassroomsViewModel : BaseViewModel, IRoutableViewModel, IActivatab
     private async Task<IEnumerable<Classroom>> CatchObservableExceptions(Exception _)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             new LocalizedMessage.Error.StorageIsNotAvailable()
         );
 

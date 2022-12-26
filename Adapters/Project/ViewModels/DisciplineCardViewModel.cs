@@ -60,7 +60,7 @@ public class DisciplineCardViewModel : BaseViewModel
     private async Task DoDelete(CancellationToken token)
     {
         var confirmDialog = _confirmDialogFactory.Invoke(
-            LocalizedMessage.Header.Delete,
+            LocalizedMessage.Letter.Delete,
             new LocalizedMessage.Question.DeleteDiscipline()
         );
 
@@ -75,6 +75,12 @@ public class DisciplineCardViewModel : BaseViewModel
         {
             var message =
                 new LocalizedMessage.Error.DisciplineReferencedByLecturer(e.Lecturer.FullName);
+            await ShowErrorMessage(message);
+        }
+        catch (DisciplineReferencedByGroupException e)
+        {
+            var message =
+                new LocalizedMessage.Error.DisciplineReferencedByGroup(e.Group.Name);
             await ShowErrorMessage(message);
         }
         catch (DisciplineGatewayException)
@@ -92,7 +98,7 @@ public class DisciplineCardViewModel : BaseViewModel
     private async Task ShowErrorMessage(LocalizedMessage message)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             message
         );
 

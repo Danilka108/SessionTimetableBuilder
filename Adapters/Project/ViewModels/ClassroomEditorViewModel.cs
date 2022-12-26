@@ -8,6 +8,7 @@ using Adapters.Common.ViewModels;
 using Application.Project.Gateways;
 using Application.Project.UseCases.Classroom;
 using Domain.Project;
+using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
@@ -36,9 +37,11 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
         Capacity = classroom?.Capacity.ToString() ?? "";
         Number = classroom?.Number.ToString() ?? "";
 
+
         SelectedFeatures =
             new ObservableCollection<ClassroomFeature>(classroom?.Features ??
                                                        new ClassroomFeature[] { });
+        AllFeatures = new ObservableCollection<ClassroomFeature>(SelectedFeatures);
 
         _saveUseCase = saveUseCase;
         _messageDialogFactory = messageDialogFactory;
@@ -67,18 +70,40 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
             .IsExecuting
             .ToPropertyEx(this, vm => vm.IsLoading);
 
-        var allFeatures = featureGateway
-            .ObserveAll()
-            .FirstAsync()
-            .Catch<IEnumerable<ClassroomFeature>, Exception>(ex =>
-                CatchFeaturesObserving(ex).ToObservable())
-            .ToPropertyEx(this, vm => vm.AllFeatures);
-
         this.WhenActivated(d =>
         {
+            featureGateway
+                .ObserveAll()
+                .Catch<IEnumerable<ClassroomFeature>, Exception>(ex =>
+                    CatchObservableExceptions(ex).ToObservable())
+                .Subscribe(features =>
+                    {
+                        IntersectAllEntitiesWith(features, AllFeatures,
+                            new ClassroomFeature.Comparer());
+                    }
+                );
+
             Save.DisposeWith(d);
-            allFeatures.DisposeWith(d);
         });
+    }
+
+    private void IntersectAllEntitiesWith<T>(
+        IEnumerable<T> updatedEntities, IList<T> allEntities, IEqualityComparer<T> comparer)
+    {
+        var itemsToRemove = from oldEntity in allEntities
+            let doesNotContains = !updatedEntities.Contains(oldEntity, comparer)
+            where doesNotContains
+            select oldEntity;
+
+        allEntities.RemoveMany(itemsToRemove);
+
+        var entitiesToAdd =
+            from newEntity in updatedEntities
+            let doesNotContains = !allEntities.Contains(newEntity, comparer)
+            where doesNotContains
+            select newEntity;
+
+        allEntities.AddRange(entitiesToAdd);
     }
 
     [ObservableAsProperty] public bool IsLoading { get; }
@@ -89,7 +114,7 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
 
     public ObservableCollection<ClassroomFeature> SelectedFeatures { get; }
 
-    [ObservableAsProperty] public IEnumerable<ClassroomFeature> AllFeatures { get; }
+    public ObservableCollection<ClassroomFeature> AllFeatures { get; }
     public ReactiveCommand<Unit, Unit> Save { get; }
     public ReactiveCommand<Unit, Unit> Close { get; }
     public Interaction<Unit, Unit> Finish { get; }
@@ -106,6 +131,13 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
             await _saveUseCase.Handle(number, capacity, _classroomId, SelectedFeatures.ToArray(),
                 token);
             await Finish.Handle(Unit.Default);
+        }
+        catch (ClassroomReferencedByExamException e)
+        {
+            var message =
+                new LocalizedMessage.Error.ClassroomReferencedByExam(e.Exam.Group.Name,
+                    e.Exam.Discipline.Name);
+            await ShowErrorMessage(message);
         }
         catch (ClassroomNumberMustBeOriginalException)
         {
@@ -127,17 +159,17 @@ public class ClassroomEditorViewModel : BaseViewModel, IActivatableViewModel
     private async Task ShowErrorMessage(LocalizedMessage message)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             message
         );
 
         await OpenMessageDialog.Handle(messageDialog);
     }
 
-    private async Task<IEnumerable<ClassroomFeature>> CatchFeaturesObserving(Exception _)
+    private async Task<IEnumerable<ClassroomFeature>> CatchObservableExceptions(Exception _)
     {
         var messageDialog = _messageDialogFactory.Invoke(
-            LocalizedMessage.Header.Error,
+            LocalizedMessage.Letter.Error,
             new LocalizedMessage.Error.StorageIsNotAvailable()
         );
 

@@ -12,7 +12,9 @@ public enum ExploredSet
     ClassroomFeatures = 0,
     Classrooms,
     Disciplines,
-    Lecturers
+    Lecturers,
+    Groups,
+    Exams
 }
 
 public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
@@ -33,7 +35,9 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
 
     private readonly LecturersViewModel.Factory _lecturersFactory;
 
-    private readonly LecturerEditorViewModel.Factory _lecturerEditorFactory;
+    private readonly GroupsViewModel.Factory _groupsFactory;
+
+    private readonly ExamsViewModel.Factory _examsFactory;
 
     private readonly IBrowser _browser;
 
@@ -46,9 +50,15 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
         ClassroomFeatureEditorViewModel.Factory classroomFeatureEditorFactory,
         DisciplineEditorViewModel.Factory disciplineEditorFactory,
         LecturersViewModel.Factory lecturersFactory,
-        LecturerEditorViewModel.Factory lecturerEditorFactory
+        LecturerEditorViewModel.Factory lecturerEditorFactory,
+        GroupsViewModel.Factory groupsFactory,
+        GroupEditorViewModel.Factory groupEditorFactory,
+        ExamsViewModel.Factory examsFactory,
+        ExamEditorViewModel.Factory examEditorFactory
     )
     {
+        _groupsFactory = groupsFactory;
+
         Activator = new ViewModelActivator();
         Router = new RoutingState();
         OpenEditor = new Interaction<(BaseViewModel, ExploredSet), Unit>();
@@ -63,13 +73,25 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
         _classroomFeaturesFactory = classroomFeaturesFactory;
         _disciplinesFactory = disciplinesFactory;
         _lecturersFactory = lecturersFactory;
-        _lecturerEditorFactory = lecturerEditorFactory;
+        _examsFactory = examsFactory;
 
         Create = ReactiveCommand.CreateFromTask(async () =>
         {
             if (ExploredSet == ExploredSet.Lecturers)
             {
-                await browser.Manager.Browse.Execute(_lecturerEditorFactory.Invoke(null));
+                await browser.Manager.Browse.Execute(lecturerEditorFactory.Invoke(null));
+                return;
+            }
+            
+            if (ExploredSet == ExploredSet.Groups)
+            {
+                await browser.Manager.Browse.Execute(groupEditorFactory.Invoke(null));
+                return;
+            }
+
+            if (ExploredSet == ExploredSet.Exams)
+            {
+                await browser.Manager.Browse.Execute(examEditorFactory.Invoke(null));
                 return;
             }
 
@@ -103,7 +125,9 @@ public class ExplorerViewModel : BaseViewModel, IActivatableViewModel, IScreen
             ExploredSet.Classrooms => _classroomsFactory.Invoke(this),
             ExploredSet.ClassroomFeatures => _classroomFeaturesFactory.Invoke(this),
             ExploredSet.Disciplines => _disciplinesFactory.Invoke(this),
-            ExploredSet.Lecturers => _lecturersFactory.Invoke(this, _browser)
+            ExploredSet.Lecturers => _lecturersFactory.Invoke(this, _browser),
+            ExploredSet.Groups => _groupsFactory.Invoke(this, _browser),
+            ExploredSet.Exams => _examsFactory.Invoke(this, _browser)
         };
 
         return Router.Navigate.Execute(viewModelToNavigate);
